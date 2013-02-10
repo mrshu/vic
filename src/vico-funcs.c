@@ -1,109 +1,109 @@
-#ifndef _VICO_FUNC
-#define _VICO_FUNC
+#ifndef _VIC_FUNC
+#define _VIC_FUNC
 
-#include "vico.h"
+#include "vic.h"
 
 #include <stdlib.h>
 #include <stdint.h>
 
-#define VICO_FUNC_BCKG 0x01
+#define VIC_FUNC_BCKG 0x01
 
-struct vico_fntable{
+struct vic_fntable{
 	char* name;
 	void(*fn)();
 	uint8_t mask;
-} *vico_fntable;
+} *vic_fntable;
 
-static int vico_fncount = 0;
+static int vic_fncount = 0;
 
-struct vico_aliases{
+struct vic_aliases{
 	char *name;
 	char *alias;
-} *vico_aliases;
-static int vico_alias_count = 0;
+} *vic_aliases;
+static int vic_alias_count = 0;
 
-void vico_fn_add_mask(char* name, void(*fn)(), uint8_t mask)
+void vic_fn_add_mask(char* name, void(*fn)(), uint8_t mask)
 {
-        if(vico_fncount == 0) {
-                vico_fntable = (struct vico_fntable*)
+        if(vic_fncount == 0) {
+                vic_fntable = (struct vic_fntable*)
                         malloc(
-                                ++vico_fncount * sizeof(struct vico_fntable)
+                                ++vic_fncount * sizeof(struct vic_fntable)
                         );
         } else {
-                vico_fntable = (struct vico_fntable*)
+                vic_fntable = (struct vic_fntable*)
                         realloc(
-                                vico_fntable,
-                                ++vico_fncount * sizeof(struct vico_fntable)
+                                vic_fntable,
+                                ++vic_fncount * sizeof(struct vic_fntable)
                         );
         }
 
-  	vico_fntable[vico_fncount - 1].name = name;
-  	vico_fntable[vico_fncount - 1].fn = *fn;
-        vico_fntable[vico_fncount - 1].mask = mask;
+  	vic_fntable[vic_fncount - 1].name = name;
+  	vic_fntable[vic_fncount - 1].fn = *fn;
+        vic_fntable[vic_fncount - 1].mask = mask;
 
 }
 
-void vico_fn_rm(char* name)
+void vic_fn_rm(char* name)
 {
 	int i;
-	for (i = 0; i < vico_fncount ; i++) {
-		if(strcmp(name, vico_fntable[i].name) == 0){
-			free(vico_fntable[i].name);
+	for (i = 0; i < vic_fncount ; i++) {
+		if(strcmp(name, vic_fntable[i].name) == 0){
+			free(vic_fntable[i].name);
 
-			vico_fntable[i].name = NULL;
-			vico_fntable[i].fn = NULL;
+			vic_fntable[i].name = NULL;
+			vic_fntable[i].fn = NULL;
 
 			break;
 		}
 	}
 }
 
-int vico_fn_call(const char* name)
+int vic_fn_call(const char* name)
 {
         int i;
 
-        for (i = 0; i < vico_fncount ; i++) {
-		if(vico_fntable[i].fn == NULL)
+        for (i = 0; i < vic_fncount ; i++) {
+		if(vic_fntable[i].fn == NULL)
 			continue;
 
-		if (!strcmp(vico_fntable[i].name , name)) {
-                      (*(vico_fntable[i].fn))();
+		if (!strcmp(vic_fntable[i].name , name)) {
+                      (*(vic_fntable[i].fn))();
                       return 1;
                 }
         }
         return 0;
 }
 
-void vico_alias_add(char *name, char *alias)
+void vic_alias_add(char *name, char *alias)
 {
-        if(vico_alias_count == 0) {
-                vico_aliases = (struct vico_aliases*)
+        if(vic_alias_count == 0) {
+                vic_aliases = (struct vic_aliases*)
                         malloc(
-                                ++vico_alias_count * sizeof(struct vico_aliases)
+                                ++vic_alias_count * sizeof(struct vic_aliases)
                         );
         } else {
-                vico_aliases = (struct vico_aliases*)
+                vic_aliases = (struct vic_aliases*)
                         realloc(
-                                vico_aliases,
-                                ++vico_alias_count * sizeof(struct vico_aliases)
+                                vic_aliases,
+                                ++vic_alias_count * sizeof(struct vic_aliases)
                         );
         }
-	vico_aliases[vico_alias_count -1].name = name;
-	vico_aliases[vico_alias_count -1].alias = alias;
+	vic_aliases[vic_alias_count -1].name = name;
+	vic_aliases[vic_alias_count -1].alias = alias;
 
 }
 
-char *vico_alias(char *name)
+char *vic_alias(char *name)
 {
 	int i;
-	for (i = 0; i < vico_alias_count; i++){
+	for (i = 0; i < vic_alias_count; i++){
 #ifdef DEBUG
-		vico_print(vico_aliases[i].name);
-		vico_print(" -> ");
-		vico_println(vico_aliases[i].alias);
+		vic_print(vic_aliases[i].name);
+		vic_print(" -> ");
+		vic_println(vic_aliases[i].alias);
 #endif
-		if(strcmp(vico_aliases[i].name, name) == 0){
-			return vico_aliases[i].alias;
+		if(strcmp(vic_aliases[i].name, name) == 0){
+			return vic_aliases[i].alias;
 		}
 	}
 
@@ -111,23 +111,23 @@ char *vico_alias(char *name)
 
 }
 
-void vico_func_ls(void)
+void vic_func_ls(void)
 {
 	int i;
 
-	for (i = 0; i < vico_fncount ; i++) {
-		if(vico_fntable[i].fn == NULL)
+	for (i = 0; i < vic_fncount ; i++) {
+		if(vic_fntable[i].fn == NULL)
 			continue;
 
-		vico_print(vico_fntable[i].name);
-		vico_print("\t -> \t");
-		vico_print_hex((int) *(vico_fntable[i].fn));
-		vico_println("");
+		vic_print(vic_fntable[i].name);
+		vic_print("\t -> \t");
+		vic_print_hex((int) *(vic_fntable[i].fn));
+		vic_println("");
 	}
 }
 
 
-void vico_func_help(void)
+void vic_func_help(void)
 {
 	
 

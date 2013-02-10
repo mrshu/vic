@@ -1,86 +1,86 @@
-#ifndef _VICO_TASKS
-#define _VICO_TASKS
+#ifndef _VIC_TASKS
+#define _VIC_TASKS
 
-#include "vico.h"
+#include "vic.h"
 
 #include <stdlib.h>
 #include <stdint.h>
 
 
-struct vico_tasks{
+struct vic_tasks{
 	char* name;
 	unsigned long lastrun;
 	unsigned int delay;
-} *vico_tasks;
+} *vic_tasks;
 
-static int vico_taskcount = 0;
+static int vic_taskcount = 0;
 
-void vico_task_start(char* name, unsigned int delay)
+void vic_task_start(char* name, unsigned int delay)
 {
-	if (vico_taskcount == 0){
-		vico_tasks = (struct vico_tasks*)
+	if (vic_taskcount == 0){
+		vic_tasks = (struct vic_tasks*)
 			malloc( 
-				++vico_taskcount * sizeof(struct vico_tasks)
+				++vic_taskcount * sizeof(struct vic_tasks)
 			);
 	} else {
-		vico_tasks = (struct vico_tasks*)
+		vic_tasks = (struct vic_tasks*)
 			realloc( 
-				vico_tasks,
-				++vico_taskcount * sizeof(struct vico_tasks)
+				vic_tasks,
+				++vic_taskcount * sizeof(struct vic_tasks)
 			);
 	}
 
 //	printf("task: %s\n", name);
 
-	vico_tasks[vico_taskcount - 1].name = name;
-	vico_tasks[vico_taskcount - 1].delay = delay;
-	vico_tasks[vico_taskcount - 1].lastrun = 0;
+	vic_tasks[vic_taskcount - 1].name = name;
+	vic_tasks[vic_taskcount - 1].delay = delay;
+	vic_tasks[vic_taskcount - 1].lastrun = 0;
 
 }
 
-void vico_task_stop(uint8_t id)
+void vic_task_stop(uint8_t id)
 {
-	if (id >= vico_taskcount)
+	if (id >= vic_taskcount)
 		return;
 
-	if (vico_tasks[id].name == NULL)
+	if (vic_tasks[id].name == NULL)
 		return;
 
 		
-	free(vico_tasks[id].name);
+	free(vic_tasks[id].name);
 
-	vico_tasks[id].name = NULL;
-	vico_tasks[id].delay = 0;
-	vico_tasks[id].lastrun = 0;
+	vic_tasks[id].name = NULL;
+	vic_tasks[id].delay = 0;
+	vic_tasks[id].lastrun = 0;
 		
 			
 
 }
 
-void vico_tasks_run(void)
+void vic_tasks_run(void)
 {
 	int i;
-	for (i = 0; i < vico_taskcount; i++) {
-		if (vico_tasks[i].name == NULL)
+	for (i = 0; i < vic_taskcount; i++) {
+		if (vic_tasks[i].name == NULL)
 			continue;
 
-		if ((vico_tasks[i].delay + vico_tasks[i].lastrun )<=
+		if ((vic_tasks[i].delay + vic_tasks[i].lastrun )<=
 			millis()){
 
-//			printf("rtask: %s\n", vico_tasks[i].name);
+//			printf("rtask: %s\n", vic_tasks[i].name);
 			char *tmp;
 			tmp = (char *) malloc(
-				(strlen(vico_tasks[i].name) + 2) * sizeof(char) 
+				(strlen(vic_tasks[i].name) + 2) * sizeof(char) 
 				);
 			
 			*tmp = '\0';
-			strcat(tmp, vico_tasks[i].name);
+			strcat(tmp, vic_tasks[i].name);
 			strcat(tmp, ";\0");
 
 //			printf("running: %s\n", tmp);
 
-			vico_exec(tmp);
-			vico_tasks[i].lastrun = millis();
+			vic_exec(tmp);
+			vic_tasks[i].lastrun = millis();
 
 			free(tmp);
 		}
@@ -89,16 +89,16 @@ void vico_tasks_run(void)
 }
 
 
-void vico_func_ps(void)
+void vic_func_ps(void)
 {
 	int i;
-	for (i = 0; i < vico_taskcount; i++) {
-		if (vico_tasks[i].name == NULL)
+	for (i = 0; i < vic_taskcount; i++) {
+		if (vic_tasks[i].name == NULL)
 			continue;
 		
-		vico_print_int(i);
-		vico_print("\t:\t");
-		vico_println(vico_tasks[i].name);
+		vic_print_int(i);
+		vic_print("\t:\t");
+		vic_println(vic_tasks[i].name);
 	}
 
 }

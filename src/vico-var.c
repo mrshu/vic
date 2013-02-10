@@ -1,75 +1,75 @@
-#ifndef _VICO_VAR
-#define _VICO_VAR
+#ifndef _VIC_VAR
+#define _VIC_VAR
 
-#include "vico.h"
+#include "vic.h"
 
 #include <stdlib.h>
 #include <stdint.h>
 
-#define VICO_VAR_NONE 255
+#define VIC_VAR_NONE 255
 
-struct vico_vars{
+struct vic_vars{
 	char* name;
 	char* val;
-} *vico_vars;
+} *vic_vars;
 
-static uint8_t vico_varcount= 0;
+static uint8_t vic_varcount= 0;
 
-void vico_var_set_new(char* name, char* val)
+void vic_var_set_new(char* name, char* val)
 {
-	if (vico_varcount == 0){
-		vico_vars = (struct vico_vars*)
+	if (vic_varcount == 0){
+		vic_vars = (struct vic_vars*)
 			malloc( 
-				++vico_varcount * sizeof(struct vico_vars)
+				++vic_varcount * sizeof(struct vic_vars)
 			);
 	} else {
-		vico_vars = (struct vico_vars*)
+		vic_vars = (struct vic_vars*)
 			realloc( 
-				vico_vars,
-				++vico_varcount * sizeof(struct vico_vars)
+				vic_vars,
+				++vic_varcount * sizeof(struct vic_vars)
 			);
 	}
 
 //	printf("task: %s\n", name);
 
-	vico_vars[vico_varcount - 1].name = strdup(name);
-	vico_vars[vico_varcount - 1].val = strdup(val);
+	vic_vars[vic_varcount - 1].name = strdup(name);
+	vic_vars[vic_varcount - 1].val = strdup(val);
 
 
 
 }
 
-uint8_t vico_var_get_id (char* name)
+uint8_t vic_var_get_id (char* name)
 {
 	int i;
-	for (i = 0; i < vico_varcount; i++) {
-		if (strcmp(name, vico_vars[i].name) == 0) {
+	for (i = 0; i < vic_varcount; i++) {
+		if (strcmp(name, vic_vars[i].name) == 0) {
 			return i;
 		}
 	}
-	return VICO_VAR_NONE;
+	return VIC_VAR_NONE;
 }
 
 
-void vico_var_set(char* name, char* val)
+void vic_var_set(char* name, char* val)
 {
 	
-	uint8_t id = vico_var_get_id(name);
-	if (id == VICO_VAR_NONE){
-		vico_var_set_new(name, val);
+	uint8_t id = vic_var_get_id(name);
+	if (id == VIC_VAR_NONE){
+		vic_var_set_new(name, val);
 	} else {
-		free(vico_vars[id].val);
-		vico_vars[id].val = strdup(val);
+		free(vic_vars[id].val);
+		vic_vars[id].val = strdup(val);
 	}
 	
 }
 
-char* vico_var_get(char* name)
+char* vic_var_get(char* name)
 {
 	int i;
-	for (i = 0; i < vico_varcount; i++) {
-		if (strcmp(name, vico_vars[i].name) == 0) {
-			return vico_vars[i].val;
+	for (i = 0; i < vic_varcount; i++) {
+		if (strcmp(name, vic_vars[i].name) == 0) {
+			return vic_vars[i].val;
 		}
 	}
 
