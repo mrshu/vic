@@ -39,7 +39,7 @@ char vic_in();
 #define vic_out(x) printf("%c", x)
 #define vic_println(x) printf("%s\n", x)
 
-#define vic_inout_init(baud);  
+#define vic_inout_init(baud);
 #define vic_available() 1
 #define vic_in getchar
 
@@ -77,7 +77,7 @@ void vic_alias_add(char *name, char *alias);
 extern char *vic_buffer;
 extern char *vic_buff;
 extern char *vic_func;
-extern uint8_t vic_returned; 
+extern uint8_t vic_returned;
 
 void vic_buffer_append(char i);
 
@@ -101,7 +101,7 @@ void vic_run(void);
 
 #define VIC_RPC 0x8
 
-#define VIC_PS1 "vi> "
+#define VIC_PS1 "+> "
 
 extern uint8_t vic_config;
 

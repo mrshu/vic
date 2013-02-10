@@ -60,7 +60,7 @@ int main(void)
         vic_exec("ls;");
         while(1){
                 char input[200];
-                vic_print("+> ");
+                vic_print(VIC_PS1);
                 gets(input);
                 int i;
                 for(i = 0; i < strlen(input); i++){
