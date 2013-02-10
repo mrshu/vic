@@ -2,9 +2,9 @@
 
 #include "WProgram.h"
 
-#include "src/vico.c"
-#include "src/vico-funcs.c"
-#include "src/vico-serial.c"
-#include "src/vico-tasks.c"
-#include "src/vico-var.c"
+#include "src/vic.c"
+#include "src/vic-funcs.c"
+#include "src/vic-serial.c"
+#include "src/vic-tasks.c"
+#include "src/vic-var.c"
 
