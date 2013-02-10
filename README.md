@@ -15,4 +15,4 @@ To build the example source file, run
 
 You can run it then by executing
 
-	$./example
+	$ ./example
