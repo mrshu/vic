@@ -5,20 +5,20 @@
 
 #define SHELL 1
 #define DEBUG 1
-#include <vico.h>
+#include <vic.h>
 
 void test()
 {
 	int t;
-	vico_args("%d", &t);
-	printf("test, args: %s, t = %d\n", vico_buff, t);
-	vico_return("%d", t+1);
+	vic_args("%d", &t);
+	printf("test, args: %s, t = %d\n", vic_buff, t);
+	vic_return("%d", t+1);
 }
 
 void whl()
 {
         char inp[65];
-        vico_args("%s", &inp);
+        vic_args("%s", &inp);
         
 
 }
@@ -26,46 +26,46 @@ void whl()
 
 void ls()
 {
-	vico_print("listing");
+	vic_print("listing");
 }
 
 void rm()
 {
 	char i[20];
-	vico_args("%s", &i);
+	vic_args("%s", &i);
 	printf("Removing %s\n", i);
-	vico_exec("ls;");
+	vic_exec("ls;");
 
 }
 
 void milis()
 {
-	vico_func();
+	vic_func();
 
-	vico_return("%d", rand());
+	vic_return("%d", rand());
 }
 
 int main(void)
 {
 
-	//vico_fn_add("A", &test);
-	vico_init();
+	//vic_fn_add("A", &test);
+	vic_init();
 	
-	vico_fn_add("l", &ls);
-	vico_fn_add("rm", &rm);
-	vico_fn_add("test", &test);
-	vico_fn_add("m", &milis);
+	vic_fn_add("l", &ls);
+	vic_fn_add("rm", &rm);
+	vic_fn_add("test", &test);
+	vic_fn_add("m", &milis);
 
-	vico_alias_add("time", "rpc;m;shell;");
-	vico_exec("ls;");
+	vic_alias_add("time", "rpc;m;shell;");
+	vic_exec("ls;");
 	while(1){
 		char input[200];	
 		gets(input);
 		int i;
 		for(i = 0; i < strlen(input); i++){
-			vico_process(input[i]);
+			vic_process(input[i]);
 		}
-		vico_process('\n');
+		vic_process('\n');
 	}
 
 	return 0;

@@ -1,32 +1,32 @@
 
 CC=gcc -g -Wall 
 
-OBJ= src/vico-serial.o src/vico-funcs.o src/vico.o src/vico-tasks.o src/vico-var.o 
-OBJC=vico-serial.c vico-funcs.c vico-tasks.c vico-var.c vico.c
+OBJ= src/vic-serial.o src/vic-funcs.o src/vic.o src/vic-tasks.o src/vic-var.o 
+OBJC=vic-serial.c vic-funcs.c vic-tasks.c vic-var.c vic.c
 
-ARDUINODEST=~/sketchbook/libraries/vico/
+ARDUINODEST=~/sketchbook/libraries/vic/
 DEST=/usr/lib
 INCLDEST=/usr/include
 
 %.o: %.c
 	$(CC) -c -o $@ $< $(OFLAGS)
 
-libvico.a: $(OBJ)
-	ar rcs libvico.a $(OBJ)
+libvic.a: $(OBJ)
+	ar rcs libvic.a $(OBJ)
 	
-example: example.c libvico.a
-	$(CC) example.c -o example -L. -lvico
+example: example.c libvic.a
+	$(CC) example.c -o example -L. -lvic
 
 arduino: $(OBJ)
 	rm src/*.o
-	cp src/* arduino/vico/src/
-	cp -R arduino/vico/* $(ARDUINODEST)
+	cp src/* arduino/vic/src/
+	cp -R arduino/vic/* $(ARDUINODEST)
 
-install: libvico.a
-	install libvico.a $(DEST)/libvico.a
-	install src/vico.h $(INCLDEST)/vico.h
+install: libvic.a
+	install libvic.a $(DEST)/libvic.a
+	install src/vic.h $(INCLDEST)/vic.h
 
 clear:
 	rm src/*.o
 	rm example
-	rm libvico.a
+	rm libvic.a
