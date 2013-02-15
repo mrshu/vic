@@ -19,8 +19,6 @@ void whl()
 {
         char inp[65];
         vic_args("%s", &inp);
-
-
 }
 
 void ls()
@@ -56,6 +54,14 @@ int main(void)
         vic_fn_add("m", &milis);
 
         vic_alias_add("time", "rpc;m;shell;");
+
+        int argc = 0;
+        char **argv = vic__args("2 'A B' \"C D\"", &argc);
+
+        int j = 0;
+        for (j = 0; j < argc; j++) {
+                printf("%s\n", argv[j]);
+        }
 
         while(1) {
                 char input[256];
