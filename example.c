@@ -23,7 +23,6 @@ void whl()
 
 }
 
-
 void ls()
 {
         vic_print("listing");
@@ -57,15 +56,17 @@ int main(void)
         vic_fn_add("m", &milis);
 
         vic_alias_add("time", "rpc;m;shell;");
-        vic_exec("ls;");
-        while(1){
+
+        while(1) {
                 char input[200];
                 vic_print(VIC_PS1);
                 gets(input);
                 int i;
+
                 for(i = 0; i < strlen(input); i++){
                         vic_process(input[i]);
                 }
+
                 vic_process('\n');
         }
 
