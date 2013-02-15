@@ -129,22 +129,21 @@ void vic_func_ls(void)
 
 void vic_func_help(void)
 {
-	
+
 
 }
 
 
-
-char **args(const char* in, int *argc)
+char** vic__args(const char* in, int *argc)
 {
 	char *tmp;
 	tmp = (char *) malloc(sizeof(char));
 	int len = 0;
-	
+
 	char **argv;
-	
+
 	uint8_t in_str = 0, in_sstr = 0;
-	
+
 	argv = NULL;
 	argv = (char **) malloc(sizeof( *argv ));
 	*argc = 0;
@@ -165,7 +164,7 @@ char **args(const char* in, int *argc)
 			len = 0;
 
 			*argc += 1;
-		
+
 		} else if (*in == '"' && in_sstr == 0 && *(in - 1) != '\\' ) {
 			in_str = !in_str;
 		} else if (*in == '\'' && in_str == 0 && *(in - 1) != '\\' )  {
@@ -179,7 +178,7 @@ char **args(const char* in, int *argc)
 				tmp[len++] = *in;
 			}
 		}
-		
+
 
 	} while (*in++ != '\0');
 

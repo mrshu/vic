@@ -58,7 +58,7 @@ int main(void)
         vic_alias_add("time", "rpc;m;shell;");
 
         while(1) {
-                char input[200];
+                char input[256];
                 vic_print(VIC_PS1);
                 gets(input);
                 int i;
