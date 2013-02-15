@@ -20,11 +20,11 @@ void vic_func_shell()
 void vic_func_free()
 {
 	vic_func();
-	
+
 	extern int __bss_end;
 	int ret;
 	vic_return("%d",  ((int)&ret) - ((int)&__bss_end));
-			
+
 }
 
 void vic_func_millis()
@@ -79,7 +79,7 @@ void vic_func_start()
 	tmp = (char *) malloc(31 * sizeof(char));
 	int time;
 	vic_args("%30s %d", tmp, &time);
-	
+
 	vic_task_start(tmp, time);
 }
 
@@ -100,7 +100,7 @@ void vic_func_set()
 	val = (char *) malloc(31 * sizeof(char));
 
 	vic_args("%30s %30s", name, val);
-	
+
 	vic_var_set(name, val);
 	free(name);
 	free(val);
@@ -112,29 +112,16 @@ void vic_func_p()
 	char* name;
 	name = (char *) malloc(31 * sizeof(char));
 	vic_args("%30s", name);
-	
+
 	vic_return("%s", vic_var_get(name));
 }
-
-/*
-void vic_func_echo()
-{
-	vic_func();
-	
-	uint8_t slash = 0;
-	while(*vic_buff != '\0'){
-		if
-	}
-	vic_println(vic_buff);
-}
-*/
 
 void vic_run(void)
 {
 	if (vic_available()){
 		vic_process(vic_in());
 	}
-	
+
 	vic_tasks_run();
 
 }
@@ -146,9 +133,10 @@ void vic_init(unsigned long baud)
 void vic_init()
 {
 #endif
-	vic_fn_add("ls", &vic_func_ls);	
-	vic_fn_add("rpc", &vic_func_rpc);	
-	vic_fn_add("shell", &vic_func_shell);	
+	vic_fn_add("ls", &vic_func_ls);
+	vic_fn_add("rpc", &vic_func_rpc);
+	vic_fn_add("shell", &vic_func_shell);
+        vic_fn_add("echo", &vic_func_echo);
 
 #ifdef SHELL
 	vic_println("beign");
@@ -158,8 +146,8 @@ void vic_init()
 
 #ifdef ARDUINO
 
-	vic_fn_add("free", &vic_func_free);	
-	vic_fn_add("millis", &vic_func_millis);	
+	vic_fn_add("free", &vic_func_free);
+	vic_fn_add("millis", &vic_func_millis);
 
 
 	vic_fn_add("pm", &vic_func_pinmode);

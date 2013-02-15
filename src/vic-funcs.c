@@ -126,6 +126,11 @@ void vic_func_ls(void)
 	}
 }
 
+void vic_func_echo()
+{
+	vic_func();
+	vic_println(vic_buff);
+}
 
 void vic_func_help(void)
 {

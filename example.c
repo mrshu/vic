@@ -58,7 +58,7 @@ int main(void)
         vic_exec("l;");
 
         int argc = 0;
-        char **argv = vic__args("2 'A B' \"C D\"", &argc);
+        char **argv = vic__args("2 'A B' \"C D E\"", &argc);
 
         int j = 0;
         for (j = 0; j < argc; j++) {
