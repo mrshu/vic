@@ -114,5 +114,6 @@ void vic_var_set(char* name, char* val);
 char* vic_var_get(char* name);
 char **vic__args(const char* in, int *argc);
 
+void vic_func_echo(void);
 
 #endif
