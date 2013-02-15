@@ -55,6 +55,8 @@ int main(void)
 
         vic_alias_add("time", "rpc;m;shell;");
 
+        vic_exec("l;");
+
         int argc = 0;
         char **argv = vic__args("2 'A B' \"C D\"", &argc);
 
