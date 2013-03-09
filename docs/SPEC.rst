@@ -46,7 +46,16 @@ once.
 
     +> echo "hi" there 
 
+**if** - comparison operator. If the first argument is not 0 the second
+argument is executed. Otherwise the third one is executed.
+    
+    +> set x 2
+    +> if (< $x 4) (echo "it's smaller") (echo "it's higher")
 
+**while** - a basic looping command
+
+    +> set x 0
+    +> while (< $x 4) (echo "smaller"; set x (+ $x 1))
 
 Arduino related
 ~~~~~~~~~~~~~~~
