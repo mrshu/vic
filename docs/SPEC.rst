@@ -30,3 +30,25 @@ brackets is marked as argument of this function. The first argument of this
 function is the code that is first evaluated and based on the return value of
 the evaluated code it evaluates the second (if the return value is true) or the
 third (if the return value is false) argument.
+
+
+Proposed `vic` builtin functions
+--------------------------------
+
+**set** - sets value to a variable. Can be used to set multiple values at
+once. 
+
+    +> set x 5 y 10
+    +> echo $x $y
+    5 10
+
+**echo** - echoes its argumets
+
+    +> echo "hi" there 
+
+
+
+Arduino related
+~~~~~~~~~~~~~~~
+
+**dr** - read from
