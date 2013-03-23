@@ -4,7 +4,7 @@
 
 void setup ()
 {
-  vicore_init(115200);
+  vic_init(115200);
   Serial.begin(115200);
 
 }
@@ -12,7 +12,7 @@ void setup ()
 void loop ()
 {
   if(Serial.available()){
-    vicore_process(Serial.read());
+    vic_process(Serial.read());
   }
 
 }
