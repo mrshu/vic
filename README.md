@@ -11,18 +11,18 @@ Building example file
 
 To build the example source file, run
 
-	$ make example
+    $ make example
 
 You can run it then by executing
 
-	$ ./example
+    $ ./example
 
 Arduino installation
 --------------------
 
 In order to use `vic` in your Arduino projects run:
 
-        $ make arduino
+    $ make arduino
 
 By default it installs the files into the `$HOME/sketchbook/libraries`
 directory.
