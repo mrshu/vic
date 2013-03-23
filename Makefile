@@ -20,6 +20,7 @@ example: example.c libvic.a
 arduino: $(OBJ)
 	rm src/*.o
 	cp src/* arduino/vic/src/
+	mkdir -p $(ARDUINODEST)
 	cp -R arduino/vic/* $(ARDUINODEST)
 
 install: libvic.a
