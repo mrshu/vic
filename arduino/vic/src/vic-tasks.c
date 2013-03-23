@@ -19,12 +19,12 @@ void vic_task_start(char* name, unsigned int delay)
 {
 	if (vic_taskcount == 0){
 		vic_tasks = (struct vic_tasks*)
-			malloc( 
+			malloc(
 				++vic_taskcount * sizeof(struct vic_tasks)
 			);
 	} else {
 		vic_tasks = (struct vic_tasks*)
-			realloc( 
+			realloc(
 				vic_tasks,
 				++vic_taskcount * sizeof(struct vic_tasks)
 			);
@@ -46,14 +46,14 @@ void vic_task_stop(uint8_t id)
 	if (vic_tasks[id].name == NULL)
 		return;
 
-		
+
 	free(vic_tasks[id].name);
 
 	vic_tasks[id].name = NULL;
 	vic_tasks[id].delay = 0;
 	vic_tasks[id].lastrun = 0;
-		
-			
+
+
 
 }
 
@@ -70,9 +70,9 @@ void vic_tasks_run(void)
 //			printf("rtask: %s\n", vic_tasks[i].name);
 			char *tmp;
 			tmp = (char *) malloc(
-				(strlen(vic_tasks[i].name) + 2) * sizeof(char) 
+				(strlen(vic_tasks[i].name) + 2) * sizeof(char)
 				);
-			
+
 			*tmp = '\0';
 			strcat(tmp, vic_tasks[i].name);
 			strcat(tmp, ";\0");
@@ -95,9 +95,9 @@ void vic_func_ps(void)
 	for (i = 0; i < vic_taskcount; i++) {
 		if (vic_tasks[i].name == NULL)
 			continue;
-		
+
 		vic_print_int(i);
-		vic_print("\t:\t");
+		vic_print(": ");
 		vic_println(vic_tasks[i].name);
 	}
 

@@ -8,13 +8,25 @@
 #include <stdint.h>
 
 
-#if defined(HIGH) || defined(ARDUINO)
-#define ARDUINO 1
+#if defined(ARDUINO) && ARDUINO >= 100
+#include <avr/pgmspace.h>
+#include "Arduino.h"
+#else
+    #if defined(ARDUINO)
+        #include <avr/pgmspace.h>
+        #include "WProgram.h"
+    #else
+        #if defined(HIGH)
+            #define ARDUINO 1
+            #include <avr/pgmspace.h>
+            #include "WProgram.h"
+        #endif
+    #endif
+#endif
+
+#if defined(ARDUINO)
 #define SHELL 1
 
-#include <avr/pgmspace.h>
-#include "WProgram.h"
-#include "WConstants.h"
 /*
 void vic_print(char *x);
 void vic_out(char x);
