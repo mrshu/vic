@@ -13,8 +13,12 @@
 #define SHELL 1
 
 #include <avr/pgmspace.h>
+#if defined(ARDUINO) && ARDUINO >= 100
+#include "Arduino.h"
+#else
 #include "WProgram.h"
-#include "WConstants.h"
+#endif
+
 /*
 void vic_print(char *x);
 void vic_out(char x);
@@ -39,7 +43,7 @@ char vic_in();
 #define vic_out(x) printf("%c", x)
 #define vic_println(x) printf("%s\n", x)
 
-#define vic_inout_init(baud);  
+#define vic_inout_init(baud);
 #define vic_available() 1
 #define vic_in getchar
 
@@ -77,7 +81,7 @@ void vic_alias_add(char *name, char *alias);
 extern char *vic_buffer;
 extern char *vic_buff;
 extern char *vic_func;
-extern uint8_t vic_returned; 
+extern uint8_t vic_returned;
 
 void vic_buffer_append(char i);
 
