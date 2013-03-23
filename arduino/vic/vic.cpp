@@ -1,19 +1,11 @@
 
 
 #if defined(ARDUINO) && ARDUINO >= 100
-#include <avr/pgmspace.h>
-#include "Arduino.h"
+  #include "Arduino.h"
 #else
-    #if defined(ARDUINO)
-        #include <avr/pgmspace.h>
-        #include "WProgram.h"
-    #else
-        #if defined(HIGH)
-            #define ARDUINO 1
-            #include <avr/pgmspace.h>
-            #include "WProgram.h"
-        #endif
-    #endif
+  #if defined(ARDUINO)
+    #include "WProgram.h"
+  #endif
 #endif
 
 #include "src/vic.c"

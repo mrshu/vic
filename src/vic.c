@@ -53,7 +53,7 @@ void vic_func_dw()
 {
 	int pin, val;
 	vic_args("%d %d", &pin, &val);
-        digitalWrite(pin, val);
+    digitalWrite(pin, val);
 }
 
 void vic_func_ar()
@@ -68,7 +68,7 @@ void vic_func_aw()
 	uint8_t pin;
 	int val;
 	vic_args("%d %d", &pin, &val);
-        analogWirte(pin, val);
+    analogWrite(pin, val);
 }
 
 #endif
