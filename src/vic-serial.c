@@ -41,7 +41,7 @@ inline void vic_buffer_free(void)
 }
 
 /*
-  Processes input stream. 
+  Processes input stream.
 */
 
 
@@ -65,7 +65,7 @@ void vic_process(char input)
 		vic_print(VIC_PS1);
 #endif
 	} else if (input == 3) { /* reseting Arduino */
-		void (*rst)() = 0; 
+		void (*rst)() = 0;
 		rst();
 
 	} else if ((input == 8) || (input == 0x7f)) { /* BACKPSACE and DELETE */
@@ -97,7 +97,8 @@ void vic_exec(char *input)
 			if (len == 0)
 				continue;
 
-			buffer = (char *) realloc(buffer, 
+                        // finish the string with '\0'
+			buffer = (char *) realloc(buffer,
 				(len + 1) * sizeof(char));
 			buffer[len++] = '\0';
 
@@ -131,18 +132,18 @@ void vic_exec(char *input)
 				vic_fn_call(vic_func);
 
 			}
-			
+
 			if (vic_returned == 0 && (vic_config & VIC_RPC)){
 				vic_out('%');
 				vic_print(vic_func);
 				vic_out('$');
-				
+
 			}
 
 			if (vic_returned == 1)
 				vic_returned = 0;
-			
-			
+
+
 			len = 0;
 			free(func);
 			func = vic_func = NULL;
@@ -157,7 +158,7 @@ void vic_exec(char *input)
 		/* separate the function */
 		} else if (*input == ' ' && func == NULL) {
 
-			buffer = (char *) realloc(buffer, 
+			buffer = (char *) realloc(buffer,
 						(len + 1) * sizeof(char));
 			buffer[len++] = '\0';
 
@@ -167,12 +168,12 @@ void vic_exec(char *input)
 
 		} else {
 
-			buffer = (char *) realloc(buffer, 
+			buffer = (char *) realloc(buffer,
 						(len + 1) * sizeof(char));
 			buffer[len++] = *input;
 
 		}
-	
+
 	} while(*(++input) != '\0');
 }
 
@@ -185,7 +186,7 @@ void vic_print_int_base(int i, uint8_t n)
                 vic_out('0');
                 return;
         }
-	
+
 
         while (i > 0) {
                 *ptr++ = i % n;
