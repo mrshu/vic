@@ -68,7 +68,7 @@ void vic_func_aw()
 	uint8_t pin;
 	int val;
 	vic_args("%d %d", &pin, &val);
-    analogWrite(pin, val);
+        analogWrite(pin, val);
 }
 
 #endif
@@ -156,11 +156,11 @@ void vic_init()
 	vic_fn_add("ar", &vic_func_ar);
 	vic_fn_add("aw", &vic_func_aw);
 #endif
-/*
 	vic_fn_add("start", &vic_func_start);
 	vic_fn_add("stop", &vic_func_stop);
 	vic_fn_add("ps", &vic_func_ps);
 
+/*
 	vic_fn_add("=", &vic_func_set);
 	vic_fn_add("p", &vic_func_p);
 
