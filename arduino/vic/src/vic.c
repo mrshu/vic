@@ -68,7 +68,7 @@ void vic_func_aw()
 	uint8_t pin;
 	int val;
 	vic_args("%d %d", &pin, &val);
-    analogWrite(pin, val);
+        analogWrite(pin, val);
 }
 
 #endif

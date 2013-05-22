@@ -64,14 +64,12 @@ void vic_tasks_run(void)
 		if (vic_tasks[i].name == NULL)
 			continue;
 
-		if ((vic_tasks[i].delay + vic_tasks[i].lastrun )<=
-			millis()){
+		if ((vic_tasks[i].delay + vic_tasks[i].lastrun) <= millis()){
 
 //			printf("rtask: %s\n", vic_tasks[i].name);
 			char *tmp;
 			tmp = (char *) malloc(
-				(strlen(vic_tasks[i].name) + 2) * sizeof(char)
-				);
+				(strlen(vic_tasks[i].name) + 2) * sizeof(char));
 
 			*tmp = '\0';
 			strcat(tmp, vic_tasks[i].name);
