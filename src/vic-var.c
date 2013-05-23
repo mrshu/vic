@@ -11,11 +11,12 @@
 struct vic_vars{
 	char* name;
 	char* val;
+        void* pval;
 } *vic_vars;
 
 static uint8_t vic_varcount= 0;
 
-void vic_var_set_new(char* name, char* val)
+void vic_var_set_new_bare(char* name, char* val, void* pval)
 {
 	if (vic_varcount == 0){
 		vic_vars = (struct vic_vars*)
@@ -35,8 +36,9 @@ void vic_var_set_new(char* name, char* val)
 	vic_vars[vic_varcount - 1].name = strdup(name);
 	vic_vars[vic_varcount - 1].val = strdup(val);
 
-
-
+        if (pval != NULL) {
+	        vic_vars[vic_varcount - 1].pval = pval;
+        }
 }
 
 uint8_t vic_var_get_id (char* name)

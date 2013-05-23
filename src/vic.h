@@ -114,9 +114,12 @@ void vic_task_start(char* name, unsigned int delay);
 void vic_tasks_run(void);
 void vic_func_ps(void);
 
+
 void vic_var_set(char* name, char* val);
 char* vic_var_get(char* name);
+#define vic_var_set_new(name, val) vic_var_set_new_bare(name, val, NULL)
 char **vic__args(const char* in, int *argc);
+
 
 void vic_func_echo(void);
 
