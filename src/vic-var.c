@@ -79,16 +79,16 @@ void vic_var_set_bind(char* name, char* val, void *pval)
 
                 if (i == len) {
                         int* p;
-                        p = vic_vars[id].pval;
+                        p = (int *) vic_vars[id].pval;
                         if (p != NULL)
                                 *p = atoi(val);
 
                 } else {
                         char* p;
-                        p = vic_vars[id].pval;
+                        p = (char *) vic_vars[id].pval;
                         if (p != NULL) {
                                 free(p);
-                                *p = strdup(val);
+                                p = strdup(val);
                         }
                 }
 	}
