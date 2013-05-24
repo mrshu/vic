@@ -81,3 +81,10 @@ Arduino related
 **aw** - write to an analog port.
 
     +> aw 5 200
+
+
+Arduino one way data binding
+----------------------------
+
+
+
