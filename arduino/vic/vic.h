@@ -9,7 +9,7 @@
 
 
 #if !defined(DEBUG)
-  #define DEBUG 1
+  #define DEBUG 0
 #endif
 
 #if defined(ARDUINO) && ARDUINO >= 100
