@@ -26,6 +26,12 @@ void ls()
         vic_print("listing");
 }
 
+int simple_changable_value = 1;
+void p()
+{
+        printf("simple_changable_value = %d\n", simple_changable_value);
+}
+
 void rm()
 {
         char i[20];
@@ -56,6 +62,8 @@ int main(void)
         vic_alias_add("time", "rpc;m;shell;");
 
         vic_exec("l;");
+
+        vic_var_set("s", "10", &simple_changable_value);
 
         int argc = 0;
         char **argv = vic__args("2 'A B' \"C D E\"", &argc);

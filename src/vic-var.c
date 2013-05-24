@@ -53,15 +53,18 @@ uint8_t vic_var_get_id (char* name)
 }
 
 
-void vic_var_set(char* name, char* val)
+void vic_var_set(char* name, char* val, void *pval)
 {
 
 	uint8_t id = vic_var_get_id(name);
 	if (id == VIC_VAR_NONE){
-		vic_var_set_new(name, val);
+		vic_var_set_new_bind(name, val, pval);
 	} else {
 		free(vic_vars[id].val);
 		vic_vars[id].val = strdup(val);
+                if (pval != NULL) {
+                        vic_vars[id].pval = pval;
+                }
 	}
 
 }
