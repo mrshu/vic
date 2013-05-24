@@ -115,9 +115,10 @@ void vic_tasks_run(void);
 void vic_func_ps(void);
 
 
-void vic_var_set(char* name, char* val);
+void vic_var_set_bind(char* name, char* val, void* pval);
+#define vic_var_set(name, val) vic_var_set_bind(name, val, NULL)
 char* vic_var_get(char* name);
-#define vic_var_set_new(name, val) vic_var_set_new_bare(name, val, NULL)
+#define vic_var_set_new(name, val) vic_var_set_new_bind(name, val, NULL)
 char **vic__args(const char* in, int *argc);
 
 

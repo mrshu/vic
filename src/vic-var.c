@@ -16,7 +16,7 @@ struct vic_vars{
 
 static uint8_t vic_varcount= 0;
 
-void vic_var_set_new_bare(char* name, char* val, void* pval)
+void vic_var_set_new_bind(char* name, char* val, void* pval)
 {
 	if (vic_varcount == 0){
 		vic_vars = (struct vic_vars*)
