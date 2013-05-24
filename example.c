@@ -58,12 +58,13 @@ int main(void)
         vic_fn_add("rm", &rm);
         vic_fn_add("test", &test);
         vic_fn_add("m", &milis);
+        vic_fn_add("prs", &p);
 
         vic_alias_add("time", "rpc;m;shell;");
 
         vic_exec("l;");
 
-        vic_var_set("s", "10", &simple_changable_value);
+        vic_var_set_bind("s", "10", &simple_changable_value);
 
         int argc = 0;
         char **argv = vic__args("2 'A B' \"C D E\"", &argc);
