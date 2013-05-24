@@ -31,6 +31,12 @@ function is the code that is first evaluated and based on the return value of
 the evaluated code it evaluates the second (if the return value is true) or the
 third (if the return value is false) argument.
 
+Booleans
+--------
+
+There are two constants: T (true) and F (false). Generally, everything
+except for the empty string and F is true.
+
 
 Proposed `vic` builtin functions
 --------------------------------
@@ -60,4 +66,18 @@ argument is executed. Otherwise the third one is executed.
 Arduino related
 ~~~~~~~~~~~~~~~
 
-**dr** - read from
+**dr** - read from a digital port.
+
+    +> dr 10
+
+**dw** - write to a digital port.
+
+    +> dw 13 1
+
+**ar** - read from an analog port.
+
+    +> ar 2
+
+**aw** - write to an analog port.
+
+    +> aw 5 200
