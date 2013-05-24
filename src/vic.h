@@ -28,14 +28,18 @@ void vic_inout_init(unsigned long baud);
 int vic_available();
 char vic_in();
 */
-#define vic_print(x) Serial.print(x)
-#define vic_out(x) Serial.print(x)
-#define vic_println(x) Serial.println(x)
 
-#define vic_inout_init(x) Serial.begin(x)
-#define vic_available Serial.available
-#define vic_in Serial.read
+#if !defined(VIC_ARDUINO_SERIAL)
+  #define VIC_ARDUINO_SERIAL Serial
+#endif
 
+#define vic_out(x) VIC_ARDUINO_SERIAL.print(x)
+#define vic_print(x) VIC_ARDUINO_SERIAL.print(x)
+#define vic_println(x) VIC_ARDUINO_SERIAL.println(x)
+
+#define vic_inout_init(x) VIC_ARDUINO_SERIAL.begin(x)
+#define vic_available VIC_ARDUINO_SERIAL.available
+#define vic_in VIC_ARDUINO_SERIAL.read
 
 #else
 
@@ -68,6 +72,16 @@ sprintf(tmp, fmt, __VA_ARGS__); } \
 vic_println(tmp); \
 free(tmp);vic_returned = 1;}
 
+#define STR(x) #x
+#define TOSTR(x) STR(x)
+#define dprint_str(str) if (DEBUG) printf(__FILE__ ":" TOSTR(__LINE__) "> " TOSTR(str) \
+                    " = '%s'\n", str)
+
+#define dprint_int(str) if (DEBUG) printf(__FILE__ ":" TOSTR(__LINE__) "> " TOSTR(str) \
+                    " = %d\n", str)
+
+#define dprint_char(str) if(DEBUG) printf(__FILE__ ":" TOSTR(__LINE__) "> " TOSTR(str) \
+                    " = %c\n", str)
 
 
 void vic_fn_add_mask(char* name, void(*fn)(), uint8_t mask);
