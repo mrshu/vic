@@ -160,9 +160,6 @@ void vic_init()
 	vic_fn_add("stop", &vic_func_stop);
 	vic_fn_add("ps", &vic_func_ps);
 
-/*
-	vic_fn_add("=", &vic_func_set);
+	vic_fn_add("set", &vic_func_set);
 	vic_fn_add("p", &vic_func_p);
-
-*/
 }

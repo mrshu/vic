@@ -35,10 +35,7 @@ void vic_var_set_new_bind(char* name, char* val, void* pval)
 
 	vic_vars[vic_varcount - 1].name = strdup(name);
 	vic_vars[vic_varcount - 1].val = strdup(val);
-
-        if (pval != NULL) {
-	        vic_vars[vic_varcount - 1].pval = pval;
-        }
+	vic_vars[vic_varcount - 1].pval = pval;
 }
 
 uint8_t vic_var_get_id (char* name)
@@ -83,13 +80,16 @@ void vic_var_set_bind(char* name, char* val, void *pval)
                 if (i == len) {
                         int* p;
                         p = vic_vars[id].pval;
-                        *p = atoi(val);
+                        if (p != NULL)
+                                *p = atoi(val);
 
                 } else {
                         char* p;
                         p = vic_vars[id].pval;
-                        free(p);
-                        *p = strdup(val);
+                        if (p != NULL) {
+                                free(p);
+                                *p = strdup(val);
+                        }
                 }
 	}
 
