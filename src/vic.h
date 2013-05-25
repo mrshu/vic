@@ -8,9 +8,6 @@
 #include <stdint.h>
 
 
-#if !defined(DEBUG)
-  #define DEBUG 1
-#endif
 
 #if defined(ARDUINO) && ARDUINO >= 100
   #include "Arduino.h"

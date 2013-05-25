@@ -3,8 +3,8 @@
 #include <ctype.h>
 #include <stdio.h>
 
-#define SHELL 1
-#define DEBUG 1
+#define SHELL 0
+#define DEBUG 0
 #include <vic.h>
 
 void test()

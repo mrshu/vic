@@ -72,6 +72,7 @@ void vic_func_aw()
 }
 
 #endif
+
 void vic_func_start()
 {
 	char *tmp;
@@ -113,7 +114,11 @@ void vic_func_p()
 	name = (char *) malloc(31 * sizeof(char));
 	vic_args("%30s", name);
 
-	vic_return("%s", vic_var_get(name));
+        char* val;
+        val = vic_var_get(name);
+        if (val != 0) {
+                vic_return("%s", val);
+        }
 }
 
 void vic_run(void)
