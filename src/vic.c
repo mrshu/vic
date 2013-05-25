@@ -127,17 +127,18 @@ void vic_func_alias()
         char** argv = vic__args(vic_buff, &argc);
 
         if (argc == 2) {
-                char* tmp = (char*) malloc(strlen(argv[1]) + 1);
-                memcpy(tmp, argv[1], strlen(argv[1]));
-                memcpy(tmp+strlen(argv[1]), ";\0", 2);
 
-                vic_alias_add(argv[0], tmp);
+                uint8_t len = strlen(argv[1]);
+                argv[1] = (char *) realloc(argv[1],
+                                (len + 2)  * sizeof(char));
+                strncpy(argv[1] + len, ";\0", 2);
+
+
+                vic_alias_add(argv[0], argv[1]);
 
                 vic_print(argv[0]);
                 vic_print("\t => \t");
-                vic_println(tmp);
-
-                free(tmp);
+                vic_println(argv[1]);
         }
 
 }
