@@ -121,6 +121,27 @@ void vic_func_p()
         }
 }
 
+void vic_func_alias()
+{
+        int argc;
+        char** argv = vic__args(vic_buff, &argc);
+
+        if (argc == 2) {
+                char* tmp = (char*) malloc(strlen(argv[1]) + 1);
+                memcpy(tmp, argv[1], strlen(argv[1]));
+                memcpy(tmp+strlen(argv[1]), ";\0", 2);
+
+                vic_alias_add(argv[0], tmp);
+
+                vic_print(argv[0]);
+                vic_print("\t => \t");
+                vic_println(tmp);
+
+                free(tmp);
+        }
+
+}
+
 void vic_run(void)
 {
 	if (vic_available()){
@@ -167,4 +188,7 @@ void vic_init()
 
 	vic_fn_add("set", &vic_func_set);
 	vic_fn_add("p", &vic_func_p);
+
+	vic_fn_add("alias", &vic_func_alias);
+	vic_fn_add("ls-alias", &vic_func_ls_alias);
 }

@@ -111,6 +111,18 @@ char *vic_alias(char *name)
 
 }
 
+void vic_func_ls_alias(void)
+{
+	int i;
+
+	for (i = 0; i < vic_alias_count; i++) {
+
+		vic_print(vic_aliases[i].name);
+		vic_print("\t => \t");
+		vic_println(vic_aliases[i].alias);
+	}
+}
+
 void vic_func_ls(void)
 {
 	int i;
