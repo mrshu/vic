@@ -91,6 +91,7 @@ int vic_fn_call(const char* name);
 
 char* vic_alias(char *name);
 void vic_alias_add(char *name, char *alias);
+void vic_alias_rm(char *name);
 void vic_func_ls_alias();
 
 /* vic-serial.c */

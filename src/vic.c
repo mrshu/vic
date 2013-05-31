@@ -143,6 +143,15 @@ void vic_func_alias()
 
 }
 
+void vic_func_rm_alias()
+{
+        int argc;
+        char** argv = vic__args(vic_buff, &argc);
+
+        if (argc >= 1)
+                vic_alias_rm(argv[0]);
+}
+
 void vic_run(void)
 {
 	if (vic_available()){
@@ -192,4 +201,5 @@ void vic_init()
 
 	vic_fn_add("alias", &vic_func_alias);
 	vic_fn_add("ls-alias", &vic_func_ls_alias);
+	vic_fn_add("rm-alias", &vic_func_rm_alias);
 }
