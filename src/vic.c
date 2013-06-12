@@ -165,6 +165,7 @@ void vic_run(void)
 void vic_init(unsigned long baud)
 {
 	vic_inout_init(baud);
+    vic_serial_id = 0;
 #else
 void vic_init()
 {
@@ -203,3 +204,12 @@ void vic_init()
 	vic_fn_add("ls-alias", &vic_func_ls_alias);
 	vic_fn_add("rm-alias", &vic_func_rm_alias);
 }
+
+#ifdef ARDUINO
+void vic_init_serial(unsigned long baud, uint8_t serial)
+{
+    vic_init(baud);
+    vic_serial_id = serial;
+}
+#endif
+
