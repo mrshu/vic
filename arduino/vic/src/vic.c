@@ -15,56 +15,20 @@ void vic_func_shell()
 
 
 #ifdef ARDUINO
-void vic_print(char *x)
-{
-    if (vic_serial_id == 0) {
-        return Serial.print(x);
-    }
-#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-    else if (vic_serial_id == 1) {
-        return Serial1.print(x);
-    } else if (vic_serial_id == 2) {
-        return Serial2.print(x);
-    } else if (vic_serial_id == 3) {
-        return Serial3.print(x);
-    }
-#endif
 
-}
-
-void vic_println(char *x)
-{
-    if (vic_serial_id == 0) {
-        return Serial.println(x);
-    }
-#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-    else if (vic_serial_id == 1) {
-        return Serial1.println(x);
-    } else if (vic_serial_id == 2) {
-        return Serial2.println(x);
-    } else if (vic_serial_id == 3) {
-        return Serial3.println(x);
-    }
-#endif
-}
-
-void vic_out(char x)
-{
-    vic_print(x);
-}
 
 char vic_in()
 {
     if (vic_serial_id == 0) {
-        return Serial.read(x);
+        return Serial.read();
     }
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
     else if (vic_serial_id == 1) {
-        return Serial1.read(x);
+        return Serial1.read();
     } else if (vic_serial_id == 2) {
-        return Serial2.read(x);
+        return Serial2.read();
     } else if (vic_serial_id == 3) {
-        return Serial3.read(x);
+        return Serial3.read();
     }
 #endif
 }

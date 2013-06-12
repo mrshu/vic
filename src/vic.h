@@ -20,12 +20,12 @@
 #if defined(ARDUINO)
 #define SHELL 1
 
-void vic_inout_init(int x);
+void vic_inout_init(long long x);
 int vic_available();
 char vic_in();
 
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
-    #define vic_sys_print(x) if (vic_serial_id == 0) { Serial.print(x); } #ielse if (vic_serial_id == 1) { Serial1.print(x); } else if (vic_serial_id == 2) { Serial2.print(x); } else if (vic_serial_id == 3) { Serial3.print(x); }
+    #define vic_sys_print(x) if (vic_serial_id == 0) { Serial.print(x); } else if (vic_serial_id == 1) { Serial1.print(x); } else if (vic_serial_id == 2) { Serial2.print(x); } else if (vic_serial_id == 3) { Serial3.print(x); }
     #define vic_sys_out(x) vic_sys_print(x)
     #define vic_sys_println(x) if (vic_serial_id == 0) { Serial.println(x); } else if (vic_serial_id == 1) { Serial1.println(x); } else if (vic_serial_id == 2) { Serial2.println(x); } else if (vic_serial_id == 3) { Serial3.println(x); }
 #else

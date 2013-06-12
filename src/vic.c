@@ -20,15 +20,15 @@ void vic_func_shell()
 char vic_in()
 {
     if (vic_serial_id == 0) {
-        return Serial.read(x);
+        return Serial.read();
     }
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
     else if (vic_serial_id == 1) {
-        return Serial1.read(x);
+        return Serial1.read();
     } else if (vic_serial_id == 2) {
-        return Serial2.read(x);
+        return Serial2.read();
     } else if (vic_serial_id == 3) {
-        return Serial3.read(x);
+        return Serial3.read();
     }
 #endif
 }
@@ -49,7 +49,7 @@ int vic_available()
 #endif
 }
 
-void vic_inout_init(x)
+void vic_inout_init(long long x)
 {
     if (vic_serial_id == 0) {
         return Serial.begin(x);
