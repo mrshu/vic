@@ -14,7 +14,6 @@ void vic_func_shell()
 }
 
 
-
 #ifdef ARDUINO
 
 

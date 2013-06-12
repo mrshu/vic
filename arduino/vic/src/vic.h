@@ -24,6 +24,11 @@ void vic_inout_init(long long x);
 int vic_available();
 char vic_in();
 
+#define VIC_SERIAL0 0
+#define VIC_SERIAL1 1
+#define VIC_SERIAL2 2
+#define VIC_SERIAL3 3
+
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
     #define vic_sys_print(x) if (vic_serial_id == 0) { Serial.print(x); } else if (vic_serial_id == 1) { Serial1.print(x); } else if (vic_serial_id == 2) { Serial2.print(x); } else if (vic_serial_id == 3) { Serial3.print(x); }
     #define vic_sys_out(x) vic_sys_print(x)
