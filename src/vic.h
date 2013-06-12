@@ -20,28 +20,13 @@
 #if defined(ARDUINO)
 #define SHELL 1
 
-/*
 void vic_print(char *x);
 void vic_out(char x);
 void vic_println(char x);
 
-void vic_inout_init(unsigned long baud);
+void vic_inout_init(int x);
 int vic_available();
 char vic_in();
-*/
-
-
-#define vic_sys_print(x) if (vic_serial_id == 0) { Serial.print(x); } else if (vic_serial_id == 1) { Serial1.print(x); } else if (vic_serial_id == 2) { Serial2.print(x); } else if (vic_serial_id == 3) { Serial3.print(x); }
-#define vic_sys_out(x) vic_sys_print(x)
-#define vic_sys_println(x) if (vic_serial_id == 0) { Serial.println(x); } else if (vic_serial_id == 1) { Serial1.println(x); } else if (vic_serial_id == 2) { Serial2.println(x); } else if (vic_serial_id == 3) { Serial3.println(x); }
-
-#define vic_inout_init(x) if (vic_serial_id == 0) { Serial.begin(x); } else if (vic_serial_id == 1) { Serial1.begin(x); } else if (vic_serial_id == 2) { Serial2.begin(x); } else if (vic_serial_id == 3) { Serial3.begin(x); }
-#define vic_available if (vic_serial_id == 0) { Serial.available(x); } else if (vic_serial_id == 1) { Serial1.available(x); } else if (vic_serial_id == 2) { Serial2.available(x); } else if (vic_serial_id == 3) { Serial3.available(x); }
-#define vic_in if (vic_serial_id == 0) { Serial.read(x); } else if (vic_serial_id == 1) { Serial1.read(x); } else if (vic_serial_id == 2) { Serial2.read(x); } else if (vic_serial_id == 3) { Serial3.read(x); }
-
-#define vic_print vic_sys_print
-#define vic_println vic_sys_println
-#define vic_out vic_sys_print
 
 #else
 
