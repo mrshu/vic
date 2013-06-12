@@ -20,7 +20,7 @@
 #if defined(ARDUINO)
 #define SHELL 1
 
-void vic_inout_init(int x);
+void vic_inout_init(long long x);
 int vic_available();
 char vic_in();
 
@@ -109,7 +109,7 @@ void vic_print_hex(int i);
 
 void vic_func_ls(void);
 #ifdef ARDUINO
-uint8_t vic_serial_id;
+extern uint8_t vic_serial_id;
 void vic_init(unsigned long baud);
 void vic_init_serial(unsigned long baud, uint8_t serial);
 #else

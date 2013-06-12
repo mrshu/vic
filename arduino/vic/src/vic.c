@@ -49,7 +49,7 @@ int vic_available()
 #endif
 }
 
-void vic_inout_init(x)
+void vic_inout_init(long long x)
 {
     if (vic_serial_id == 0) {
         return Serial.begin(x);
