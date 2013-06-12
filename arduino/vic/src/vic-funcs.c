@@ -93,6 +93,22 @@ void vic_alias_add(char *name, char *alias)
 
 }
 
+void vic_alias_rm(char* name)
+{
+	int i;
+	for (i = 0; i < vic_alias_count; i++) {
+		if(strcmp(name, vic_aliases[i].name) == 0){
+			free(vic_aliases[i].name);
+			free(vic_aliases[i].alias);
+
+			vic_aliases[i].name = NULL;
+			vic_aliases[i].alias = NULL;
+
+			break;
+		}
+	}
+}
+
 char *vic_alias(char *name)
 {
 	int i;
@@ -102,6 +118,9 @@ char *vic_alias(char *name)
 		vic_print(" -> ");
 		vic_println(vic_aliases[i].alias);
 #endif
+        if (vic_aliases[i].name == NULL)
+            continue;
+
 		if(strcmp(vic_aliases[i].name, name) == 0){
 			return vic_aliases[i].alias;
 		}
@@ -109,6 +128,20 @@ char *vic_alias(char *name)
 
 	return 0;
 
+}
+
+void vic_func_ls_alias(void)
+{
+	int i;
+
+	for (i = 0; i < vic_alias_count; i++) {
+        if(vic_aliases[i].name == NULL)
+            continue;
+
+		vic_print(vic_aliases[i].name);
+		vic_print("\t => \t");
+		vic_println(vic_aliases[i].alias);
+	}
 }
 
 void vic_func_ls(void)

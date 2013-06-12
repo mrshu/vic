@@ -72,6 +72,7 @@ void vic_func_aw()
 }
 
 #endif
+
 void vic_func_start()
 {
 	char *tmp;
@@ -113,7 +114,42 @@ void vic_func_p()
 	name = (char *) malloc(31 * sizeof(char));
 	vic_args("%30s", name);
 
-	vic_return("%s", vic_var_get(name));
+        char* val;
+        val = vic_var_get(name);
+        if (val != 0) {
+                vic_return("%s", val);
+        }
+}
+
+void vic_func_alias()
+{
+        int argc;
+        char** argv = vic__args(vic_buff, &argc);
+
+        if (argc == 2) {
+
+                uint8_t len = strlen(argv[1]);
+                argv[1] = (char *) realloc(argv[1],
+                                (len + 2)  * sizeof(char));
+                strncpy(argv[1] + len, ";\0", 2);
+
+
+                vic_alias_add(argv[0], argv[1]);
+
+                vic_print(argv[0]);
+                vic_print("\t => \t");
+                vic_println(argv[1]);
+        }
+
+}
+
+void vic_func_rm_alias()
+{
+        int argc;
+        char** argv = vic__args(vic_buff, &argc);
+
+        if (argc >= 1)
+                vic_alias_rm(argv[0]);
 }
 
 void vic_run(void)
@@ -129,6 +165,7 @@ void vic_run(void)
 void vic_init(unsigned long baud)
 {
 	vic_inout_init(baud);
+    vic_serial_id = 0;
 #else
 void vic_init()
 {
@@ -162,4 +199,17 @@ void vic_init()
 
 	vic_fn_add("set", &vic_func_set);
 	vic_fn_add("p", &vic_func_p);
+
+	vic_fn_add("alias", &vic_func_alias);
+	vic_fn_add("ls-alias", &vic_func_ls_alias);
+	vic_fn_add("rm-alias", &vic_func_rm_alias);
 }
+
+#ifdef ARDUINO
+void vic_init_serial(unsigned long baud, uint8_t serial)
+{
+    vic_init(baud);
+    vic_serial_id = serial;
+}
+#endif
+

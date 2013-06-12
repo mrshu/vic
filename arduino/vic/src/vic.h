@@ -8,9 +8,6 @@
 #include <stdint.h>
 
 
-#if !defined(DEBUG)
-  #define DEBUG 1
-#endif
 
 #if defined(ARDUINO) && ARDUINO >= 100
   #include "Arduino.h"
@@ -33,17 +30,15 @@ int vic_available();
 char vic_in();
 */
 
-#if !defined(VIC_ARDUINO_SERIAL)
-  #define VIC_ARDUINO_SERIAL Serial
-#endif
 
-#define vic_out(x) VIC_ARDUINO_SERIAL.print(x)
-#define vic_print(x) VIC_ARDUINO_SERIAL.print(x)
-#define vic_println(x) VIC_ARDUINO_SERIAL.println(x)
+#define vic_sys_print(x) if (vic_serial_id == 0) { Serial.print(x) } else if (vic_serial_id == 1) { Serial1.print(x) } else if (vic_serial_id == 2) { Serial2.print(x) } else if (vic_serial_id == 3) { Serial3.print(x) }
+#define vic_sys_out(x) vic_sys_print(x)
+#define vic_sys_println(x) if (vic_serial_id == 0) { Serial.println(x) } else if (vic_serial_id == 1) { Serial1.println(x) } else if (vic_serial_id == 2) { Serial2.println(x) } else if (vic_serial_id == 3) { Serial3.println(x) }
 
-#define vic_inout_init(x) VIC_ARDUINO_SERIAL.begin(x)
-#define vic_available VIC_ARDUINO_SERIAL.available
-#define vic_in VIC_ARDUINO_SERIAL.read
+#define vic_inout_init(x) if (vic_serial_id == 0) { Serial.begin(x) } else if (vic_serial_id == 1) { Serial1.begin(x) } else if (vic_serial_id == 2) { Serial2.begin(x) } else if (vic_serial_id == 3) { Serial3.begin(x) }
+#define vic_available if (vic_serial_id == 0) { Serial.available(x) } else if (vic_serial_id == 1) { Serial1.available(x) } else if (vic_serial_id == 2) { Serial2.available(x) } else if (vic_serial_id == 3) { Serial3.available(x) }
+#define vic_in if (vic_serial_id == 0) { Serial.read(x) } else if (vic_serial_id == 1) { Serial1.read(x) } else if (vic_serial_id == 2) { Serial2.read(x) } else if (vic_serial_id == 3) { Serial3.read(x) }
+
 
 #else
 
@@ -94,6 +89,8 @@ int vic_fn_call(const char* name);
 
 char* vic_alias(char *name);
 void vic_alias_add(char *name, char *alias);
+void vic_alias_rm(char *name);
+void vic_func_ls_alias();
 
 /* vic-serial.c */
 extern char *vic_buffer;
@@ -114,7 +111,9 @@ void vic_print_hex(int i);
 
 void vic_func_ls(void);
 #ifdef ARDUINO
+uint8_t vic_serial_id;
 void vic_init(unsigned long baud);
+void vic_init_serial(unsigned long baud, uint8_t serial);
 #else
 void vic_init();
 #endif
