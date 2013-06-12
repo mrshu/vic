@@ -15,6 +15,92 @@ void vic_func_shell()
 
 
 #ifdef ARDUINO
+void vic_print(char *x)
+{
+    if (vic_serial_id == 0) {
+        return Serial.print(x);
+    }
+#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+    else if (vic_serial_id == 1) {
+        return Serial1.print(x);
+    } else if (vic_serial_id == 2) {
+        return Serial2.print(x);
+    } else if (vic_serial_id == 3) {
+        return Serial3.print(x);
+    }
+#endif
+
+}
+
+void vic_println(char *x)
+{
+    if (vic_serial_id == 0) {
+        return Serial.println(x);
+    }
+#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+    else if (vic_serial_id == 1) {
+        return Serial1.println(x);
+    } else if (vic_serial_id == 2) {
+        return Serial2.println(x);
+    } else if (vic_serial_id == 3) {
+        return Serial3.println(x);
+    }
+#endif
+}
+
+void vic_out(char x)
+{
+    vic_print(x);
+}
+
+char vic_in()
+{
+    if (vic_serial_id == 0) {
+        return Serial.read(x);
+    }
+#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+    else if (vic_serial_id == 1) {
+        return Serial1.read(x);
+    } else if (vic_serial_id == 2) {
+        return Serial2.read(x);
+    } else if (vic_serial_id == 3) {
+        return Serial3.read(x);
+    }
+#endif
+}
+
+int vic_available()
+{
+    if (vic_serial_id == 0) {
+        return Serial.available();
+    }
+#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+    else if (vic_serial_id == 1) {
+        return Serial1.available();
+    } else if (vic_serial_id == 2) {
+        return Serial2.available();
+    } else if (vic_serial_id == 3) {
+        return Serial3.available();
+    }
+#endif
+}
+
+void vic_inout_init(x)
+{
+    if (vic_serial_id == 0) {
+        return Serial.begin(x);
+    }
+#if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
+    else if (vic_serial_id == 1) {
+        return Serial1.begin(x);
+    } else if (vic_serial_id == 2) {
+        return Serial2.begin(x);
+    } else if (vic_serial_id == 3) {
+        return Serial3.begin(x);
+    }
+#endif
+}
+
 
 // from http://forum.pololu.com/viewtopic.php?f=10&t=989#p4218
 void vic_func_free()
