@@ -1,6 +1,7 @@
 #include "vic.h"
 
 uint8_t vic_config = 0;
+uint8_t vic_serial_id = 0;
 
 void vic_func_rpc()
 {
