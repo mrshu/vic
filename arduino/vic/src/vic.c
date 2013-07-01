@@ -95,6 +95,7 @@ void vic_func_dr()
 {
 	uint8_t pin;
 	vic_args("%d", &pin);
+        pinMode(pin, INPUT);
 	vic_return("%d", digitalRead(pin));
 
 }
@@ -103,13 +104,15 @@ void vic_func_dw()
 {
 	int pin, val;
 	vic_args("%d %d", &pin, &val);
-    digitalWrite(pin, val);
+        pinMode(pin, OUTPUT);
+        digitalWrite(pin, val);
 }
 
 void vic_func_ar()
 {
 	uint8_t pin;
 	vic_args("%d", &pin);
+        pinMode(pin, INPUT);
 	vic_return("%d", analogRead(pin));
 }
 
@@ -118,6 +121,7 @@ void vic_func_aw()
 	uint8_t pin;
 	int val;
 	vic_args("%d %d", &pin, &val);
+        pinMode(pin, OUTPUT);
         analogWrite(pin, val);
 }
 
