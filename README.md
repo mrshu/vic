@@ -27,3 +27,10 @@ In order to use `vic` in your Arduino projects run:
 By default it installs the files into the `$HOME/sketchbook/libraries`
 directory.
 
+
+ToDo
+----
+
+- shell, a usable one
+- finish SPECs
+
