@@ -28,7 +28,7 @@ install: libvic.a
 	install libvic.a $(DEST)/libvic.a
 	install src/vic.h $(INCLDEST)/vic.h
 
-clear:
+clean:
 	rm src/*.o
 	rm example
 	rm libvic.a
