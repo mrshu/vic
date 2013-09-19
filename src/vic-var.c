@@ -110,34 +110,76 @@ char* vic_var_get(char* name)
 
 char* vic_var_replace(char* str)
 {
-    char* buffer = (char *) malloc(sizeof(char));
+    char* buffer = NULL;
+    buffer = (char *) malloc(sizeof(char));
     uint8_t buffer_len = 0;
 
-    char* var = (char *) malloc(sizeof(char));
+    char* var = NULL;
+    var = (char *) malloc(sizeof(char));
     uint8_t var_len = 0;
 
     uint8_t in_var = 0;
+    uint8_t finished = 0;
+
     do {
+        if (*str == '\0') {
+            finished = 1;
+        }
 
         /* all variables start with $ */
         if (*str == '$' && in_var == 0) {
             in_var = 1;
             /* variable names can contain alphanumeric chars and underscore */
-        } else if (isalnum(*str) || *str == '_') {
-            var = (char *) realloc(buffer,
+        } else if ((isalnum(*str) || *str == '_') && in_var) {
+            var = (char *) realloc(var,
                     (var_len + 1) * sizeof(char));
             var[var_len++] = *str;
 
         } else {
-            buffer = (char *) realloc(buffer,
-                    (buffer_len + 1) * sizeof(char));
-            buffer[buffer_len++] = *str;
+            /* replacing $var with the value of the variable */
+            if (in_var == 1) {
+                var = (char *) realloc(var,
+                        (var_len + 1) * sizeof(char));
+                var[var_len++] = '\0';
+                char* val = vic_var_get(var);
+
+                if (val == 0) {
+                    val = (char *) malloc(sizeof(char));
+                    *val = '\0';
+                }
+
+                buffer = (char *) realloc(buffer,
+                        (buffer_len + strlen(val) + 1) * sizeof(char));
+                strncpy(buffer + buffer_len, val, strlen(val));
+
+                buffer_len += strlen(val);
+
+                /* freeing unnecessary memory */
+                free(var);
+                var = NULL;
+                var_len = 0;
+
+                in_var = 0;
+
+                /* the current character was not evaluated in this
+                 * cycle so let's do it again */
+                str = str - 1;
+
+            } else {
+                buffer = (char *) realloc(buffer,
+                        (buffer_len + 1) * sizeof(char));
+                buffer[buffer_len++] = *str;
+
+            }
+
         }
+    } while(*(++str) != '\0' || finished != 1);
 
+    buffer = (char *) realloc(buffer,
+            (buffer_len + 1) * sizeof(char));
+    buffer[buffer_len++] = '\0';
 
-
-    } while(*(str++) != '\0');
-
+    return buffer;
 }
 
 
