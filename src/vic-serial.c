@@ -88,19 +88,24 @@ void vic_process(char input)
 
 void vic_exec(char *input)
 {
-	char *buffer;
+	char *buffer = NULL;
 	char *func = NULL;
 	buffer = (char *) malloc(sizeof(char));
 	int len = 0;
 	do {
-		if(*input == ';') {
+        if(*input == ';') {
 			if (len == 0)
 				continue;
 
-                        // finish the string with '\0'
+            // finish the string with '\0'
 			buffer = (char *) realloc(buffer,
 				(len + 1) * sizeof(char));
 			buffer[len++] = '\0';
+
+            char *replaced_buffer = NULL;
+            replaced_buffer = vic_var_replace(buffer);
+            free(buffer);
+            buffer = replaced_buffer;
 
 
 			/* in case of calling a procedure */
