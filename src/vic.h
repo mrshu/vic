@@ -54,10 +54,12 @@ char vic_in();
 
 #endif
 
-
+extern char* vic_output;
 void vic_out(char x);
 void vic_print(char *x);
 void vic_println(char *x);
+char* vic_io_return();
+void vic_io_clean();
 
 #define VIC_MAX_CHARS 80
 #define vic_args(fmt, ...) sscanf(vic_buff, fmt, __VA_ARGS__); \

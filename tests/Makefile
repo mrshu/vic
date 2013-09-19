@@ -13,6 +13,12 @@ test-var: test-vic-var.c
 	$(C) test-vic-var.c -o test-vic-var $(C_LIBS)
 	./test-vic-var
 
+test-io: test-vic-io.c
+	$(C) test-vic-io.c -o test-vic-io $(C_LIBS)
+	./test-vic-io
+
+
+
 all-tests: test-serial test-funcs test-var
 	@echo "All passed!"
 
