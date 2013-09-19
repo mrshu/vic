@@ -40,11 +40,38 @@ inline void vic_buffer_free(void)
         vic_buffer_len = 0;
 }
 
+
+char* vic_replace_evals(char* input)
+{
+
+        char* output;
+        output = NULL;
+
+        output = (char*) malloc(sizeof(char));
+        uint8_t output_len = 0;
+
+        uint8_t in_eval = 0;
+
+        do {
+                if (*input == '(') {
+                        in_eval = 1;
+                } else if (*input == ')') {
+                        in_eval = 0;
+                } else {
+                        if (in_eval) {
+
+                        } else {
+                                output = (char *) realloc(output,
+                                        (output_len + 1) * sizeof(char));
+                                output[output_len++] = *input;
+                        }
+                }
+        } while(*(++input) != '\0');
+}
+
 /*
   Processes input stream.
 */
-
-
 void vic_process(char input)
 {
 	if (vic_buffer == NULL)
