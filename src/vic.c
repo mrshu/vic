@@ -219,7 +219,7 @@ void vic_run(void)
 void vic_init(unsigned long baud)
 {
 	vic_inout_init(baud);
-    vic_serial_id = 0;
+        vic_serial_id = 0;
 #else
 void vic_init()
 {
@@ -230,8 +230,8 @@ void vic_init()
         vic_fn_add("echo", &vic_func_echo);
 
 #ifdef SHELL
-	vic_println("beign");
-	vic_print(VIC_PS1);
+	vic_sys_println("beign");
+	vic_sys_print(VIC_PS1);
 #endif
 
 

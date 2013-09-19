@@ -60,7 +60,7 @@ void vic_process(char input)
 		vic_println(" ");
 #endif
 		char* output = vic_exec(vic_buffer);
-                vic_sys_println(output);
+                vic_sys_print(output);
 
                 vic_io_clean();
 		vic_buffer_free();
