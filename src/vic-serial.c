@@ -59,8 +59,12 @@ void vic_process(char input)
 #ifdef SHELL
 		vic_println(" ");
 #endif
-		vic_exec(vic_buffer);
+		char* output = vic_exec(vic_buffer);
+                vic_sys_println(output);
+
+                vic_io_clean();
 		vic_buffer_free();
+
 #ifdef SHELL
 		vic_print(VIC_PS1);
 #endif
@@ -86,106 +90,110 @@ void vic_process(char input)
 
 }
 
-void vic_exec(char *input)
+char* vic_exec(char *input)
 {
-	char *buffer = NULL;
-	char *func = NULL;
-	buffer = (char *) malloc(sizeof(char));
-	int len = 0;
-	do {
-        if(*input == ';') {
-			if (len == 0)
-				continue;
+        char *buffer = NULL;
+        char *func = NULL;
+        buffer = (char *) malloc(sizeof(char));
+        int len = 0;
+        do {
+                if(*input == ';') {
+                        if (len == 0)
+                                continue;
 
-            // finish the string with '\0'
-			buffer = (char *) realloc(buffer,
-				(len + 1) * sizeof(char));
-			buffer[len++] = '\0';
+                        // finish the string with '\0'
+                        buffer = (char *) realloc(buffer,
+                                        (len + 1) * sizeof(char));
+                        buffer[len++] = '\0';
 
-            char *replaced_buffer = NULL;
-            replaced_buffer = vic_var_replace(buffer);
-            free(buffer);
-            buffer = replaced_buffer;
-
-
-			/* in case of calling a procedure */
-			if(func == NULL) {
-				char *tmp;
-
-				// gives pointer to aliased string
-				if ((tmp = vic_alias(buffer)) != 0){
-					vic_exec(tmp);
-					// free(buffer);
-
-				} else {
-					vic_func = buffer;
-					vic_fn_call(vic_func);
-				}
+                        char *replaced_buffer = NULL;
+                        replaced_buffer = vic_var_replace(buffer);
+                        free(buffer);
+                        buffer = replaced_buffer;
 
 
-			} else {
-				vic_func = func;
-				vic_buff = buffer;
-		#ifdef DEBUG
-				vic_print("buf: '");
-				vic_print(vic_buff);
-				vic_println("'");
+                        /* in case of calling a procedure */
+                        if(func == NULL) {
+                                char *tmp;
 
-				vic_print("func: ");
-				vic_println(vic_func);
-		#endif
-				vic_fn_call(vic_func);
+                                // gives pointer to aliased string
+                                if ((tmp = vic_alias(buffer)) != 0){
+                                        vic_exec(tmp);
+                                        // free(buffer);
 
-			}
-
-			if (vic_returned == 0 && (vic_config & VIC_RPC)){
-				vic_out('%');
-				vic_print(vic_func);
-				vic_out('$');
-
-			}
-
-			if (vic_returned == 1)
-				vic_returned = 0;
+                                } else {
+                                        vic_func = buffer;
+                                        vic_fn_call(vic_func);
+                                }
 
 
-			len = 0;
-			free(func);
-			func = vic_func = NULL;
+                        } else {
+                                vic_func = func;
+                                vic_buff = buffer;
+#ifdef DEBUG
+                                vic_print("buf: '");
+                                vic_print(vic_buff);
+                                vic_println("'");
 
-			free(buffer);
-			buffer = NULL;
+                                vic_print("func: ");
+                                vic_println(vic_func);
+#endif
+                                vic_fn_call(vic_func);
 
-		/* ignoring whitespace */
-		} else if (isspace(*input) && len == 0) {
-			continue;
+                        }
 
-		/* separate the function */
-		} else if (*input == ' ' && func == NULL) {
+                        if (vic_returned == 0 && (vic_config & VIC_RPC)){
+                                vic_out('%');
+                                vic_print(vic_func);
+                                vic_out('$');
 
-			buffer = (char *) realloc(buffer,
-						(len + 1) * sizeof(char));
-			buffer[len++] = '\0';
+                        }
 
-			func = buffer;
-			buffer = (char *) malloc(sizeof(char));
-			len = 0;
+                        if (vic_returned == 1)
+                                vic_returned = 0;
 
-		} else {
 
-			buffer = (char *) realloc(buffer,
-						(len + 1) * sizeof(char));
-			buffer[len++] = *input;
+                        len = 0;
+                        free(func);
+                        func = vic_func = NULL;
 
-		}
+                        free(buffer);
+                        buffer = NULL;
 
-	} while(*(++input) != '\0');
+                        return vic_io_return();
+
+                        /* ignoring whitespace */
+                } else if (isspace(*input) && len == 0) {
+                        continue;
+
+                        /* separate the function */
+                } else if (*input == ' ' && func == NULL) {
+
+                        buffer = (char *) realloc(buffer,
+                                        (len + 1) * sizeof(char));
+                        buffer[len++] = '\0';
+
+                        func = buffer;
+                        buffer = (char *) malloc(sizeof(char));
+                        len = 0;
+
+                } else {
+
+                        buffer = (char *) realloc(buffer,
+                                        (len + 1) * sizeof(char));
+                        buffer[len++] = *input;
+
+                }
+
+        } while(*(++input) != '\0');
+
+        return vic_io_return();
 }
 
 // from bitlash/src/bitlast-serial.c
 void vic_print_int_base(int i, uint8_t n)
 {
-	char buf[8 * sizeof(uint8_t)];           // stack for the digits
+        char buf[8 * sizeof(uint8_t)];           // stack for the digits
         char *ptr = buf;
         if (i == 0) {
                 vic_out('0');
@@ -202,18 +210,18 @@ void vic_print_int_base(int i, uint8_t n)
 
 void vic_print_int(int n)
 {
-	if (n < 0) {
-		vic_out('-');
-		n = -n;
-	}
+        if (n < 0) {
+                vic_out('-');
+                n = -n;
+        }
 
-	vic_print_int_base(n, 10);
+        vic_print_int_base(n, 10);
 }
 
 void vic_print_hex(int n)
 {
-	vic_print("0x");
-	vic_print_int_base(n, 16);
+        vic_print("0x");
+        vic_print_int_base(n, 16);
 }
 
 #endif

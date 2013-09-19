@@ -155,7 +155,7 @@ void vic_func_ls(void)
 		vic_print(vic_fntable[i].name);
 		vic_print("\t -> \t");
 		vic_print_hex((int) *(vic_fntable[i].fn));
-		vic_println("");
+        vic_out('\n');
 	}
 }
 

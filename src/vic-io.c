@@ -16,9 +16,6 @@ void vic_out(char x)
                     (vic_output_len + 1) * sizeof(char)
             );
     vic_output[vic_output_len++] = x;
-
-    vic_sys_out(x);
-
 }
 
 void vic_print(char *x)
