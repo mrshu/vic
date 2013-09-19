@@ -39,15 +39,11 @@ char vic_in();
     #define vic_sys_println(x) if (vic_serial_id == 0) { Serial.println(x); }
 #endif
 
-#define vic_print vic_sys_print
-#define vic_println vic_sys_println
-#define vic_out vic_sys_print
-
 #else
 
-#define vic_print(x) printf("%s", x)
-#define vic_out(x) printf("%c", x)
-#define vic_println(x) printf("%s\n", x)
+#define vic_sys_print(x) printf("%s", x)
+#define vic_sys_out(x) printf("%c", x)
+#define vic_sys_println(x) printf("%s\n", x)
 
 #define vic_inout_init(baud);
 #define vic_available() 1
@@ -57,6 +53,11 @@ char vic_in();
 #define millis() time(0)
 
 #endif
+
+
+void vic_out(char x);
+void vic_print(char *x);
+void vic_println(char *x);
 
 #define VIC_MAX_CHARS 80
 #define vic_args(fmt, ...) sscanf(vic_buff, fmt, __VA_ARGS__); \
