@@ -17,6 +17,9 @@ libvic.a: $(OBJ)
 example: example.c libvic.a
 	$(CC) example.c -o example -L. -lvic -I./src/
 
+shell: shell.c libvic.a
+	$(CC) shell.c -o vic -L. -lvic -I./src/
+
 arduino: $(OBJ)
 	rm src/*.o
 	cp src/* arduino/vic/src/
