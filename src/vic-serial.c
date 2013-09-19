@@ -103,7 +103,7 @@ void vic_exec(char *input)
 			buffer[len++] = '\0';
 
             char *replaced_buffer = NULL;
-            replaced_buffer = (char*) vic_var_replace(buffer);
+            replaced_buffer = vic_var_replace(buffer);
             free(buffer);
             buffer = replaced_buffer;
 
