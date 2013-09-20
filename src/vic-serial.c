@@ -187,8 +187,6 @@ char* vic_exec(char *input)
                         free(buffer);
                         buffer = NULL;
 
-                        return vic_io_return();
-
                         /* ignoring whitespace */
                 } else if (isspace(*input) && len == 0) {
                         continue;

@@ -252,7 +252,6 @@ void vic_init()
 	vic_fn_add("ps", &vic_func_ps);
 
 	vic_fn_add("set", &vic_func_set);
-	vic_fn_add("p", &vic_func_p);
 
 	vic_fn_add("alias", &vic_func_alias);
 	vic_fn_add("ls-alias", &vic_func_ls_alias);

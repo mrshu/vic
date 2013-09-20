@@ -4,8 +4,8 @@
 #include <stdio.h>
 
 #define SHELL 0
-#define DEBUG 0
 #include <vic.h>
+#define DEBUG 1
 
 void test()
 {
@@ -62,7 +62,9 @@ int main(void)
 
         vic_alias_add("time", "rpc;m;shell;");
 
-        vic_exec("l;");
+        char* out = vic_exec("l;");
+        dprint_str(out);
+        vic_io_clean();
 
         vic_var_set_bind("s", "10", &simple_changable_value);
 
@@ -74,9 +76,13 @@ int main(void)
                 printf("%s\n", argv[j]);
         }
 
+        out = vic_exec("ls;");
+        dprint_str(out);
+        vic_io_clean();
+
         while(1) {
                 char input[256];
-                vic_print(VIC_PS1);
+                vic_sys_print(VIC_PS1);
                 gets(input);
                 int i;
 
