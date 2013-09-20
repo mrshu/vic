@@ -21,10 +21,6 @@ test-exec: test-vic-exec.c
 	$(C) test-vic-exec.c -o test-vic-exec $(C_LIBS)
 	./test-vic-exec
 
-test-evals: test-vic-evals.c
-	$(C) test-vic-evals.c -o test-vic-evals $(C_LIBS)
-	./test-vic-evals
-
 all-tests: test-serial test-funcs test-var test-exec
 	@echo "All passed!"
 

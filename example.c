@@ -69,7 +69,7 @@ int main(void)
         vic_var_set_bind("s", "10", &simple_changable_value);
 
         int argc = 0;
-        char **argv = vic__args("2 'A B' \"C D E\"", &argc);
+        char **argv = vic__args("2 'A B' \"C D E\" '\"asdasd\"' ", &argc);
 
         int j = 0;
         for (j = 0; j < argc; j++) {

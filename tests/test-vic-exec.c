@@ -33,6 +33,21 @@ static char * test_complicated_exec()
     return 0;
 }
 
+static char * test_simple_eval_replace()
+{
+
+    char in[] = "echo `echo fero`;";
+    char* output = vic_replace_evals(in);
+    dprint_str(output);
+
+    mu_assert(strlen(output) == 11);
+    mu_assert(strcmp(output, "echo fero\n;") == 0);
+
+    free(output);
+    vic_io_clean();
+    return 0;
+}
+
 
 static char * all_tests()
 {
@@ -40,6 +55,8 @@ static char * all_tests()
 
 	mu_run_test(test_simple_exec);
 	mu_run_test(test_complicated_exec);
+
+	mu_run_test(test_simple_eval_replace);
 	return 0;
 }
 
