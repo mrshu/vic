@@ -72,8 +72,6 @@ char* vic_replace_evals(char* input)
                         output = (char *) realloc(output,
                                         (output_len + strlen(out)) * sizeof(char));
 
-                        dprint_str(out);
-
                         memcpy(output + output_len, out, strlen(out));
                         output_len += strlen(out);
 
@@ -83,7 +81,8 @@ char* vic_replace_evals(char* input)
 
                 } else {
                         if (in_eval) {
-                                tmp = (char *) realloc(tmp, (tmp_len+1) * sizeof(char));
+                                tmp = (char *) realloc(tmp,
+                                                (tmp_len+1) * sizeof(char));
                                 tmp[tmp_len++] = *input;
 
                         } else {

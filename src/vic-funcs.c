@@ -223,6 +223,5 @@ char** vic__args(const char* in, int *argc)
 	return argv;
 
 }
-
 #endif
 
