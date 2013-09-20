@@ -52,13 +52,37 @@ char* vic_replace_evals(char* input)
 
         uint8_t in_eval = 0;
 
+        char* tmp;
+        tmp = NULL;
+        tmp = (char*) malloc(sizeof(char));
+        uint8_t tmp_len = 0;
+
         do {
-                if (*input == '(') {
+                if (*input == '`') {
                         in_eval = 1;
-                } else if (*input == ')') {
+                } else if (*input == '`') {
                         in_eval = 0;
+
+                        tmp = (char *) realloc(tmp, (tmp_len+2) * sizeof(char));
+                        tmp[tmp_len++] = ';';
+                        tmp[tmp_len++] = '\0'';
+
+                        char *out = vic_exec(tmp);
+
+                        output = (char *) realloc(output,
+                                        (output_len + strlen(out)) * sizeof(char));
+                        output_len += strlen(out);
+
+                        memcmp(output, out, strlen(out));
+
+                        free(out);
+                        free(tmp);
+                        tmp_len = 0;
+
                 } else {
                         if (in_eval) {
+                                tmp = (char *) realloc(tmp, (tmp_len+1) * sizeof(char));
+                                tmp[tmp_len++] = *input;
 
                         } else {
                                 output = (char *) realloc(output,
@@ -66,6 +90,7 @@ char* vic_replace_evals(char* input)
                                 output[output_len++] = *input;
                         }
                 }
+
         } while(*(++input) != '\0');
 }
 
