@@ -67,7 +67,12 @@ static char * test_args()
     mu_assert(strcmp(argv[3], "D \"E\"") == 0);
     mu_assert(strcmp(argv[4], "F 'G'") == 0);
 
-    free(argv);
+  //for (j = 0; j < argc; j++) {
+  //    free(argv[j]);
+  //}
+  //free(argv);
+
+    vic__args_clean(argv, argc);
     vic_io_clean();
     return 0;
 }

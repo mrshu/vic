@@ -192,7 +192,7 @@ char** vic__args(const char* in, int *argc)
 			tmp[len++] = '\0';
 
 
-			argv = (char **) realloc(argv, (*argc + 1) * sizeof( char *));
+			argv = (char **) realloc(argv, (*argc + 1) * sizeof(char *));
 
 			argv[*argc] = (char *) malloc((len+1) * sizeof(char));
 			argv[*argc] = strdup(tmp);
@@ -223,5 +223,6 @@ char** vic__args(const char* in, int *argc)
 	return argv;
 
 }
+
 #endif
 
