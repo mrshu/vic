@@ -1,4 +1,4 @@
-C=gcc -g -I../src 
+C=gcc -g -I../src -lm
 C_LIBS=-L../ -lvic  
 
 test-funcs: test-vic-funcs.c

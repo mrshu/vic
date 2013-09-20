@@ -5,6 +5,7 @@
 
 #include <stdlib.h>
 #include <stdint.h>
+#include <math.h>
 
 #define VIC_FUNC_BCKG 0x01
 
@@ -172,7 +173,7 @@ void vic_func_help(void)
 }
 
 
-char** vic__args(const char* in, int *argc)
+char** vic__args_ebits(const char* in, int *argc, uint8_t *ebits)
 {
 	char *tmp;
 	tmp = (char *) malloc(sizeof(char));
@@ -180,14 +181,18 @@ char** vic__args(const char* in, int *argc)
 
 	char **argv;
 
-	uint8_t in_str = 0, in_sstr = 0;
+	uint8_t in_str = 0, in_sstr = 0, in_estr = 0;
 
 	argv = NULL;
 	argv = (char **) malloc(sizeof( *argv ));
 	*argc = 0;
 
+    // when ebits == NULL noone cares about setting ebits
+    if (ebits != NULL)
+        *ebits = 0;
+
 	do {
-		if ((*in == ' ' || *in == '\0') && (!in_str && !in_sstr)) {
+		if ((*in == ' ' || *in == '\0') && (!in_str && !in_sstr && !in_estr)) {
 			tmp = (char *) realloc(tmp, (len + 1) * sizeof(char));
 			tmp[len++] = '\0';
 
@@ -203,10 +208,19 @@ char** vic__args(const char* in, int *argc)
 
 			*argc += 1;
 
-		} else if (*in == '"' && in_sstr == 0 && *(in - 1) != '\\' ) {
+		} else if (*in == '"' && in_sstr == 0 && in_estr == 0 && *(in - 1) != '\\' ) {
 			in_str = !in_str;
-		} else if (*in == '\'' && in_str == 0 && *(in - 1) != '\\' )  {
+		} else if (*in == '\'' && in_str == 0 && in_estr == 0 && *(in - 1) != '\\' )  {
 			in_sstr = !in_sstr;
+        } else if (*in == '(' && in_str == 0 && in_sstr == 0){
+            in_estr = 1;
+        } else if (*in == ')' && in_str == 0 && in_sstr == 0){
+            in_estr = 0;
+
+            if (ebits != NULL) {
+                *ebits |= (uint8_t) pow(2, *argc);
+            }
+
 		} else {
 			/* escaping \" and \' */
 			if ((*in == '"' || *in == '\'') && *(in - 1) == '\\') {

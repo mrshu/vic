@@ -55,11 +55,6 @@ static char * test_args()
     int argc = 0;
     char **argv = vic__args(in, &argc);
 
-    int j = 0;
-    for (j = 0; j < argc; j++) {
-            printf("%s\n", argv[j]);
-    }
-
     mu_assert(argc == 5);
     mu_assert(strcmp(argv[0], "echo") == 0);
     mu_assert(strcmp(argv[1], "A B") == 0);
@@ -77,6 +72,23 @@ static char * test_args()
     return 0;
 }
 
+static char * test_args_ebits()
+{
+
+    char in[] = "set y (+ $x 1)";
+    int argc = 0;
+    uint8_t ebits;
+    char **argv = vic__args_ebits(in, &argc, &ebits);
+
+    dprint_int(ebits);
+    mu_assert(argc == 3);
+
+    vic__args_clean(argv, argc);
+    vic_io_clean();
+    return 0;
+}
+
+
 static char * all_tests()
 {
     vic_init();
@@ -87,6 +99,7 @@ static char * all_tests()
 	mu_run_test(test_simple_eval_replace);
 
 	mu_run_test(test_args);
+	mu_run_test(test_args_ebits);
 	return 0;
 }
 
