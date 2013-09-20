@@ -11,11 +11,23 @@ static char * test_simple_exec()
 {
 
     char in[] = "echo ahoj;";
-    dprint_str(in);
     char* output = vic_exec(in);
 
     mu_assert(strlen(output) == 5);
     mu_assert(strcmp(output, "ahoj\n") == 0);
+
+    vic_io_clean();
+    return 0;
+}
+
+static char * test_complicated_exec()
+{
+
+    char in[] = "echo ahoj;set f 20;echo fero;echo $f;";
+    char* output = vic_exec(in);
+
+    mu_assert(strlen(output) == 13);
+    mu_assert(strcmp(output, "ahoj\nfero\n20\n") == 0);
 
     vic_io_clean();
     return 0;
@@ -27,6 +39,7 @@ static char * all_tests()
     vic_init();
 
 	mu_run_test(test_simple_exec);
+	mu_run_test(test_complicated_exec);
 	return 0;
 }
 
