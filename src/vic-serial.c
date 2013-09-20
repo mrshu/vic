@@ -58,24 +58,26 @@ char* vic_replace_evals(char* input)
         uint8_t tmp_len = 0;
 
         do {
-                if (*input == '`') {
+                if (*input == '`' && in_eval == 0) {
                         in_eval = 1;
-                } else if (*input == '`') {
+                } else if (*input == '`' && in_eval == 1) {
                         in_eval = 0;
 
                         tmp = (char *) realloc(tmp, (tmp_len+2) * sizeof(char));
                         tmp[tmp_len++] = ';';
-                        tmp[tmp_len++] = '\0'';
+                        tmp[tmp_len++] = '\0';
 
                         char *out = vic_exec(tmp);
 
                         output = (char *) realloc(output,
                                         (output_len + strlen(out)) * sizeof(char));
+
+                        dprint_str(out);
+
+                        memcpy(output + output_len, out, strlen(out));
                         output_len += strlen(out);
 
-                        memcmp(output, out, strlen(out));
-
-                        free(out);
+                        vic_io_clean();
                         free(tmp);
                         tmp_len = 0;
 
@@ -92,6 +94,12 @@ char* vic_replace_evals(char* input)
                 }
 
         } while(*(++input) != '\0');
+
+        output = (char *) realloc(output, (output_len + 1) * sizeof(char));
+        output[output_len++] = '\0';
+
+        return output;
+
 }
 
 /*
@@ -183,12 +191,12 @@ char* vic_exec(char *input)
                                 vic_func = func;
                                 vic_buff = buffer;
 #ifdef DEBUG
-                                vic_print("buf: '");
-                                vic_print(vic_buff);
-                                vic_println("'");
+                                vic_sys_print("buf: '");
+                                vic_sys_print(vic_buff);
+                                vic_sys_println("'");
 
-                                vic_print("func: ");
-                                vic_println(vic_func);
+                                vic_sys_print("func: ");
+                                vic_sys_println(vic_func);
 #endif
                                 vic_fn_call(vic_func);
 

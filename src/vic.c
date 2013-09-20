@@ -215,6 +215,7 @@ void vic_run(void)
 	vic_tasks_run();
 
 }
+
 #ifdef ARDUINO
 void vic_init(unsigned long baud)
 {

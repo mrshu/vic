@@ -1,5 +1,5 @@
 
-CC=gcc -g -Wall 
+CC=gcc -g -Wall -D DEBUG
 
 OBJ= src/vic-serial.o src/vic-funcs.o src/vic.o src/vic-tasks.o src/vic-var.o src/vic-io.o
 OBJC=vic-serial.c vic-funcs.c vic-tasks.c vic-var.c vic-io.c vic.c

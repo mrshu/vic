@@ -107,6 +107,7 @@ extern uint8_t vic_returned;
 void vic_buffer_append(char i);
 
 void vic_process(char input);
+char* vic_replace_evals(char* input);
 char* vic_exec(char *input);
 
 
