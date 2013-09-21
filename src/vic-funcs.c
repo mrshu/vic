@@ -38,126 +38,126 @@ void vic_fn_add_mask(char* name, void(*fn)(), uint8_t mask)
                         );
         }
 
-  	vic_fntable[vic_fncount - 1].name = name;
-  	vic_fntable[vic_fncount - 1].fn = *fn;
+  	    vic_fntable[vic_fncount - 1].name = name;
+  	    vic_fntable[vic_fncount - 1].fn = *fn;
         vic_fntable[vic_fncount - 1].mask = mask;
 
 }
 
 void vic_fn_rm(char* name)
 {
-	int i;
-	for (i = 0; i < vic_fncount ; i++) {
-		if(strcmp(name, vic_fntable[i].name) == 0){
-			free(vic_fntable[i].name);
+    int i;
+    for (i = 0; i < vic_fncount ; i++) {
+        if(strcmp(name, vic_fntable[i].name) == 0){
+            free(vic_fntable[i].name);
 
-			vic_fntable[i].name = NULL;
-			vic_fntable[i].fn = NULL;
+            vic_fntable[i].name = NULL;
+            vic_fntable[i].fn = NULL;
 
-			break;
-		}
-	}
+            break;
+        }
+    }
 }
 
 int vic_fn_call(const char* name)
 {
-        int i;
+    int i;
 
-        for (i = 0; i < vic_fncount ; i++) {
-		if(vic_fntable[i].fn == NULL)
-			continue;
+    for (i = 0; i < vic_fncount ; i++) {
+        if(vic_fntable[i].fn == NULL)
+            continue;
 
-		if (!strcmp(vic_fntable[i].name , name)) {
-                      (*(vic_fntable[i].fn))();
-                      return 1;
-                }
+        if (!strcmp(vic_fntable[i].name , name)) {
+            (*(vic_fntable[i].fn))();
+            return 1;
         }
-        return 0;
+    }
+    return 0;
 }
 
 void vic_alias_add(char *name, char *alias)
 {
-        if(vic_alias_count == 0) {
-                vic_aliases = (struct vic_aliases*)
-                        malloc(
-                                ++vic_alias_count * sizeof(struct vic_aliases)
-                        );
-        } else {
-                vic_aliases = (struct vic_aliases*)
-                        realloc(
-                                vic_aliases,
-                                ++vic_alias_count * sizeof(struct vic_aliases)
-                        );
-        }
-	vic_aliases[vic_alias_count -1].name = name;
-	vic_aliases[vic_alias_count -1].alias = alias;
+    if(vic_alias_count == 0) {
+        vic_aliases = (struct vic_aliases*)
+            malloc(
+                    ++vic_alias_count * sizeof(struct vic_aliases)
+                  );
+    } else {
+        vic_aliases = (struct vic_aliases*)
+            realloc(
+                    vic_aliases,
+                    ++vic_alias_count * sizeof(struct vic_aliases)
+                   );
+    }
+    vic_aliases[vic_alias_count -1].name = name;
+    vic_aliases[vic_alias_count -1].alias = alias;
 
 }
 
 void vic_alias_rm(char* name)
 {
-	int i;
-	for (i = 0; i < vic_alias_count; i++) {
-		if(strcmp(name, vic_aliases[i].name) == 0){
-			free(vic_aliases[i].name);
-			free(vic_aliases[i].alias);
+    int i;
+    for (i = 0; i < vic_alias_count; i++) {
+        if(strcmp(name, vic_aliases[i].name) == 0){
+            free(vic_aliases[i].name);
+            free(vic_aliases[i].alias);
 
-			vic_aliases[i].name = NULL;
-			vic_aliases[i].alias = NULL;
+            vic_aliases[i].name = NULL;
+            vic_aliases[i].alias = NULL;
 
-			break;
-		}
-	}
+            break;
+        }
+    }
 }
 
 char *vic_alias(char *name)
 {
-	int i;
-	for (i = 0; i < vic_alias_count; i++){
+    int i;
+    for (i = 0; i < vic_alias_count; i++){
 #ifdef DEBUG
-		vic_print(vic_aliases[i].name);
-		vic_print(" -> ");
-		vic_println(vic_aliases[i].alias);
+        vic_print(vic_aliases[i].name);
+        vic_print(" -> ");
+        vic_println(vic_aliases[i].alias);
 #endif
         if (vic_aliases[i].name == NULL)
             continue;
 
-		if(strcmp(vic_aliases[i].name, name) == 0){
-			return vic_aliases[i].alias;
-		}
-	}
+        if(strcmp(vic_aliases[i].name, name) == 0){
+            return vic_aliases[i].alias;
+        }
+    }
 
-	return 0;
+    return 0;
 
 }
 
 void vic_func_ls_alias(void)
 {
-	int i;
+    int i;
 
-	for (i = 0; i < vic_alias_count; i++) {
+    for (i = 0; i < vic_alias_count; i++) {
         if(vic_aliases[i].name == NULL)
             continue;
 
-		vic_print(vic_aliases[i].name);
-		vic_print("\t => \t");
-		vic_println(vic_aliases[i].alias);
-	}
+        vic_print(vic_aliases[i].name);
+        vic_print("\t => \t");
+        vic_println(vic_aliases[i].alias);
+    }
 }
 
 void vic_func_ls(void)
 {
-	int i;
+    int i;
 
-	for (i = 0; i < vic_fncount ; i++) {
-		if(vic_fntable[i].fn == NULL)
-			continue;
+    for (i = 0; i < vic_fncount ; i++) {
+        if(vic_fntable[i].fn == NULL)
+            continue;
 
-		vic_print(vic_fntable[i].name);
-		vic_print("\t -> \t");
-		vic_print_hex((int) *(vic_fntable[i].fn));
+        vic_print(vic_fntable[i].name);
+        vic_print("\t -> \t");
+        vic_print_hex((int) *(vic_fntable[i].fn));
         vic_out('\n');
-	}
+    }
 }
 
 void vic_func_echo()
@@ -166,7 +166,7 @@ void vic_func_echo()
     char** argv = vic__args(vic_buff, &argc);
 
     int i;
-    //printf("%d\n", argc);
+    printf("%d\n", argc);
 
     for (i = 0; i < argc; i++) {
         vic_print(argv[i]);
@@ -180,8 +180,8 @@ void vic_func_echo()
     }
 
 
-	//vic_func();
-	//vic_println(vic_buff);
+    //vic_func();
+    //vic_println(vic_buff);
     //
 }
 
@@ -211,6 +211,10 @@ char** vic__args_ebits(const char* in, int *argc, uint8_t *ebits)
 
     do {
         if ((*in == ' ' || *in == '\0') && (!in_str && !in_sstr && !in_estr)) {
+
+            if (len == 0)
+                continue;
+
             tmp = (char *) realloc(tmp, (len + 1) * sizeof(char));
             tmp[len++] = '\0';
 

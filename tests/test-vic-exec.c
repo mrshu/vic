@@ -79,6 +79,11 @@ static char * test_args_advanced()
     int argc = 0;
     char **argv = vic__args(in, &argc);
 
+    dprint_int(argc);
+    dprint_str(argv[0]);
+    dprint_str(argv[1]);
+    dprint_str(argv[2]);
+
     mu_assert(argc == 3);
     mu_assert(strcmp(argv[0], "echo") == 0);
     mu_assert(strcmp(argv[1], "hi") == 0);
