@@ -111,11 +111,9 @@ char* vic_var_get(char* name)
 char* vic_var_replace(char* str)
 {
     char* buffer = NULL;
-    buffer = (char *) malloc(sizeof(char));
     uint8_t buffer_len = 0;
 
     char* var = NULL;
-    var = (char *) malloc(sizeof(char));
     uint8_t var_len = 0;
 
     uint8_t in_var = 0;
