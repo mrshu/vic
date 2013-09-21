@@ -162,10 +162,12 @@ char* vic_exec(char *input)
 
                         // finish the string with '\0'
                         buffer = (char *) realloc(buffer,
-                                        (len + 1) * sizeof(char));
-                        buffer[len++] = '\0';
+                                        (len + 2) * sizeof(char));
+                        buffer[len] = '\0';
 
-                        char *replaced_buffer = NULL;
+
+                        char *replaced_buffer;
+                        replaced_buffer = NULL;
                         replaced_buffer = vic_var_replace(buffer);
                         free(buffer);
                         buffer = replaced_buffer;

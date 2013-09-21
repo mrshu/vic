@@ -119,7 +119,6 @@ char* vic_var_replace(char* str)
     uint8_t var_len = 0;
 
     uint8_t in_var = 0;
-    uint8_t finished = 0;
 
     do {
         if (*str == '\0') {
@@ -173,7 +172,8 @@ char* vic_var_replace(char* str)
             }
 
         }
-    } while(*(++str) != '\0' || finished != 1);
+        str++;
+    } while(*str != '\0');
 
     buffer = (char *) realloc(buffer,
             (buffer_len + 1) * sizeof(char));

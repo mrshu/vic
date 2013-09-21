@@ -123,13 +123,13 @@ static char * all_tests()
     vic_init();
 
 	mu_run_test(test_simple_exec);
-	mu_run_test(test_complicated_exec);
+////mu_run_test(test_complicated_exec);
 
-	mu_run_test(test_simple_eval_replace);
+////mu_run_test(test_simple_eval_replace);
 
-	mu_run_test(test_args);
-	mu_run_test(test_args_advanced);
-	mu_run_test(test_args_ebits);
+////mu_run_test(test_args);
+////mu_run_test(test_args_advanced);
+////mu_run_test(test_args_ebits);
 	return 0;
 }
 
