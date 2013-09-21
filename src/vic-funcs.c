@@ -162,56 +162,74 @@ void vic_func_ls(void)
 
 void vic_func_echo()
 {
-	vic_func();
-	vic_println(vic_buff);
+    int argc;
+    char** argv = vic__args(vic_buff, &argc);
+
+    int i;
+    //printf("%d\n", argc);
+
+    for (i = 0; i < argc; i++) {
+        vic_print(argv[i]);
+        //printf("'%s'\n", argv[i]);
+
+        if (i != argc - 1) {
+            vic_out(' ');
+        } else {
+            vic_out('\n');
+        }
+    }
+
+
+	//vic_func();
+	//vic_println(vic_buff);
+    //
 }
 
 void vic_func_help(void)
 {
-
 
 }
 
 
 char** vic__args_ebits(const char* in, int *argc, uint8_t *ebits)
 {
-	char *tmp;
-	tmp = (char *) malloc(sizeof(char));
-	int len = 0;
+    char *tmp;
+    tmp = (char *) malloc(sizeof(char));
+    int len = 0;
 
-	char **argv;
+    char **argv;
 
-	uint8_t in_str = 0, in_sstr = 0, in_estr = 0;
+    uint8_t in_str = 0, in_sstr = 0, in_estr = 0;
 
-	argv = NULL;
-	argv = (char **) malloc(sizeof( *argv ));
-	*argc = 0;
+    argv = NULL;
+    argv = (char **) malloc(sizeof( *argv ));
+    *argc = 0;
 
     // when ebits == NULL noone cares about setting ebits
     if (ebits != NULL)
         *ebits = 0;
 
-	do {
-		if ((*in == ' ' || *in == '\0') && (!in_str && !in_sstr && !in_estr)) {
-			tmp = (char *) realloc(tmp, (len + 1) * sizeof(char));
-			tmp[len++] = '\0';
+    do {
+        if ((*in == ' ' || *in == '\0') && (!in_str && !in_sstr && !in_estr)) {
+            tmp = (char *) realloc(tmp, (len + 1) * sizeof(char));
+            tmp[len++] = '\0';
 
 
-			argv = (char **) realloc(argv, (*argc + 1) * sizeof(char *));
+            argv = (char **) realloc(argv, (*argc + 1) * sizeof(char *));
 
-			argv[*argc] = (char *) malloc((len+1) * sizeof(char));
-			argv[*argc] = strdup(tmp);
+            argv[*argc] = (char *) malloc((len+1) * sizeof(char));
+            argv[*argc] = strdup(tmp);
 
-			free(tmp);
-			tmp = (char *) malloc(sizeof(char));
-			len = 0;
+            free(tmp);
+            tmp = (char *) malloc(sizeof(char));
+            len = 0;
 
-			*argc += 1;
+            *argc += 1;
 
-		} else if (*in == '"' && in_sstr == 0 && in_estr == 0 && *(in - 1) != '\\' ) {
-			in_str = !in_str;
-		} else if (*in == '\'' && in_str == 0 && in_estr == 0 && *(in - 1) != '\\' )  {
-			in_sstr = !in_sstr;
+        } else if (*in == '"' && in_sstr == 0 && in_estr == 0 && *(in - 1) != '\\' ) {
+            in_str = !in_str;
+        } else if (*in == '\'' && in_str == 0 && in_estr == 0 && *(in - 1) != '\\' )  {
+            in_sstr = !in_sstr;
         } else if (*in == '(' && in_str == 0 && in_sstr == 0){
             in_estr = 1;
         } else if (*in == ')' && in_str == 0 && in_sstr == 0){
@@ -221,20 +239,20 @@ char** vic__args_ebits(const char* in, int *argc, uint8_t *ebits)
                 *ebits |= (uint8_t) pow(2, *argc);
             }
 
-		} else {
-			/* escaping \" and \' */
-			if ((*in == '"' || *in == '\'') && *(in - 1) == '\\') {
-				tmp[len - 1] = *in;
-			} else {
-				tmp = (char *) realloc(tmp, (len + 1) * sizeof(char));
-				tmp[len++] = *in;
-			}
-		}
+        } else {
+            /* escaping \" and \' */
+            if ((*in == '"' || *in == '\'') && *(in - 1) == '\\') {
+                tmp[len - 1] = *in;
+            } else {
+                tmp = (char *) realloc(tmp, (len + 1) * sizeof(char));
+                tmp[len++] = *in;
+            }
+        }
 
 
-	} while (*in++ != '\0');
+    } while (*in++ != '\0');
 
-	return argv;
+    return argv;
 
 }
 

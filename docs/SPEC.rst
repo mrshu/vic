@@ -52,7 +52,7 @@ once.
 
     +> echo "hi" there 
 
-**if** - comparison operator. If the first argument is not 0 the second
+**if** - comparison operator. If the first argument is not false the
 argument is executed. Otherwise the third one is executed.
     
     +> set x 2
