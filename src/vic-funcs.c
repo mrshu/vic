@@ -218,7 +218,6 @@ char** vic__args_ebits(const char* in, int *argc, uint8_t *ebits)
 
             argv = (char **) realloc(argv, (*argc + 1) * sizeof(char *));
 
-            argv[*argc] = (char *) malloc((len+1) * sizeof(char));
             argv[*argc] = strdup(tmp);
 
             free(tmp);
