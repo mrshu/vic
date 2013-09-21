@@ -72,6 +72,28 @@ static char * test_args()
     return 0;
 }
 
+static char * test_args_advanced()
+{
+
+    char in[] = "echo 'hi'   there";
+    int argc = 0;
+    char **argv = vic__args(in, &argc);
+
+    mu_assert(argc == 3);
+    mu_assert(strcmp(argv[0], "echo") == 0);
+    mu_assert(strcmp(argv[1], "hi") == 0);
+    mu_assert(strcmp(argv[2], "there") == 0);
+
+  //for (j = 0; j < argc; j++) {
+  //    free(argv[j]);
+  //}
+  //free(argv);
+
+    vic__args_clean(argv, argc);
+    vic_io_clean();
+    return 0;
+}
+
 static char * test_args_ebits()
 {
 
@@ -99,6 +121,7 @@ static char * all_tests()
 	mu_run_test(test_simple_eval_replace);
 
 	mu_run_test(test_args);
+	mu_run_test(test_args_advanced);
 	mu_run_test(test_args_ebits);
 	return 0;
 }
