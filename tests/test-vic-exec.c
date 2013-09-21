@@ -75,27 +75,22 @@ static char * test_args()
 static char * test_args_advanced()
 {
 
-    char in[] = "echo 'hi'   there";
+    char in[] = "echo 'hi'   there \"I\"   am 'Richard II.'";
     int argc = 0;
     char **argv = vic__args(in, &argc);
 
-    dprint_int(argc);
-    dprint_str(argv[0]);
-    dprint_str(argv[1]);
-    dprint_str(argv[2]);
-
-    mu_assert(argc == 3);
+    mu_assert(argc == 6);
     mu_assert(strcmp(argv[0], "echo") == 0);
     mu_assert(strcmp(argv[1], "hi") == 0);
     mu_assert(strcmp(argv[2], "there") == 0);
-
-  //for (j = 0; j < argc; j++) {
-  //    free(argv[j]);
-  //}
-  //free(argv);
+    mu_assert(strcmp(argv[3], "I") == 0);
+    mu_assert(strcmp(argv[4], "am") == 0);
+    mu_assert(strcmp(argv[5], "Richard II.") == 0);
 
     vic__args_clean(argv, argc);
     vic_io_clean();
+
+
     return 0;
 }
 

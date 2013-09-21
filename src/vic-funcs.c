@@ -166,11 +166,9 @@ void vic_func_echo()
     char** argv = vic__args(vic_buff, &argc);
 
     int i;
-    printf("%d\n", argc);
 
     for (i = 0; i < argc; i++) {
         vic_print(argv[i]);
-        //printf("'%s'\n", argv[i]);
 
         if (i != argc - 1) {
             vic_out(' ');
@@ -178,7 +176,6 @@ void vic_func_echo()
             vic_out('\n');
         }
     }
-
 
     //vic_func();
     //vic_println(vic_buff);
