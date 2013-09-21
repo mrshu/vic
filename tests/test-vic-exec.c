@@ -104,6 +104,13 @@ static char * test_args_ebits()
 
     dprint_int(ebits);
     mu_assert(argc == 3);
+    mu_assert(strcmp(argv[0], "set") == 0);
+    mu_assert(strcmp(argv[1], "y") == 0);
+    mu_assert(strcmp(argv[2], "+ $x 1") == 0);
+
+    mu_assert((ebits & 2) == 0);
+    mu_assert((ebits & 1) == 0);
+    mu_assert(ebits & 4);
 
     vic__args_clean(argv, argc);
     vic_io_clean();
