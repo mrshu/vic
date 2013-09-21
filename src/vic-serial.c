@@ -162,7 +162,7 @@ char* vic_exec(char *input)
 
                         // finish the string with '\0'
                         buffer = (char *) realloc(buffer,
-                                        (len + 2) * sizeof(char));
+                                        (len + 1) * sizeof(char));
                         buffer[len] = '\0';
 
 

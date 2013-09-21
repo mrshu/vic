@@ -222,7 +222,7 @@ char** vic__args_ebits(const char* in, int *argc, uint8_t *ebits)
             argv[*argc] = strdup(tmp);
 
             free(tmp);
-            tmp = (char *) malloc(sizeof(char));
+            tmp = NULL;
             len = 0;
 
             *argc += 1;
