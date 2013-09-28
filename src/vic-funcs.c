@@ -177,6 +177,8 @@ void vic_func_echo()
         }
     }
 
+    vic__args_clean(argv, argc);
+
     //vic_func();
     //vic_println(vic_buff);
     //
@@ -191,7 +193,7 @@ void vic_func_help(void)
 char** vic__args_ebits(const char* in, int *argc, uint8_t *ebits)
 {
     char *tmp;
-    tmp = (char *) malloc(sizeof(char));
+    tmp = NULL;
     int len = 0;
 
     char **argv;
@@ -199,7 +201,6 @@ char** vic__args_ebits(const char* in, int *argc, uint8_t *ebits)
     uint8_t in_str = 0, in_sstr = 0, in_estr = 0;
 
     argv = NULL;
-    argv = (char **) malloc(sizeof( *argv ));
     *argc = 0;
 
     // when ebits == NULL noone cares about setting ebits
@@ -214,7 +215,6 @@ char** vic__args_ebits(const char* in, int *argc, uint8_t *ebits)
 
             tmp = (char *) realloc(tmp, (len + 1) * sizeof(char));
             tmp[len++] = '\0';
-
 
             argv = (char **) realloc(argv, (*argc + 1) * sizeof(char *));
 
