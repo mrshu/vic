@@ -283,4 +283,20 @@ void vic_print_hex(int n)
         vic_print_int_base(n, 16);
 }
 
+
+char* vic_rstrip(char *s)
+{
+        uint8_t len = strlen(s);
+        while(isspace(s[len-1])){
+                len--;
+        }
+
+        char * out;
+        out = malloc((len+1) * sizeof(char));
+
+        memcpy(out, s, len);
+        out[len] = '\0';
+        return out;
+}
+
 #endif

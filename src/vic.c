@@ -149,17 +149,56 @@ void vic_func_stop()
 
 void vic_func_set()
 {
-	char* name;
-	name = (char *) malloc(31 * sizeof(char));
-	char* val;
-	val = (char *) malloc(31 * sizeof(char));
+        int argc = 0;
+        uint8_t ebits;
+        char **argv = vic__args_ebits(vic_buff, &argc, &ebits);
 
-	vic_args("%30s %30s", name, val);
+        if (argc == 2) {
 
-	vic_var_set(name, val);
-	free(name);
-	free(val);
+                char* outl;
+                char* outr;
 
+                outl = argv[0];
+                outr = argv[1];
+
+                // adding terminators
+                if ((ebits & 1)) {
+                        uint8_t len = strlen(argv[0]);
+                        argv[0] = (char *) realloc(argv[0],
+                                        (len + 2)  * sizeof(char));
+                        strncpy(argv[0] + len, ";\0", 2);
+                        outl = vic_exec(argv[0]);
+                        char* out = vic_exec(argv[0]);
+                        char* tmp = strdup(out);
+                        outl = vic_rstrip(tmp);
+
+                        free(tmp);
+                        vic_io_clean();
+                }
+                if ((ebits & 2)) {
+                        uint8_t len = strlen(argv[1]);
+                        argv[1] = (char *) realloc(argv[1],
+                                        (len + 2)  * sizeof(char));
+                        strncpy(argv[1] + len, ";\0", 2);
+                        char* out = vic_exec(argv[1]);
+                        char* tmp = strdup(out);
+                        outr = vic_rstrip(tmp);
+
+                        free(tmp);
+                        vic_io_clean();
+                }
+	        vic_var_set(outl, outr);
+
+                if ((ebits & 1)) {
+                        free(outl);
+                }
+
+                if ((ebits & 2)) {
+                        free(outr);
+                }
+        }
+
+        vic__args_clean(argv, argc);
 }
 
 void vic_func_p()

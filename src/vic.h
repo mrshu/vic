@@ -115,6 +115,7 @@ void vic_print_int(int i);
 void vic_print_int_base(int i, uint8_t n);
 void vic_print_hex(int i);
 
+char* vic_rstrip(char *s);
 
 void vic_func_ls(void);
 #ifdef ARDUINO
