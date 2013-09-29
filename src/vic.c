@@ -171,11 +171,9 @@ void vic_func_set()
                         strncpy(argv[0] + len, ";\0", 2);
                         outl = vic_exec(argv[0]);
                         char* out = vic_exec(argv[0]);
-                        char* tmp = strdup(out);
-                        outl = vic_rstrip(tmp);
+                        outl = vic_rstrip(out);
 
-                        free(tmp);
-                        vic_io_clean();
+                        free(out);
                 }
                 if ((ebits & 2)) {
                         uint8_t len = strlen(argv[1]);
@@ -186,8 +184,7 @@ void vic_func_set()
                         char* tmp = strdup(out);
                         outr = vic_rstrip(tmp);
 
-                        free(tmp);
-                        vic_io_clean();
+                        free(out);
                 }
 	        vic_var_set(outl, outr);
 
