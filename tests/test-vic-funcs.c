@@ -28,6 +28,8 @@ static char * test_set()
     char* output = vic_exec(in);
     mu_assert(strcmp(vic_var_get("x"), "a") == 0);
 
+    free(output);
+
 	return 0;
 }
 

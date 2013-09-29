@@ -181,8 +181,7 @@ void vic_func_set()
                                         (len + 2)  * sizeof(char));
                         strncpy(argv[1] + len, ";\0", 2);
                         char* out = vic_exec(argv[1]);
-                        char* tmp = strdup(out);
-                        outr = vic_rstrip(tmp);
+                        outr = vic_rstrip(out);
 
                         free(out);
                 }
