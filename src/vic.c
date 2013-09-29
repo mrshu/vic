@@ -141,10 +141,13 @@ void vic_func_start()
 
 void vic_func_stop()
 {
-	uint8_t id;
-	vic_args("%d", &id);
 
-	vic_task_stop(id);
+        int argc;
+        char **argv = vic__args(vic_buff, &argc);
+
+        if (argc >= 1) {
+	        vic_task_stop(atoi(argv[0]));
+        }
 }
 
 
