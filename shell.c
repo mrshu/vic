@@ -13,7 +13,7 @@ int main(void)
     while(1) {
         char input[256];
         vic_sys_print(VIC_PS1);
-        gets(input);
+        fgets(input, 256, stdin);
         int i;
 
         for(i = 0; i < strlen(input); i++){
