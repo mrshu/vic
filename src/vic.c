@@ -1,4 +1,5 @@
 #include "vic.h"
+#include "vic-stdlib.c"
 
 uint8_t vic_config = 0;
 uint8_t vic_serial_id = 0;
@@ -296,6 +297,9 @@ void vic_init()
 	vic_fn_add("alias", &vic_func_alias);
 	vic_fn_add("ls-alias", &vic_func_ls_alias);
 	vic_fn_add("rm-alias", &vic_func_rm_alias);
+
+        vic_fn_add("+", &vic_func_plus);
+        vic_fn_add("-", &vic_func_minus);
 }
 
 #ifdef ARDUINO

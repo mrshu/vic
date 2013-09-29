@@ -259,7 +259,6 @@ void vic_print_int_base(int i, uint8_t n)
                 return;
         }
 
-
         while (i > 0) {
                 *ptr++ = i % n;
                 i /= n;

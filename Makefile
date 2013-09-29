@@ -1,8 +1,7 @@
 
 CC=gcc -g -Wall -lm
-
-OBJ= src/vic-serial.o src/vic-funcs.o src/vic.o src/vic-tasks.o src/vic-var.o src/vic-io.o
-OBJC=vic-serial.c vic-funcs.c vic-tasks.c vic-var.c vic-io.c vic.c
+OBJ= src/vic-serial.o src/vic-funcs.o src/vic.o src/vic-tasks.o src/vic-var.o src/vic-io.o src/vic-stdlib.o
+OBJC=vic-serial.c vic-funcs.c vic-tasks.c vic-var.c vic-io.c vic-stdlib.c vic.c
 
 ARDUINODEST=~/sketchbook/libraries/vic/
 DEST=/usr/lib
