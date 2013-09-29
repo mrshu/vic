@@ -75,7 +75,7 @@ char* vic_replace_evals(char* input)
                         memcpy(output + output_len, out, strlen(out));
                         output_len += strlen(out);
 
-                        vic_io_clean();
+                        free(out);
                         free(tmp);
                         tmp_len = 0;
 

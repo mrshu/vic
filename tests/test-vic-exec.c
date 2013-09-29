@@ -16,7 +16,7 @@ static char * test_simple_exec()
     mu_assert(strlen(output) == 5);
     mu_assert(strcmp(output, "ahoj\n") == 0);
 
-    vic_io_clean();
+    free(output);
     return 0;
 }
 
@@ -29,7 +29,7 @@ static char * test_complicated_exec()
     mu_assert(strlen(output) == 13);
     mu_assert(strcmp(output, "ahoj\nfero\n20\n") == 0);
 
-    vic_io_clean();
+    free(output);
     return 0;
 }
 
@@ -44,7 +44,6 @@ static char * test_simple_eval_replace()
     mu_assert(strcmp(output, "echo fero\n;") == 0);
 
     free(output);
-    vic_io_clean();
     return 0;
 }
 
