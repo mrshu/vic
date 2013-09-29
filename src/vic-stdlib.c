@@ -82,5 +82,27 @@ void vic_func_division()
         vic__args_clean(argv, argc);
 }
 
+void vic_func_modulo()
+{
+        int argc;
+        char** argv = vic__args(vic_buff, &argc);
+
+        if (argc >= 1) {
+                int i;
+                int sum = atol(argv[0]);
+                for(i = 1; i < argc; i++) {
+                        sum %= atoi(argv[i]);
+                }
+
+                vic_print_int(sum);
+                vic_out('\n');
+
+        }
+
+        vic__args_clean(argv, argc);
+}
+
+
+
 #endif
 
