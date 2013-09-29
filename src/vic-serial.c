@@ -246,7 +246,11 @@ char* vic_exec(char *input)
 
         } while(*(++input) != '\0');
 
-        return vic_io_return();
+        char* out = vic_io_return();
+        out = strdup(out);
+        vic_io_clean();
+
+        return out;
 }
 
 // from bitlash/src/bitlast-serial.c
