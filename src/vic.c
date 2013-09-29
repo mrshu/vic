@@ -130,18 +130,16 @@ void vic_func_aw()
 
 void vic_func_start()
 {
-	char *tmp;
-	tmp = NULL;
-	tmp = (char *) malloc(31 * sizeof(char));
-	int time;
-	vic_args("%30s %d", tmp, &time);
+        int argc;
+        char **argv = vic__args(vic_buff, &argc);
 
-	vic_task_start(tmp, time);
+        if (argc >= 2) {
+                vic_task_start(argv[0], atoi(argv[1]));
+        }
 }
 
 void vic_func_stop()
 {
-
         int argc;
         char **argv = vic__args(vic_buff, &argc);
 
