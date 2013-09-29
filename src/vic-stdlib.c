@@ -102,6 +102,58 @@ void vic_func_modulo()
         vic__args_clean(argv, argc);
 }
 
+void vic_func_equals()
+{
+        int argc;
+        char** argv = vic__args(vic_buff, &argc);
+
+        if (argc >= 1) {
+                char* first = argv[0];
+                int i;
+                for(i = 1; i < argc; i++) {
+                        if (strcmp(first, argv[i]) != 0) {
+                                vic_println("F");
+                                vic__args_clean(argv, argc);
+                                return;
+                        }
+                }
+
+                vic_println("T");
+        }
+
+        vic__args_clean(argv, argc);
+}
+
+
+void vic_func_if()
+{
+///     int argc;
+///     char** argv = vic__args(vic_buff, &argc);
+
+
+///     if (argc == 2) {
+///             char* ret = vic_exec(argv[0]);
+///             if (strcmp(ret, "F") != 0 || strlen(ret) != 0) {
+///                     char* out = vic_exec(argv[1]);
+///                     vic_print(out);
+///             }
+///     } else if (argc >= 3) {
+///             char* ret = vic_exec(argv[0]);
+///             vic_sys_println(argv[0]);
+///             char* out;
+///             if (strcmp(ret, "F") != 0 || strlen(ret) != 0) {
+///                     vic_io_clean();
+///                     out = vic_exec(argv[1]);
+///             } else {
+///                     vic_io_clean();
+///                     out = vic_exec(argv[2]);
+///             }
+///             vic_print(out);
+///             vic_io_clean();
+///     }
+
+///     vic__args_clean(argv, argc);
+}
 
 
 #endif

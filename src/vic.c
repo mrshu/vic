@@ -303,6 +303,10 @@ void vic_init()
         vic_fn_add("*", &vic_func_times);
         vic_fn_add("/", &vic_func_division);
         vic_fn_add("%", &vic_func_modulo);
+
+        vic_fn_add("=", &vic_func_equals);
+
+        vic_fn_add("if", &vic_func_if);
 }
 
 #ifdef ARDUINO
