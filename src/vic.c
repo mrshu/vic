@@ -300,6 +300,8 @@ void vic_init()
 
         vic_fn_add("+", &vic_func_plus);
         vic_fn_add("-", &vic_func_minus);
+        vic_fn_add("*", &vic_func_times);
+        vic_fn_add("/", &vic_func_division);
 }
 
 #ifdef ARDUINO
