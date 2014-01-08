@@ -25,7 +25,6 @@ void vic_func_plus()
                 }
         }
 
-        dprint_int(sum);
         vic_print_int(sum);
         vic_out('\n');
 

@@ -40,9 +40,15 @@ static char * test_compute()
 {
     char in[] = "+ (+ 1 2) (+ 2 3);";
     char* output = vic_exec(in);
-    dprint_str(output);
 
+    mu_assert(strcmp(output, "8\n") == 0);
     free(output);
+
+    output = vic_exec("+ 20 (+ (+ 1 1) (+ 2 2));");
+
+    mu_assert(strcmp(output, "26\n") == 0);
+    free(output);
+
     return 0;
 
 }
