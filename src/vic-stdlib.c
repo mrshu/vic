@@ -6,12 +6,22 @@
 void vic_func_plus()
 {
         int argc;
-        char** argv = vic__args(vic_buff, &argc);
+        uint8_t ebits;
+        char** argv = vic__args_ebits(vic_buff, &argc, &ebits);
 
         int i;
         int sum = 0;
         for(i = 0; i < argc; i++) {
-                sum += atoi(argv[i]);
+                if ((ebits & pow(2, i))) {
+                    char* out;
+                    vic_exec_cstr(argv[i], out);
+
+                    sum += atoi(out);
+
+                    free(out);
+                } else {
+                    sum += atoi(argv[i]);
+                }
         }
 
         dprint_int(sum);
