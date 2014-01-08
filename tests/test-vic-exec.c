@@ -68,7 +68,6 @@ static char * test_args()
   //free(argv);
 
     vic__args_clean(argv, argc);
-    vic_io_clean();
     return 0;
 }
 
@@ -88,7 +87,6 @@ static char * test_args_advanced()
     mu_assert(strcmp(argv[5], "Richard II.") == 0);
 
     vic__args_clean(argv, argc);
-    vic_io_clean();
 
 
     return 0;
@@ -113,7 +111,6 @@ static char * test_args_ebits()
     mu_assert(ebits & 4);
 
     vic__args_clean(argv, argc);
-    vic_io_clean();
     return 0;
 }
 
