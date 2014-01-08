@@ -27,6 +27,10 @@ static char * test_set()
     char in[] = "set x (echo 'a');";
     char* output = vic_exec(in);
     mu_assert(strcmp(vic_var_get("x"), "a") == 0);
+    free(output);
+
+    output = vic_exec("set y (+ 3 2);");
+    mu_assert(strcmp(vic_var_get("y"), "5") == 0);
 
     free(output);
     return 0;
@@ -37,8 +41,6 @@ static char * test_compute()
     char in[] = "+ 2 3;";
     char* output = vic_exec(in);
     dprint_str(output);
-
-    mu_assert(1 == 0);
 
     free(output);
     return 0;

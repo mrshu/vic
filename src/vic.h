@@ -112,6 +112,12 @@ void vic_buffer_append(char i);
 void vic_process(char input);
 char* vic_replace_evals(char* input);
 char* vic_exec(char *input);
+#define vic_exec_cstr(str, pointer) uint8_t len = strlen(str); \
+        str = (char *) realloc(str, (len + 2)  * sizeof(char)); \
+        strncpy(str + len, ";\0", 2); \
+        char* out = vic_exec(str); \
+        pointer = vic_rstrip(out); \
+        free(out);
 
 
 void vic_print_int(int i);

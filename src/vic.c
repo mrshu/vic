@@ -165,26 +165,12 @@ void vic_func_set()
 
                 // adding terminators
                 if ((ebits & 1)) {
-                        uint8_t len = strlen(argv[0]);
-                        argv[0] = (char *) realloc(argv[0],
-                                        (len + 2)  * sizeof(char));
-                        strncpy(argv[0] + len, ";\0", 2);
-                        char* out = vic_exec(argv[0]);
-                        outl = vic_rstrip(out);
-
-                        free(out);
+                    vic_exec_cstr(argv[0], outl);
                 }
                 if ((ebits & 2)) {
-                        uint8_t len = strlen(argv[1]);
-                        argv[1] = (char *) realloc(argv[1],
-                                        (len + 2)  * sizeof(char));
-                        strncpy(argv[1] + len, ";\0", 2);
-                        char* out = vic_exec(argv[1]);
-                        outr = vic_rstrip(out);
-
-                        free(out);
+                    vic_exec_cstr(argv[1], outr);
                 }
-	        vic_var_set(outl, outr);
+	            vic_var_set(outl, outr);
 
                 if ((ebits & 1)) {
                         free(outl);
