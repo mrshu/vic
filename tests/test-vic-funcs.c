@@ -52,7 +52,7 @@ static char * test_compute()
     output = vic_exec("+ 20 (+ (+ 1 1) (- 2 2));");
 
     dprint_str(output);
-    mu_assert(strcmp(output, "21\n") == 0);
+    mu_assert(strcmp(output, "22\n") == 0);
     free(output);
 
 
