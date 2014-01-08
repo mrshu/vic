@@ -115,9 +115,9 @@ char* vic_exec(char *input);
 #define vic_exec_cstr(str, pointer) uint8_t len = strlen(str); \
         str = (char *) realloc(str, (len + 2)  * sizeof(char)); \
         strncpy(str + len, ";\0", 2); \
-        char* out = vic_exec(str); \
-        pointer = vic_rstrip(out); \
-        free(out);
+        char* _tmp_out = vic_exec(str); \
+        pointer = vic_rstrip(_tmp_out); \
+        free(_tmp_out);
 
 
 void vic_print_int(int i);

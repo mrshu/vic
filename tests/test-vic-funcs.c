@@ -38,7 +38,7 @@ static char * test_set()
 
 static char * test_compute()
 {
-    char in[] = "+ 2 3;";
+    char in[] = "+ (+ 1 2) (+ 2 3);";
     char* output = vic_exec(in);
     dprint_str(output);
 

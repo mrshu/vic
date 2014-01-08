@@ -12,7 +12,8 @@ void vic_func_plus()
         int i;
         int sum = 0;
         for(i = 0; i < argc; i++) {
-                if ((ebits & pow(2, i))) {
+                // 1 << i is used here to check whether the argument has an ebit set
+                if ((ebits & (1 << i))) {
                     char* out;
                     vic_exec_cstr(argv[i], out);
 
