@@ -169,7 +169,6 @@ void vic_func_set()
                         argv[0] = (char *) realloc(argv[0],
                                         (len + 2)  * sizeof(char));
                         strncpy(argv[0] + len, ";\0", 2);
-                        outl = vic_exec(argv[0]);
                         char* out = vic_exec(argv[0]);
                         outl = vic_rstrip(out);
 
