@@ -39,19 +39,27 @@ void vic_func_minus()
 
         if (argc >= 1) {
             int i;
-            int sum = atoi(argv[0]);
-            for(i = 1; i < argc; i++) {
+            int sum = 0;
+            for(i = 0; i < argc; i++) {
                     // 1 << i is used here to check whether the argument has
                     // an ebit set
                     if ((ebits & (1 << i))) {
                         char* out;
                         vic_exec_cstr(argv[i], out);
 
-                        sum -= atoi(out);
+                        if (i == 0)
+                            sum = atoi(out);
+                        else
+                            sum -= atoi(out);
 
                         free(out);
                     } else {
-                        sum -= atoi(argv[i]);
+
+                        if (i == 0)
+                            sum = atoi(argv[i]);
+                        else
+                            sum -= atoi(argv[i]);
+
                     }
             }
 
