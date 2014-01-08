@@ -30,18 +30,20 @@ static char * test_process()
 
 static char * test_exec()
 {
-	test_var = 0;
-	vic_exec("call;");
-	mu_assert(test_var == 1);
+        test_var = 0;
+        char* a = vic_exec("call;");
+        mu_assert(test_var == 1);
+        free(a);
 
-	test_var = 0;
-	vic_exec(";;;;;;;call;;;;;;;");
-	mu_assert(test_var == 1);
+        test_var = 0;
+        a = vic_exec(";;;;;;;call;;;;;;;");
+        mu_assert(test_var == 1);
+        free(a);
 
-
-	test_var = 0;
-	vic_exec("    call;;;;;;;");
-	mu_assert(test_var == 1);
+        test_var = 0;
+        a = vic_exec("    call;;;;;;;");
+        mu_assert(test_var == 1);
+        free(a);
 
 
 

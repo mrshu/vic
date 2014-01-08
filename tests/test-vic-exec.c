@@ -26,6 +26,7 @@ static char * test_complicated_exec()
     char in[] = "echo ahoj;set f 20;echo fero;echo $f;";
     char* output = vic_exec(in);
 
+    dprint_str(output);
     mu_assert(strlen(output) == 13);
     mu_assert(strcmp(output, "ahoj\nfero\n20\n") == 0);
 
@@ -120,6 +121,7 @@ static char * test_args_ebits()
 static char * all_tests()
 {
     vic_init();
+    vic_debug(1);
 
 	mu_run_test(test_simple_exec);
     mu_run_test(test_complicated_exec);

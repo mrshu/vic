@@ -120,8 +120,8 @@ void vic_process(char input)
 #endif
 		char* output = vic_exec(vic_buffer);
                 vic_sys_print(output);
+                free(output);
 
-                vic_io_clean();
 		vic_buffer_free();
 
 #ifdef SHELL
@@ -165,18 +165,11 @@ char* vic_exec(char *input)
                                         (len + 1) * sizeof(char));
                         buffer[len] = '\0';
 
-                        dprint_int(len);
-                        dprint_int((int) '\0');
-                        dprint_int((int) buffer[len]);
-                        dprint_str(buffer);
-
-
                         char *replaced_buffer;
                         replaced_buffer = NULL;
                         replaced_buffer = vic_var_replace(buffer);
                         free(buffer);
                         buffer = replaced_buffer;
-
 
                         /* in case of calling a procedure */
                         if(func == NULL) {
@@ -255,6 +248,10 @@ char* vic_exec(char *input)
         } while(*(++input) != '\0');
 
         char* out = vic_io_return();
+
+        dprint_str(out);
+        dprint_int(strlen(out));
+
         out = strdup(out);
         vic_io_clean();
 

@@ -11,10 +11,14 @@ static uint8_t vic_output_len = 0;
 
 void vic_out(char x)
 {
-    vic_output = (char *)
-            realloc(vic_output,
-                    (vic_output_len + 1) * sizeof(char)
-            );
+    if (vic_output_len == 0) {
+        vic_output = (char *) malloc( (vic_output_len + 1) * sizeof(char));
+    } else {
+        vic_output = (char *)
+                realloc(vic_output,
+                        (vic_output_len + 1) * sizeof(char)
+                );
+    }
     vic_output[vic_output_len++] = x;
 }
 
@@ -38,6 +42,7 @@ void vic_println(char *x)
 char* vic_io_return()
 {
     vic_out('\0');
+    dprint_int(vic_output);
     return vic_output;
 }
 
