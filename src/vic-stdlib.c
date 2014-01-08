@@ -34,12 +34,23 @@ void vic_func_plus()
 void vic_func_minus()
 {
         int argc;
-        char** argv = vic__args(vic_buff, &argc);
+        uint8_t ebits;
+        char** argv = vic__args_ebits(vic_buff, &argc, &ebits);
 
         int i;
         int sum = 0;
         for(i = 0; i < argc; i++) {
-                sum -= atoi(argv[i]);
+                // 1 << i is used here to check whether the argument has an ebit set
+                if ((ebits & (1 << i))) {
+                    char* out;
+                    vic_exec_cstr(argv[i], out);
+
+                    sum -= atoi(out);
+
+                    free(out);
+                } else {
+                    sum -= atoi(argv[i]);
+                }
         }
 
         vic_print_int(sum);
@@ -51,12 +62,23 @@ void vic_func_minus()
 void vic_func_times()
 {
         int argc;
-        char** argv = vic__args(vic_buff, &argc);
+        uint8_t ebits;
+        char** argv = vic__args_ebits(vic_buff, &argc, &ebits);
 
         int i;
         int sum = 1;
         for(i = 0; i < argc; i++) {
-                sum *= atoi(argv[i]);
+                // 1 << i is used here to check whether the argument has an ebit set
+                if ((ebits & (1 << i))) {
+                    char* out;
+                    vic_exec_cstr(argv[i], out);
+
+                    sum *= atoi(out);
+
+                    free(out);
+                } else {
+                    sum -= atoi(argv[i]);
+                }
         }
 
         vic_print_int(sum);

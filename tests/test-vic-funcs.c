@@ -49,6 +49,13 @@ static char * test_compute()
     mu_assert(strcmp(output, "26\n") == 0);
     free(output);
 
+    output = vic_exec("+ 20 (+ (+ 1 1) (- 2 2));");
+
+    dprint_str(output);
+    mu_assert(strcmp(output, "21\n") == 0);
+    free(output);
+
+
     return 0;
 
 }
