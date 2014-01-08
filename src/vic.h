@@ -77,15 +77,18 @@ sprintf(tmp, fmt, __VA_ARGS__); } \
 vic_println(tmp); \
 free(tmp);vic_returned = 1;}
 
+
+extern uint8_t vic_debugging;
+
 #define STR(x) #x
 #define TOSTR(x) STR(x)
-#define dprint_str(str) if (DEBUG) printf(__FILE__ ":" TOSTR(__LINE__) "> " TOSTR(str) \
+#define dprint_str(str) if (vic_debugging) printf(__FILE__ ":" TOSTR(__LINE__) "> " TOSTR(str) \
                     " = '%s'\n", str)
 
-#define dprint_int(str) if (DEBUG) printf(__FILE__ ":" TOSTR(__LINE__) "> " TOSTR(str) \
+#define dprint_int(str) if (vic_debugging) printf(__FILE__ ":" TOSTR(__LINE__) "> " TOSTR(str) \
                     " = %d\n", str)
 
-#define dprint_char(str) if(DEBUG) printf(__FILE__ ":" TOSTR(__LINE__) "> " TOSTR(str) \
+#define dprint_char(str) if(vic_debugging) printf(__FILE__ ":" TOSTR(__LINE__) "> " TOSTR(str) \
                     " = %c\n", str)
 
 

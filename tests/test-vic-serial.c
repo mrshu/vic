@@ -61,6 +61,10 @@ static char * all_tests()
 
 int main(void)
 {
+
+        vic_init();
+        vic_debug(1);
+
 	char *result = all_tests();
 
 	if (result == 0){

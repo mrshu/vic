@@ -253,11 +253,17 @@ void vic_run(void)
 
 }
 
+uint8_t vic_debugging = 0;
+void vic_debug(uint8_t debug)
+{
+    vic_debugging = debug;
+}
+
 #ifdef ARDUINO
 void vic_init(unsigned long baud)
 {
 	vic_inout_init(baud);
-        vic_serial_id = 0;
+    vic_serial_id = 0;
 #else
 void vic_init()
 {

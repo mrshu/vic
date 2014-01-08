@@ -165,6 +165,11 @@ char* vic_exec(char *input)
                                         (len + 1) * sizeof(char));
                         buffer[len] = '\0';
 
+                        dprint_int(len);
+                        dprint_int((int) '\0');
+                        dprint_int((int) buffer[len]);
+                        dprint_str(buffer);
+
 
                         char *replaced_buffer;
                         replaced_buffer = NULL;
@@ -241,6 +246,9 @@ char* vic_exec(char *input)
                         buffer = (char *) realloc(buffer,
                                         (len + 1) * sizeof(char));
                         buffer[len++] = *input;
+
+                        dprint_int(len);
+                        dprint_char(buffer[len-1]);
 
                 }
 
