@@ -42,7 +42,6 @@ void vic_println(char *x)
 char* vic_io_return()
 {
     vic_out('\0');
-    dprint_int(vic_output);
     return vic_output;
 }
 

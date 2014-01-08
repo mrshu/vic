@@ -14,6 +14,7 @@ void vic_func_plus()
                 sum += atoi(argv[i]);
         }
 
+        dprint_int(sum);
         vic_print_int(sum);
         vic_out('\n');
 

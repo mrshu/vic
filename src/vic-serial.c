@@ -240,17 +240,11 @@ char* vic_exec(char *input)
                                         (len + 1) * sizeof(char));
                         buffer[len++] = *input;
 
-                        dprint_int(len);
-                        dprint_char(buffer[len-1]);
-
                 }
 
         } while(*(++input) != '\0');
 
         char* out = vic_io_return();
-
-        dprint_str(out);
-        dprint_int(strlen(out));
 
         out = strdup(out);
         vic_io_clean();

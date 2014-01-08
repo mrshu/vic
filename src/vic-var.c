@@ -171,7 +171,6 @@ char* vic_var_replace(char* str)
             }
 
         }
-        dprint_char(*str);
         str++;
     } while(*str != '\0' || finished != 1);
 

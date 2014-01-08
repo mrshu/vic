@@ -87,8 +87,6 @@ static char * test_args_advanced()
     mu_assert(strcmp(argv[5], "Richard II.") == 0);
 
     vic__args_clean(argv, argc);
-
-
     return 0;
 }
 
