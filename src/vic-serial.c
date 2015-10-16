@@ -24,6 +24,7 @@ void vic_buffer_append(char i)
 
 void vic_process(char input)
 {
+    vic_buffer_append(input);
 }
 
 #endif
