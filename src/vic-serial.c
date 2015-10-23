@@ -8,13 +8,26 @@
 #include <ctype.h>
 
 
-static int vic_buffer_len = 0;
-char vic_buffer[VIC_BUFFER_SIZE];
+int vic_buffer_len = 0;
+char vic_buffer[VIC_BUFFER_SIZE] = {'\0'};
 
+
+void vic_buffer_clear()
+{
+        memset(vic_buffer, '\0', VIC_BUFFER_SIZE);
+        vic_buffer_len = 0;
+}
 
 void vic_buffer_append(char i)
 {
-        vic_buffer[vic_buffer_len++] = i;
+        if (vic_buffer_length < VIC_BUFFER_SIZE)
+                vic_buffer[vic_buffer_len++] = i;
+}
+
+void vic_buffer_pop()
+{
+        if (vic_buffer_len > 0)
+                vic_buffer[--vic_buffer_len] = '\0';
 }
 
 
@@ -24,7 +37,13 @@ void vic_buffer_append(char i)
 
 void vic_process(char input)
 {
-    vic_buffer_append(input);
+        if (input == (char)0x08) { /* backspace */
+                vic_buffer_pop();
+        } else {
+                vic_buffer_append(input);
+        }
 }
 
 #endif
+
+/* vim: set tabstop=8:softtabstop=8:shiftwidth=8:expandtabs */
