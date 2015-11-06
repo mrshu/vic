@@ -78,18 +78,17 @@ static char * all_tests()
 
 int main(void)
 {
-        char *result = all_tests();
+    char *result = all_tests();
 
-        if (result == 0){
-                printf("All tests passed!\n");
-        } else {
-                printf("%s\n", result);
-        }
+    if (result == 0){
+        printf("All tests passed!\n");
+    } else {
+        printf("%s\n", result);
+    }
 
-        printf("Status: %d from %d tests passed\n", tests_passed, tests_count);
+    printf("Status: %d from %d tests passed\n", tests_passed, tests_count);
 
-        return 0;
+    return 0;
 }
 
-
-
+/* vim: set tabstop=4:softtabstop=4:shiftwidth=4:expandtabs */
