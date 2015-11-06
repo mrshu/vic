@@ -25,3 +25,5 @@ void vic_process(char input);
 void vic_init();
 
 #endif
+
+/* vim: set tabstop=4:softtabstop=4:shiftwidth=4:expandtabs */
