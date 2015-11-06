@@ -19,6 +19,8 @@ extern char vic_buffer[VIC_BUFFER_SIZE];
 extern int vic_buffer_len;
 
 void vic_buffer_append(char i);
+void vic_buffer_clear(void);
+void vic_buffer_pop(void);
 void vic_process(char input);
 
 /* vic.c */
