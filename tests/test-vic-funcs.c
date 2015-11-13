@@ -2,82 +2,66 @@
 #include "munit.h"
 #include "../src/vic.h"
 
-#define DEBUG 1
-
 int tests_passed = 0;
 int tests_count = 0;
 
-int test_var = 0;
-
-void fn_call()
+void test_func(void)
 {
-	test_var = 1;
+    return;
 }
 
-
-static char * test_call()
+static char * test_fn_add_easy(void)
 {
-    vic_fn_call("call");
-    mu_assert(test_var == 1);
+    vic_fn_add("test", test_func);
+
+    mu_assert(strcmp(vic_funcs[0].name, "test") == 0);
+    mu_assert(vic_funcs[0].p_func == &test_func);
+
     return 0;
 }
 
-static char * test_set()
+static char * test_fn_add_overflow(void)
 {
-    char in[] = "set x (echo 'a');";
-    char* output = vic_exec(in);
-    mu_assert(strcmp(vic_var_get("x"), "a") == 0);
-    free(output);
+    int i;
+    for (i = 0; i < VIC_FUNCS_COUNT; i++) {
+        vic_fn_add("test", test_func);
+    }
 
-    output = vic_exec("set y (+ 3 2);");
-    mu_assert(strcmp(vic_var_get("y"), "5") == 0);
+    mu_assert(vic_fn_add("a", test_func) != VIC_NO_ERR);
 
-    free(output);
     return 0;
 }
 
-static char * test_compute()
+static char * test_fn_add_long_name(void)
 {
-    char in[] = "+ (+ 1 2) (+ 2 3);";
-    char* output = vic_exec(in);
+    char true_name[VIC_FUNC_NAME_LEN + 1] = {'a'};
+    char name[VIC_FUNC_NAME_LEN + 3] = {'a'};
+    name[VIC_FUNC_NAME_LEN + 2] = '\0';
+    true_name[VIC_FUNC_NAME_LEN] = '\0';
 
-    mu_assert(strcmp(output, "8\n") == 0);
-    free(output);
+    vic_fn_add(name, test_func);
 
-    output = vic_exec("+ 20 (+ (+ 1 1) (+ 2 2));");
-
-    mu_assert(strcmp(output, "26\n") == 0);
-    free(output);
-
-    output = vic_exec("+ 20 (+ (+ 1 1) (- 2 2));");
-
-    dprint_str(output);
-    mu_assert(strcmp(output, "22\n") == 0);
-    free(output);
-
+    mu_assert(strcmp(vic_funcs[0].name, true_name) == 0);
 
     return 0;
-
 }
 
-
-static char * all_tests()
+static char * all_tests(void)
 {
+    mu_run_test(test_fn_add_overflow);
+    vic_funcs_clear();
+    mu_run_test(test_fn_add_easy);
+    vic_funcs_clear();
+    mu_run_test(test_fn_add_long_name);
 
-    vic_init();
-    vic_debug(1);
-
-    vic_fn_add("call", &fn_call);
-
-    mu_run_test(test_call);
-    mu_run_test(test_set);
-    mu_run_test(test_compute);
     return 0;
 }
 
 
 int main(void)
 {
+    vic_init();
+
     char *result = all_tests();
 
     if (result == 0){
