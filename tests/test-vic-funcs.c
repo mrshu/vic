@@ -5,9 +5,11 @@
 int tests_passed = 0;
 int tests_count = 0;
 
+int test_var = 0;
+
 void test_func(void)
 {
-    return;
+    test_var++;
 }
 
 static char * test_fn_add_easy(void)
@@ -46,6 +48,31 @@ static char * test_fn_add_long_name(void)
     return 0;
 }
 
+static char * test_fn_call(void)
+{
+    test_var = 0;
+    char *name = "calltest";
+    vic_fn_add(name, test_func);
+    vic_fn_call(name);
+    vic_fn_call(name);
+    vic_fn_call(name);
+
+    mu_assert(test_var == 3);
+
+    return 0;
+}
+
+static char * test_fn_call_wrong_name(void)
+{
+    test_var = 0;
+    vic_fn_add("name", test_func);
+
+    mu_assert(vic_fn_call("wrongname") == VIC_WRONG_FUNC_NAME);
+    mu_assert(test_var == 0);
+
+    return 0;
+}
+
 static char * all_tests(void)
 {
     mu_run_test(test_fn_add_overflow);
@@ -53,6 +80,10 @@ static char * all_tests(void)
     mu_run_test(test_fn_add_easy);
     vic_funcs_clear();
     mu_run_test(test_fn_add_long_name);
+    vic_funcs_clear();
+    mu_run_test(test_fn_call);
+    vic_funcs_clear();
+    mu_run_test(test_fn_call_wrong_name);
 
     return 0;
 }

@@ -5,7 +5,9 @@
 
 typedef struct vic_func {
     char name[VIC_FUNC_NAME_LEN + 1];
-    void (*p_func)();
+    void (*p_func)(void);
 } VIC_FUNC;
+
+void vic_prepare_name(const char *raw_name, char name[VIC_FUNC_NAME_LEN+1]);
 
 #endif
