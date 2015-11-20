@@ -73,6 +73,18 @@ static char * test_fn_call_wrong_name(void)
     return 0;
 }
 
+static char * test_fn_rm(void)
+{
+    vic_fn_add("name", test_func);
+    vic_fn_add("name2", test_func);
+    vic_fn_add("name3", test_func);
+
+    mu_assert(vic_fn_rm("name2") == VIC_NO_ERR);
+    mu_assert(vic_fn_rm("name2") == VIC_WRONG_FUNC_NAME);
+
+    return 0;
+}
+
 static char * all_tests(void)
 {
     mu_run_test(test_fn_add_overflow);
@@ -84,6 +96,8 @@ static char * all_tests(void)
     mu_run_test(test_fn_call);
     vic_funcs_clear();
     mu_run_test(test_fn_call_wrong_name);
+    vic_funcs_clear();
+    mu_run_test(test_fn_rm);
 
     return 0;
 }

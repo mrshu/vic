@@ -44,7 +44,28 @@ int vic_fn_call(const char *raw_name)
     return VIC_WRONG_FUNC_NAME;
 }
 
-void vic_prepare_name(const char *raw_name, char name[VIC_FUNC_NAME_LEN+1])
+int vic_fn_rm(const char *raw_name)
+{
+    char name[VIC_FUNC_NAME_LEN + 1];
+    vic_prepare_name(raw_name, name);
+    int i;
+    for (i = 0; i < vic_funcs_len; i++) {
+        if (strcmp(name, vic_funcs[i].name) == 0) {
+            /* found function to remove */
+            int j;
+            for (j = i; j < vic_funcs_len - 1; j++) {
+                vic_funcs[j].p_func = vic_funcs[j+1].p_func;
+                strcpy(vic_funcs[j].name, vic_funcs[j+1].name);
+            }
+            vic_funcs_len--;
+            return VIC_NO_ERR;
+        }
+    }
+    return VIC_WRONG_FUNC_NAME;
+}
+
+static void vic_prepare_name(const char *raw_name,
+                             char name[VIC_FUNC_NAME_LEN+1])
 {
     memset(name, '\0', VIC_FUNC_NAME_LEN + 1);
     if (strlen(raw_name) > VIC_FUNC_NAME_LEN) {

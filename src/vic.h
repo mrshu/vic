@@ -34,6 +34,7 @@ extern int vic_funcs_len;
 
 int vic_fn_add(const char *raw_name, void (*p_func)(void));
 int vic_fn_call(const char *raw_name);
+int vic_fn_rm(const char *raw_name);
 void vic_funcs_clear(void);
 
 /* vic.c */
