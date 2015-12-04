@@ -17,9 +17,9 @@
 #define VIC_BUFFER_SIZE 128
 #define VIC_FUNCS_COUNT 64
 
-#define VIC_NO_ERR 0
-#define VIC_FUNC_INSUFFICIENT_SPACE 1
-#define VIC_WRONG_FUNC_NAME 2
+#define VIC_ERR_NO 0
+#define VIC_ERR_FUNC_INSUFFICIENT_SPACE 1
+#define VIC_ERR_FUNC_WRONG_NAME 2
 
 /* vic-serial.c */
 extern char vic_buffer[VIC_BUFFER_SIZE];
@@ -29,7 +29,7 @@ void vic_buffer_append(char i);
 void vic_process(char input);
 
 /* vic-funcs.c */
-extern VIC_FUNC vic_funcs[VIC_FUNCS_COUNT];
+extern struct vic_func_t vic_funcs[VIC_FUNCS_COUNT];
 extern int vic_funcs_len;
 
 int vic_fn_add(const char *raw_name, void (*p_func)(void));

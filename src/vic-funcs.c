@@ -4,12 +4,12 @@
 #include "vic.h"
 #include "vic-funcs.h"
 
-VIC_FUNC vic_funcs[VIC_FUNCS_COUNT];
+struct vic_func_t vic_funcs[VIC_FUNCS_COUNT];
 int vic_funcs_len = 0;
 
 void vic_funcs_clear(void)
 {
-    memset(vic_funcs, 0, sizeof(VIC_FUNC) * vic_funcs_len);
+    memset(vic_funcs, 0, sizeof(struct vic_func_t) * vic_funcs_len);
     vic_funcs_len = 0;
 }
 
@@ -17,7 +17,7 @@ int vic_fn_add(const char *raw_name, void (*p_func)(void))
 {
     /* there is no space for next function */
     if (vic_funcs_len == VIC_FUNCS_COUNT) {
-        return VIC_FUNC_INSUFFICIENT_SPACE;
+        return VIC_ERR_FUNC_INSUFFICIENT_SPACE;
     }
 
     char name[VIC_FUNC_NAME_LEN+1];
@@ -29,17 +29,17 @@ int vic_fn_add(const char *raw_name, void (*p_func)(void))
         /* if yes, overwrite it */
         if (strcmp(name, vic_funcs[i].name) == 0) {
             vic_funcs[i].p_func = p_func;
-            return VIC_NO_ERR;
+            return VIC_ERR_NO;
         }
     }
     /* if not, make new one */
-    VIC_FUNC new_func;
+    struct vic_func_t new_func;
     new_func.p_func = p_func;
     strcpy(new_func.name, name);
     vic_funcs[vic_funcs_len] = new_func;
 
     vic_funcs_len++;
-    return VIC_NO_ERR;
+    return VIC_ERR_NO;
 }
 
 int vic_fn_call(const char *raw_name)
@@ -51,10 +51,10 @@ int vic_fn_call(const char *raw_name)
         if (strcmp(name, vic_funcs[i].name) == 0) {
             /* found function to call */
             (*(vic_funcs[i].p_func))();
-            return VIC_NO_ERR;
+            return VIC_ERR_NO;
         }
     }
-    return VIC_WRONG_FUNC_NAME;
+    return VIC_ERR_FUNC_WRONG_NAME;
 }
 
 int vic_fn_rm(const char *raw_name)
@@ -71,18 +71,18 @@ int vic_fn_rm(const char *raw_name)
                 strcpy(vic_funcs[j].name, vic_funcs[j+1].name);
             }
             vic_funcs_len--;
-            return VIC_NO_ERR;
+            return VIC_ERR_NO;
         }
     }
-    return VIC_WRONG_FUNC_NAME;
+    return VIC_ERR_FUNC_WRONG_NAME;
 }
 
-static void vic_prepare_name(const char *raw_name,
-                             char name[VIC_FUNC_NAME_LEN+1])
+void vic_prepare_name(const char *raw_name,
+                  char name[VIC_FUNC_NAME_LEN+1])
 {
-    memset(name, '\0', VIC_FUNC_NAME_LEN + 1);
-    if (strlen(raw_name) > VIC_FUNC_NAME_LEN) {
-        memcpy(name, raw_name, VIC_FUNC_NAME_LEN);
+memset(name, '\0', VIC_FUNC_NAME_LEN + 1);
+if (strlen(raw_name) > VIC_FUNC_NAME_LEN) {
+    memcpy(name, raw_name, VIC_FUNC_NAME_LEN);
     } else {
         strcpy(name, raw_name);
     }
