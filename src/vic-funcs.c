@@ -78,11 +78,11 @@ int vic_fn_rm(const char *raw_name)
 }
 
 void vic_prepare_name(const char *raw_name,
-                  char name[VIC_FUNC_NAME_LEN+1])
+                      char name[VIC_FUNC_NAME_LEN+1])
 {
-memset(name, '\0', VIC_FUNC_NAME_LEN + 1);
-if (strlen(raw_name) > VIC_FUNC_NAME_LEN) {
-    memcpy(name, raw_name, VIC_FUNC_NAME_LEN);
+    memset(name, '\0', VIC_FUNC_NAME_LEN + 1);
+    if (strlen(raw_name) > VIC_FUNC_NAME_LEN) {
+        memcpy(name, raw_name, VIC_FUNC_NAME_LEN);
     } else {
         strcpy(name, raw_name);
     }
