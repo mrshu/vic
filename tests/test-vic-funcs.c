@@ -2,82 +2,138 @@
 #include "munit.h"
 #include "../src/vic.h"
 
-#define DEBUG 1
-
 int tests_passed = 0;
 int tests_count = 0;
 
 int test_var = 0;
 
-void fn_call()
+void test_func(void)
 {
-	test_var = 1;
+    test_var++;
+}
+
+void test_func2(void)
+{
+    test_var += 2;
 }
 
 
-static char * test_call()
+static char * test_fn_add_overflow(void)
 {
-    vic_fn_call("call");
+    char name[VIC_FUNC_NAME_LEN + 1] = {0x01};
+    name[VIC_FUNC_NAME_LEN] = '\0';
+
+    int i, j;
+    for (i = 0; i < VIC_FUNCS_COUNT; i++) {
+        /* create new name */
+        for (j = 0; j < VIC_FUNC_NAME_LEN; j++) {
+            if (name[j] < 0xFF) {
+                name[j]++;
+                break;
+            }
+            name[j] = 0x01;
+        }
+        vic_fn_add(name, test_func);
+    }
+
+    mu_assert(vic_fn_add("a", test_func) != VIC_ERR_NO);
+
+    return 0;
+}
+
+static char * test_fn_add_long_name(void)
+{
+    char true_name[VIC_FUNC_NAME_LEN + 1] = {'a'};
+    char name[VIC_FUNC_NAME_LEN + 3] = {'a'};
+    name[VIC_FUNC_NAME_LEN + 2] = '\0';
+    true_name[VIC_FUNC_NAME_LEN] = '\0';
+
+    test_var = 0;
+    vic_fn_add(name, test_func);
+    vic_fn_call(true_name);
+
     mu_assert(test_var == 1);
+
     return 0;
 }
 
-static char * test_set()
+static char * test_fn_call(void)
 {
-    char in[] = "set x (echo 'a');";
-    char* output = vic_exec(in);
-    mu_assert(strcmp(vic_var_get("x"), "a") == 0);
-    free(output);
+    test_var = 0;
+    char *name = "calltest";
+    vic_fn_add(name, test_func);
+    vic_fn_call(name);
+    vic_fn_call(name);
+    vic_fn_call(name);
 
-    output = vic_exec("set y (+ 3 2);");
-    mu_assert(strcmp(vic_var_get("y"), "5") == 0);
+    mu_assert(test_var == 3);
 
-    free(output);
     return 0;
 }
 
-static char * test_compute()
+static char * test_fn_call_wrong_name(void)
 {
-    char in[] = "+ (+ 1 2) (+ 2 3);";
-    char* output = vic_exec(in);
+    test_var = 0;
+    vic_fn_add("name", test_func);
 
-    mu_assert(strcmp(output, "8\n") == 0);
-    free(output);
-
-    output = vic_exec("+ 20 (+ (+ 1 1) (+ 2 2));");
-
-    mu_assert(strcmp(output, "26\n") == 0);
-    free(output);
-
-    output = vic_exec("+ 20 (+ (+ 1 1) (- 2 2));");
-
-    dprint_str(output);
-    mu_assert(strcmp(output, "22\n") == 0);
-    free(output);
-
+    mu_assert(vic_fn_call("wrongname") == VIC_ERR_FUNC_WRONG_NAME);
+    mu_assert(test_var == 0);
 
     return 0;
-
 }
 
-
-static char * all_tests()
+static char * test_fn_rm(void)
 {
+    vic_fn_add("name", test_func);
+    vic_fn_add("name2", test_func);
+    vic_fn_add("name3", test_func);
 
-    vic_init();
-    vic_debug(1);
+    mu_assert(vic_fn_rm("name2") == VIC_ERR_NO);
+    mu_assert(vic_fn_rm("name2") == VIC_ERR_FUNC_WRONG_NAME);
 
-    vic_fn_add("call", &fn_call);
+    return 0;
+}
 
-    mu_run_test(test_call);
-    mu_run_test(test_set);
-    mu_run_test(test_compute);
+static char * test_fn_overwrite(void)
+{
+    test_var = 0;
+    vic_fn_add("name", test_func);
+    vic_fn_call("name");
+    vic_fn_add("name", test_func2);
+
+    mu_assert(vic_fn_call("name") == VIC_ERR_NO);
+    mu_assert(test_var == 3);
+
+    return 0;
+}
+
+static char * all_tests(void)
+{
+    mu_run_test(test_fn_add_overflow);
+    vic_funcs_clear();
+
+    mu_run_test(test_fn_add_long_name);
+    vic_funcs_clear();
+
+    mu_run_test(test_fn_call);
+    vic_funcs_clear();
+
+    mu_run_test(test_fn_call_wrong_name);
+    vic_funcs_clear();
+
+    mu_run_test(test_fn_rm);
+    vic_funcs_clear();
+
+    mu_run_test(test_fn_overwrite);
+
     return 0;
 }
 
 
 int main(void)
 {
+    vic_init();
+
     char *result = all_tests();
 
     if (result == 0){

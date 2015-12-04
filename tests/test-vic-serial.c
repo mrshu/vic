@@ -57,9 +57,12 @@ static char * all_tests()
 {
     mu_run_test(test_process);
     vic_buffer_clear();
+
     mu_run_test(test_process_backspace);
     vic_buffer_clear();
+
     mu_run_test(test_process_long_line);
+
     return 0;
 }
 
