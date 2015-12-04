@@ -17,15 +17,6 @@ void test_func2(void)
     test_var += 2;
 }
 
-static char * test_fn_add_easy(void)
-{
-    vic_fn_add("test", test_func);
-
-    mu_assert(strcmp(vic_funcs[0].name, "test") == 0);
-    mu_assert(vic_funcs[0].p_func == &test_func);
-
-    return 0;
-}
 
 static char * test_fn_add_overflow(void)
 {
@@ -57,9 +48,11 @@ static char * test_fn_add_long_name(void)
     name[VIC_FUNC_NAME_LEN + 2] = '\0';
     true_name[VIC_FUNC_NAME_LEN] = '\0';
 
+    test_var = 0;
     vic_fn_add(name, test_func);
+    vic_fn_call(true_name);
 
-    mu_assert(strcmp(vic_funcs[0].name, true_name) == 0);
+    mu_assert(test_var == 1);
 
     return 0;
 }
@@ -117,9 +110,6 @@ static char * test_fn_overwrite(void)
 static char * all_tests(void)
 {
     mu_run_test(test_fn_add_overflow);
-    vic_funcs_clear();
-
-    mu_run_test(test_fn_add_easy);
     vic_funcs_clear();
 
     mu_run_test(test_fn_add_long_name);
