@@ -1,0 +1,4 @@
+install: make
+language: c
+complier: gcc
+script: cd tests && make all-tests
