@@ -9,7 +9,7 @@
 
 
 int vic_buffer_len = 0;
-char vic_buffer[VIC_BUFFER_SIZE] = {'\0'};
+char vic_buffer[VIC_BUFFER_SIZE + 1] = {'\0'};
 
 
 void vic_buffer_clear(void)
@@ -39,6 +39,9 @@ void vic_process(char input)
 {
     if (input == (char)0x08) { /* backspace */
         vic_buffer_pop();
+    } else if (input == '\n') { /* new line */
+        vic_exec(vic_buffer);
+        vic_buffer_clear();
     } else {
         vic_buffer_append(input);
     }
