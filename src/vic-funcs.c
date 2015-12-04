@@ -20,9 +20,22 @@ int vic_fn_add(const char *raw_name, void (*p_func)(void))
         return VIC_FUNC_INSUFFICIENT_SPACE;
     }
 
+    char name[VIC_FUNC_NAME_LEN+1];
+    vic_prepare_name(raw_name, name);
+
+    int i;
+    /* traverse vic_funcs to find out if there already is this function */
+    for (i = 0; i < vic_funcs_len; i++) {
+        /* if yes, overwrite it */
+        if (strcmp(name, vic_funcs[i].name) == 0) {
+            vic_funcs[i].p_func = p_func;
+            return VIC_NO_ERR;
+        }
+    }
+    /* if not, make new one */
     VIC_FUNC new_func;
-    vic_prepare_name(raw_name, new_func.name);
     new_func.p_func = p_func;
+    strcpy(new_func.name, name);
     vic_funcs[vic_funcs_len] = new_func;
 
     vic_funcs_len++;

@@ -12,6 +12,11 @@ void test_func(void)
     test_var++;
 }
 
+void test_func2(void)
+{
+    test_var += 2;
+}
+
 static char * test_fn_add_easy(void)
 {
     vic_fn_add("test", test_func);
@@ -24,9 +29,20 @@ static char * test_fn_add_easy(void)
 
 static char * test_fn_add_overflow(void)
 {
-    int i;
+    char name[VIC_FUNC_NAME_LEN + 1] = {0x01};
+    name[VIC_FUNC_NAME_LEN] = '\0';
+
+    int i, j;
     for (i = 0; i < VIC_FUNCS_COUNT; i++) {
-        vic_fn_add("test", test_func);
+        /* create new name */
+        for (j = 0; j < VIC_FUNC_NAME_LEN; j++) {
+            if (name[j] < 0xFF) {
+                name[j]++;
+                break;
+            }
+            name[j] = 0x01;
+        }
+        vic_fn_add(name, test_func);
     }
 
     mu_assert(vic_fn_add("a", test_func) != VIC_NO_ERR);
@@ -85,6 +101,19 @@ static char * test_fn_rm(void)
     return 0;
 }
 
+static char * test_fn_overwrite(void)
+{
+    test_var = 0;
+    vic_fn_add("name", test_func);
+    vic_fn_call("name");
+    vic_fn_add("name", test_func2);
+
+    mu_assert(vic_fn_call("name") == VIC_NO_ERR);
+    mu_assert(test_var == 3);
+
+    return 0;
+}
+
 static char * all_tests(void)
 {
     mu_run_test(test_fn_add_overflow);
@@ -98,6 +127,8 @@ static char * all_tests(void)
     mu_run_test(test_fn_call_wrong_name);
     vic_funcs_clear();
     mu_run_test(test_fn_rm);
+    vic_funcs_clear();
+    mu_run_test(test_fn_overwrite);
 
     return 0;
 }
