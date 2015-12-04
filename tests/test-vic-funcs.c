@@ -7,12 +7,12 @@ int tests_count = 0;
 
 int test_var = 0;
 
-void test_func(void)
+static void test_func(void)
 {
     test_var++;
 }
 
-void test_func2(void)
+static void test_func2(void)
 {
     test_var += 2;
 }

@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include <string.h>
 
-void vic_exec(char *input)
+int vic_exec(char *input)
 {
     int start = 0, end;
     /* find start of func name */
@@ -16,7 +16,7 @@ void vic_exec(char *input)
     
     /* end of line */
     if (input[start] == '\0') {
-        return;
+        return VIC_ERR_NO;
     }
 
     end = start;
@@ -30,7 +30,9 @@ void vic_exec(char *input)
     }
     input[end] = '\0';
 
-    vic_fn_call(input + start);
+    return vic_fn_call(input + start);
 }
 
 #endif
+
+/* vim: set tabstop=4:softtabstop=4:shiftwidth=4:expandtabs */

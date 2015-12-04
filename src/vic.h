@@ -1,5 +1,5 @@
 #ifndef _VIC_H
-#define _VIC_H 1
+#define _VIC_H
 
 #include <stdlib.h>
 #include <string.h>
@@ -38,7 +38,7 @@ int vic_fn_rm(const char *raw_name);
 void vic_funcs_clear(void);
 
 /* vic-exec.c */
-void vic_exec(char *line);
+int vic_exec(char *line);
 
 /* vic.c */
 void vic_init();
