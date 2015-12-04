@@ -21,7 +21,7 @@ test-vic-exec: test-vic-exec.c
 	$(C) test-vic-exec.c -o test-vic-exec $(C_LIBS)
 	./test-vic-exec
 
-all-tests: test-vic-serial
+all-tests: test-vic-serial test-vic-funcs
 	@echo "All passed!"
 
 clean: 
