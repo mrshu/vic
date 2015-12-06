@@ -8,7 +8,7 @@ int tests_count = 0;
 
 static char * test_process()
 {
-    char in[] = "call\n";
+    char in[] = "call";
 
     int i;
     for(i = 0; i < strlen(in); i++){
@@ -21,7 +21,7 @@ static char * test_process()
 
 static char * test_process_backspace()
 {
-    char in[] = "call\n";
+    char in[] = "call";
 
     int i;
     for(i = 0; i < strlen(in); i++){
@@ -46,7 +46,6 @@ static char * test_process_long_line()
     for (i = 0; i < VIC_BUFFER_SIZE; i++){
         vic_process(in[i]);
     }
-    vic_process('\n');
     vic_process('\0');
     mu_assert(strcmp(vic_buffer, in) == 0);
 

@@ -1,5 +1,5 @@
 #ifndef _VIC_H
-#define _VIC_H 1
+#define _VIC_H
 
 #include <stdlib.h>
 #include <string.h>
@@ -22,7 +22,7 @@
 #define VIC_ERR_FUNC_WRONG_NAME 2
 
 /* vic-serial.c */
-extern char vic_buffer[VIC_BUFFER_SIZE];
+extern char vic_buffer[VIC_BUFFER_SIZE + 1];
 extern int vic_buffer_len;
 
 void vic_buffer_append(char i);
@@ -36,6 +36,9 @@ int vic_fn_add(const char *raw_name, void (*p_func)(void));
 int vic_fn_call(const char *raw_name);
 int vic_fn_rm(const char *raw_name);
 void vic_funcs_clear(void);
+
+/* vic-exec.c */
+int vic_exec(char *line);
 
 /* vic.c */
 void vic_init();
