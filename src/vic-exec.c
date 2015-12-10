@@ -6,6 +6,8 @@
 #include <ctype.h>
 #include <string.h>
 
+char *vic_args_s = NULL;
+
 int vic_exec(char *input)
 {
     int start = 0, end;
@@ -30,7 +32,11 @@ int vic_exec(char *input)
     }
     input[end] = '\0';
 
-    return vic_fn_call(input + start);
+    vic_args_s = input + end + 1;
+    int error = vic_fn_call(input + start);
+    vic_args_s = NULL;
+
+    return error;
 }
 
 #endif

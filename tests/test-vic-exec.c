@@ -12,6 +12,13 @@ static void test_func(void)
     test_var++;
 }
 
+static void test_par(void)
+{
+    int a, b;
+    sscanf(vic_args_s, "%d %d", &a, &b);
+    test_var = a + b;
+}
+
 static char * test_exec_func(void)
 {
     test_var = 0;
@@ -29,9 +36,26 @@ static char * test_exec_func(void)
     return 0;
 }
 
+static char * test_exec_par_func(void)
+{
+    test_var = 0;
+    char in[] = "test_par  3 4  \n";
+    vic_fn_add("test_par", test_par);
+
+    int i;
+    for (i = 0; i < strlen(in); i++) {
+        vic_process(in[i]);
+    }
+
+    mu_assert(test_var == 7);
+
+    return 0;
+}
+
 static char * all_tests()
 {
     mu_run_test(test_exec_func);
+    mu_run_test(test_exec_par_func);
 
     return 0;
 }

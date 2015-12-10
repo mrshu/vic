@@ -38,6 +38,8 @@ int vic_fn_rm(const char *raw_name);
 void vic_funcs_clear(void);
 
 /* vic-exec.c */
+extern char *vic_args_s;
+
 int vic_exec(char *line);
 
 /* vic.c */
