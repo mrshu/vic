@@ -13,6 +13,8 @@
 #define vic_sys_out(x) printf("%c", x)
 #define vic_sys_println(x) printf("%s\n", x)
 
+#define vic_args(format, ...) (sscanf(vic_args_s, (format), __VA_ARGS__))
+
 #define VIC_PS1 "+> "
 #define VIC_BUFFER_SIZE 128
 #define VIC_FUNCS_COUNT 64

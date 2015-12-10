@@ -15,7 +15,7 @@ static void test_func(void)
 static void test_par(void)
 {
     int a, b;
-    sscanf(vic_args_s, "%d %d", &a, &b);
+    vic_args("%d %d", &a, &b);
     test_var = a + b;
 }
 
