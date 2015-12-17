@@ -21,7 +21,7 @@ int vic_fn_add(const char *raw_name, void (*p_func)(void))
     }
 
     char name[VIC_FUNC_NAME_LEN+1];
-    vic_prepare_name(raw_name, name);
+    vic_prepare_name(raw_name, name, VIC_FUNC_NAME_LEN);
 
     int i;
     /* traverse vic_funcs to find out if there already is this function */
@@ -45,7 +45,7 @@ int vic_fn_add(const char *raw_name, void (*p_func)(void))
 int vic_fn_call(const char *raw_name)
 {
     char name[VIC_FUNC_NAME_LEN + 1];
-    vic_prepare_name(raw_name, name);
+    vic_prepare_name(raw_name, name, VIC_FUNC_NAME_LEN);
     int i;
     for (i = 0; i < vic_funcs_len; i++) {
         if (strcmp(name, vic_funcs[i].name) == 0) {
@@ -60,7 +60,7 @@ int vic_fn_call(const char *raw_name)
 int vic_fn_rm(const char *raw_name)
 {
     char name[VIC_FUNC_NAME_LEN + 1];
-    vic_prepare_name(raw_name, name);
+    vic_prepare_name(raw_name, name, VIC_FUNC_NAME_LEN);
     int i;
     for (i = 0; i < vic_funcs_len; i++) {
         if (strcmp(name, vic_funcs[i].name) == 0) {
@@ -75,17 +75,6 @@ int vic_fn_rm(const char *raw_name)
         }
     }
     return VIC_ERR_FUNC_WRONG_NAME;
-}
-
-void vic_prepare_name(const char *raw_name,
-                      char name[VIC_FUNC_NAME_LEN+1])
-{
-    memset(name, '\0', VIC_FUNC_NAME_LEN + 1);
-    if (strlen(raw_name) > VIC_FUNC_NAME_LEN) {
-        memcpy(name, raw_name, VIC_FUNC_NAME_LEN);
-    } else {
-        strcpy(name, raw_name);
-    }
 }
 
 #endif

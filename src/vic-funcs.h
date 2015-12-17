@@ -8,7 +8,4 @@ struct vic_func_t {
     void (*p_func)(void);
 };
 
-void vic_prepare_name(const char *raw_name,
-                      char name[VIC_FUNC_NAME_LEN+1]);
-
 #endif

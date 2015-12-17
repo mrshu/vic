@@ -46,6 +46,7 @@ int vic_exec(char *line);
 
 /* vic.c */
 void vic_init();
+void vic_prepare_name(const char *raw_name, char *name, int len);
 
 #endif
 
