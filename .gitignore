@@ -16,4 +16,4 @@
 *.out
 *.app
 example
-shell
+./shell

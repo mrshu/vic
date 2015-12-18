@@ -11,15 +11,8 @@ INCLDEST=/usr/include
 libvic.a: $(OBJ)
 	ar rcs libvic.a $(OBJ)
 	
-shell: shell.c libvic.a
-	$(CC) shell.c -o vic -L. -lvic -I./src/
-
-arduino: $(OBJ)
-	rm src/*.o
-	cp src/* arduino/vic/src/
-	cp src/vic.h arduino/vic/vic.h
-	mkdir -p $(ARDUINODEST)
-	cp -R arduino/vic/* $(ARDUINODEST)
+shell: shell/shell.c libvic.a
+	$(CC) shell/shell.c -o vic -L. -lvic -I./src/
 
 install: libvic.a
 	install libvic.a $(DEST)/libvic.a
