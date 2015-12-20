@@ -20,25 +20,25 @@
 
 /* vic-serial.c */
 extern char vic_buffer[VIC_BUFFER_SIZE + 1];
-extern int vic_buffer_len;
+extern uint8_t vic_buffer_len;
 
 void vic_buffer_append(char i);
 void vic_process(char input);
 
 /* vic-funcs.c */
-int vic_fn_add(const char *raw_name, void (*p_func)(void));
-int vic_fn_call(const char *raw_name);
-int vic_fn_rm(const char *raw_name);
+int8_t vic_fn_add(const char *raw_name, void (*p_func)(void));
+int8_t vic_fn_call(const char *raw_name);
+int8_t vic_fn_rm(const char *raw_name);
 void vic_funcs_clear(void);
 
 /* vic-exec.c */
 extern char *vic_args_s;
 
-int vic_exec(char *line);
+int8_t vic_exec(char *line);
 
 /* vic.c */
 void vic_init();
-void vic_prepare_name(const char *raw_name, char *name, int len);
+void vic_prepare_name(const char *raw_name, char *name, uint8_t len);
 
 #endif
 

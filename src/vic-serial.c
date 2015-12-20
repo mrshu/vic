@@ -8,7 +8,7 @@
 #include <ctype.h>
 
 
-int vic_buffer_len = 0;
+uint8_t vic_buffer_len = 0;
 char vic_buffer[VIC_BUFFER_SIZE + 1] = {'\0'};
 
 

@@ -8,9 +8,9 @@
 
 char *vic_args_s = NULL;
 
-int vic_exec(char *input)
+int8_t vic_exec(char *input)
 {
-    int start = 0, end;
+    uint8_t start = 0, end;
     /* find start of func name */
     while (isspace(input[start])) {
         start++;
@@ -33,7 +33,7 @@ int vic_exec(char *input)
     input[end] = '\0';
 
     vic_args_s = input + end + 1;
-    int error = vic_fn_call(input + start);
+    int8_t error = vic_fn_call(input + start);
     vic_args_s = NULL;
 
     return error;
