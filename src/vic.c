@@ -1,6 +1,6 @@
 #include "vic.h"
 
-void vic_prepare_name(const char *raw_name, char *name, int len)
+void vic_prepare_name(const char *raw_name, char *name, uint8_t len)
 {
     memset(name, '\0', len + 1);
     if (strlen(raw_name) > len) {

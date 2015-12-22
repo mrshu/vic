@@ -5,7 +5,7 @@
 #include "vic-funcs.h"
 
 struct vic_func_t vic_funcs[VIC_FUNCS_COUNT];
-int vic_funcs_len = 0;
+uint8_t vic_funcs_len = 0;
 
 void vic_funcs_clear(void)
 {
@@ -13,7 +13,7 @@ void vic_funcs_clear(void)
     vic_funcs_len = 0;
 }
 
-int vic_fn_add(const char *raw_name, void (*p_func)(void))
+int8_t vic_fn_add(const char *raw_name, void (*p_func)(void))
 {
     /* there is no space for next function */
     if (vic_funcs_len == VIC_FUNCS_COUNT) {
@@ -23,7 +23,7 @@ int vic_fn_add(const char *raw_name, void (*p_func)(void))
     char name[VIC_FUNC_NAME_LEN+1];
     vic_prepare_name(raw_name, name, VIC_FUNC_NAME_LEN);
 
-    int i;
+    uint8_t i;
     /* traverse vic_funcs to find out if there already is this function */
     for (i = 0; i < vic_funcs_len; i++) {
         /* if yes, overwrite it */
@@ -42,11 +42,11 @@ int vic_fn_add(const char *raw_name, void (*p_func)(void))
     return VIC_ERR_NO;
 }
 
-int vic_fn_call(const char *raw_name)
+int8_t vic_fn_call(const char *raw_name)
 {
     char name[VIC_FUNC_NAME_LEN + 1];
     vic_prepare_name(raw_name, name, VIC_FUNC_NAME_LEN);
-    int i;
+    uint8_t i;
     for (i = 0; i < vic_funcs_len; i++) {
         if (strcmp(name, vic_funcs[i].name) == 0) {
             /* found function to call */
@@ -57,15 +57,15 @@ int vic_fn_call(const char *raw_name)
     return VIC_ERR_FUNC_WRONG_NAME;
 }
 
-int vic_fn_rm(const char *raw_name)
+int8_t vic_fn_rm(const char *raw_name)
 {
     char name[VIC_FUNC_NAME_LEN + 1];
     vic_prepare_name(raw_name, name, VIC_FUNC_NAME_LEN);
-    int i;
+    uint8_t i;
     for (i = 0; i < vic_funcs_len; i++) {
         if (strcmp(name, vic_funcs[i].name) == 0) {
             /* found function to remove */
-            int j;
+            uint8_t j;
             for (j = i; j < vic_funcs_len - 1; j++) {
                 vic_funcs[j].p_func = vic_funcs[j+1].p_func;
                 strcpy(vic_funcs[j].name, vic_funcs[j+1].name);
