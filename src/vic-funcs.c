@@ -15,11 +15,6 @@ void vic_funcs_clear(void)
 
 int8_t vic_fn_add(const char *raw_name, void (*p_func)(void))
 {
-    /* there is no space for next function */
-    if (vic_funcs_len == VIC_FUNCS_COUNT) {
-        return VIC_ERR_FUNC_INSUFFICIENT_SPACE;
-    }
-
     char name[VIC_FUNC_NAME_LEN+1];
     vic_prepare_name(raw_name, name, VIC_FUNC_NAME_LEN);
 
@@ -33,6 +28,12 @@ int8_t vic_fn_add(const char *raw_name, void (*p_func)(void))
         }
     }
     /* if not, make new one */
+
+    /* there is no space for next function */
+    if (vic_funcs_len == VIC_FUNCS_COUNT) {
+        return VIC_ERR_INSUFFICIENT_SPACE;
+    }
+
     struct vic_func_t new_func;
     new_func.p_func = p_func;
     strcpy(new_func.name, name);
@@ -54,7 +55,7 @@ int8_t vic_fn_call(const char *raw_name)
             return VIC_ERR_NO;
         }
     }
-    return VIC_ERR_FUNC_WRONG_NAME;
+    return VIC_ERR_WRONG_NAME;
 }
 
 int8_t vic_fn_rm(const char *raw_name)
@@ -74,7 +75,7 @@ int8_t vic_fn_rm(const char *raw_name)
             return VIC_ERR_NO;
         }
     }
-    return VIC_ERR_FUNC_WRONG_NAME;
+    return VIC_ERR_WRONG_NAME;
 }
 
 #endif

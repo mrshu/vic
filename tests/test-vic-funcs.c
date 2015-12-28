@@ -76,7 +76,7 @@ static char * test_fn_call_wrong_name(void)
     test_var = 0;
     vic_fn_add("name", test_func);
 
-    mu_assert(vic_fn_call("wrongname") == VIC_ERR_FUNC_WRONG_NAME);
+    mu_assert(vic_fn_call("wrongname") == VIC_ERR_WRONG_NAME);
     mu_assert(test_var == 0);
 
     return 0;
@@ -89,7 +89,7 @@ static char * test_fn_rm(void)
     vic_fn_add("name3", test_func);
 
     mu_assert(vic_fn_rm("name2") == VIC_ERR_NO);
-    mu_assert(vic_fn_rm("name2") == VIC_ERR_FUNC_WRONG_NAME);
+    mu_assert(vic_fn_rm("name2") == VIC_ERR_WRONG_NAME);
 
     return 0;
 }
