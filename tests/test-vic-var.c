@@ -1,84 +1,45 @@
 #include <stdio.h>
 #include "munit.h"
-
-#define DEBUG 1
 #include "../src/vic.h"
-
 
 int tests_passed = 0;
 int tests_count = 0;
 
-int test_var = 0;
-
-static char * test_simple_replace()
+static char * test_var_basic(void)
 {
-    char in[] = "$hello\0";
-    char* out = vic_var_replace(in);
-    mu_assert(strcmp(out, "hello world") == 0);
-    free(out);
+    char *var_name1 = "name";
+    char *var_name2 = "age";
+    char *right_value1 = "John";
+    int age = 17;
+    int *right_value2 = &age;
 
-    vic_var_set("a", "hey");
+    mu_assert(vic_var_set(var_name1, right_value1) == VIC_ERR_NO);
+    mu_assert(vic_var_set(var_name2, (char *)right_value2) == VIC_ERR_NO);
 
-    char in_a[] = "a=$a\0";
-    char* out_a = vic_var_replace(in_a);
-    mu_assert(strcmp(out_a, "a=hey") == 0);
-    dprint_str(out_a);
+    char *value1;
+    int *value2;
 
-    free(out_a);
+    vic_var_get(var_name1, &value1);
+    vic_var_get(var_name2, (char **)(&value2));
 
-    vic_var_set("name", "John");
-
-    char in_b[] = "Hey $name!\0";
-    char* out_b = vic_var_replace(in_b);
-    mu_assert(strcmp(out_b, "Hey John!") == 0);
-    dprint_str(out_b);
-
-    free(out_b);
-
-
-    vic_var_set("surname", "Travolta");
-    char in_c[] = "Hey $name $surname!\0";
-    char* out_c = vic_var_replace(in_c);
-    mu_assert(strcmp(out_c, "Hey John Travolta!") == 0);
-    dprint_str(out_c);
-
-    free(out_c);
-
-
-    vic_var_set("full_name", "John Travolta");
-    char in_d[] = "Hey $full_name!\0";
-    char* out_d = vic_var_replace(in_d);
-    mu_assert(strcmp(out_d, "Hey John Travolta!") == 0);
-    dprint_str(out_d);
-
-    free(out_d);
-
-
-
-    char in_e[] = "My name is $surname, $name $surname!\0";
-    char* out_e = vic_var_replace(in_e);
-    mu_assert(strcmp(out_e, "My name is Travolta, John Travolta!") == 0);
-    dprint_str(out_e);
-
-    free(out_e);
-
-
-
+    mu_assert(strcmp(value1, right_value1) == 0);
+    mu_assert(*value2 == *right_value2);
 
     return 0;
 }
 
-static char * all_tests()
+static char * all_tests(void)
 {
-    vic_var_set("hello", "hello world");
+    mu_run_test(test_var_basic);
 
-    mu_run_test(test_simple_replace);
     return 0;
 }
 
 
 int main(void)
 {
+    vic_init();
+
     char *result = all_tests();
 
     if (result == 0){

@@ -1,6 +1,6 @@
 CC=gcc -g -Wall
 OFLAGS=-lm
-OBJ=src/vic.o src/vic-serial.o src/vic-funcs.o src/vic-exec.o
+OBJ=src/vic.o src/vic-serial.o src/vic-funcs.o src/vic-exec.o src/vic-var.o
 
 DEST=/usr/lib
 INCLDEST=/usr/include
