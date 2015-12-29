@@ -24,8 +24,11 @@
 extern char vic_buffer[VIC_BUFFER_SIZE + 1];
 extern uint8_t vic_buffer_len;
 
+void vic_out(char c);
+void vic_print(char *s);
 void vic_buffer_append(char i);
 void vic_process(char input);
+void vic_output_set(void (*output_func)(char));
 
 /* vic-funcs.c */
 int8_t vic_fn_add(const char *raw_name, void (*p_func)(void));

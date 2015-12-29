@@ -10,7 +10,24 @@
 
 uint8_t vic_buffer_len = 0;
 char vic_buffer[VIC_BUFFER_SIZE + 1] = {'\0'};
+void (*vic_output_func)(char) = NULL;
 
+void vic_out(char c)
+{
+    if (vic_output_func != NULL) {
+        vic_output_func(c);
+    }
+}
+
+void vic_print(char *s)
+{
+    if (vic_output_func != NULL) {
+        while (*s != '\0') {
+            vic_output_func(*s);
+            s++;
+        }
+    }
+}
 
 void vic_buffer_clear(void)
 {
@@ -30,6 +47,13 @@ void vic_buffer_pop(void)
         vic_buffer[--vic_buffer_len] = '\0';
 }
 
+/*
+  User can handle output as he wants.
+*/
+void vic_output_set(void (*output_func)(char))
+{
+    vic_output_func = output_func;
+}
 
 /*
   Processes input stream.
