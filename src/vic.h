@@ -18,7 +18,7 @@
 
 #define VIC_ERR_NO 0
 #define VIC_ERR_INSUFFICIENT_SPACE 1
-#define VIC_ERR_WRONG_NAME 2
+#define VIC_ERR_INVALID_NAME 2
 
 /* vic-serial.c */
 extern char vic_buffer[VIC_BUFFER_SIZE + 1];

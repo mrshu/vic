@@ -51,7 +51,7 @@ int8_t vic_var_get(const char *raw_name, char **value_out)
         }
     }
     /* no variable with that name */
-    return VIC_ERR_WRONG_NAME;
+    return VIC_ERR_INVALID_NAME;
 }
 
 #endif

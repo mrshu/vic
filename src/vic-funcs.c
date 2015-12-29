@@ -55,7 +55,7 @@ int8_t vic_fn_call(const char *raw_name)
             return VIC_ERR_NO;
         }
     }
-    return VIC_ERR_WRONG_NAME;
+    return VIC_ERR_INVALID_NAME;
 }
 
 int8_t vic_fn_rm(const char *raw_name)
@@ -75,7 +75,7 @@ int8_t vic_fn_rm(const char *raw_name)
             return VIC_ERR_NO;
         }
     }
-    return VIC_ERR_WRONG_NAME;
+    return VIC_ERR_INVALID_NAME;
 }
 
 #endif
