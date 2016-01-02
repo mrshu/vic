@@ -31,11 +31,13 @@ void vic_get(void)
         return;
     }
 
-    char *value;
+    char *value = NULL;
     int8_t error = vic_var_get(var_name, &value);
 
     vic_print_err(error);
-    vic_println(value);
+    if (value != NULL) {
+        vic_println(value);
+    }
 }
 
 #endif

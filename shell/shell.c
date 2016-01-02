@@ -10,16 +10,14 @@
 int main(void)
 {
     vic_init();
-    while(1) {
-        char input[256];
-        vic_sys_print(VIC_PS1);
-        fgets(input, 256, stdin);
-        int i;
+    vic_output_set((void (*)(char))putchar);
+    while (1) {
+        vic_print(VIC_PS1);
 
-        for(i = 0; i < strlen(input); i++){
-            vic_process(input[i]);
+        char c;
+        while ((c = getchar()) != '\n') {
+            vic_process(c);
         }
-
         vic_process('\n');
     }
 
