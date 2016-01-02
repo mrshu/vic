@@ -2,6 +2,7 @@
 #define _VIC_EXEC
 
 #include "vic.h"
+#include "vic-funcs.h"
 
 #include <ctype.h>
 #include <string.h>
@@ -33,9 +34,17 @@ int8_t vic_exec(char *input)
     input[end] = '\0';
 
     vic_args_s = input + end + 1;
-    int8_t error = vic_fn_call(input + start);
-    vic_args_s = NULL;
+    char *command = input + start;
+    /* At first try to call intern function */
+    int8_t error = vic_fn_intern_call(command);
+    if (error == VIC_ERR_INVALID_NAME) {
+        /* No intern function with this name, try to call use defined one */
+        error = vic_fn_call(command);
+    }
 
+    vic_print_err(error);
+
+    vic_args_s = NULL;
     return error;
 }
 

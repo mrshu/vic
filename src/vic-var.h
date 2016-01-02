@@ -5,7 +5,7 @@
 
 struct vic_var_t {
     char name[VIC_VAR_NAME_LEN + 1];
-    char *p_value;
+    char value[VIC_VAR_VAL_LEN + 1];
 };
 
 #endif

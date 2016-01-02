@@ -91,12 +91,111 @@ static char * test_exec_bad_par_func_2(void)
     return 0;
 }
 
+/*
+  Testing intern functions
+*/
+
+#define BUFFER_LEN 128
+
+char buffer[BUFFER_LEN] = {'\0'};
+int buffer_i = 0;
+
+void print(char c)
+{
+    if (buffer_i < BUFFER_LEN - 1) {
+        buffer[buffer_i] = c;
+        buffer_i++;
+    }
+}
+
+static char * test_exec_set(void)
+{
+    int test_count = 4;
+
+    char *in[] = {
+        "  set  \n",
+        "   set name  \n",
+        " set name Peter \n",
+        "  set age 7 \n"
+    };
+    char *out[] = {
+        vic_err_msg[VIC_ERR_INVALID_ARGS],
+        vic_err_msg[VIC_ERR_INVALID_ARGS],
+        vic_err_msg[VIC_ERR_NO],
+        vic_err_msg[VIC_ERR_NO]
+    };
+
+    vic_output_set(print);
+
+    int test_i;
+    for (test_i = 0; test_i < test_count; test_i++) {
+        buffer_i = 0;
+        int i;
+        for (i = 0; i < strlen(in[test_i]); i++) {
+            vic_process(in[test_i][i]);
+        }
+        buffer[buffer_i] = '\0';
+
+        /*
+        printf("in: %sout: %s\n", in[test_i], buffer);
+        */
+
+        mu_assert(strcmp(buffer, out[test_i]) == 0);
+    }
+
+    return 0;
+}
+
+static char *test_exec_set_get(void)
+{
+    int test_count = 6;
+
+    char *in[] = {
+        " set name Peter \n",
+        "  set age 7 \n",
+        " get    \n",
+        "get age \n",
+        " get name\n",
+        "get   Peter \n"
+    };
+    char *out[] = {
+        vic_err_msg[VIC_ERR_NO],
+        vic_err_msg[VIC_ERR_NO],
+        vic_err_msg[VIC_ERR_INVALID_ARGS],
+        "7\n",
+        "Peter\n",
+        vic_err_msg[VIC_ERR_INVALID_NAME]
+    };
+
+    vic_output_set(print);
+
+    int test_i;
+    for (test_i = 0; test_i < test_count; test_i++) {
+        buffer_i = 0;
+        int i;
+        for (i = 0; i < strlen(in[test_i]); i++) {
+            vic_process(in[test_i][i]);
+        }
+        buffer[buffer_i] = '\0';
+
+        /*
+        printf("in: %sout: %s\n", in[test_i], buffer);
+        */
+
+        mu_assert(strcmp(buffer, out[test_i]) == 0);
+    }
+
+    return 0;
+}
+
 static char * all_tests()
 {
     mu_run_test(test_exec_func);
     mu_run_test(test_exec_par_func);
     mu_run_test(test_exec_bad_par_func);
     mu_run_test(test_exec_bad_par_func_2);
+    mu_run_test(test_exec_set);
+    mu_run_test(test_exec_set_get);
 
     return 0;
 }

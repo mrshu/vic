@@ -1,14 +1,18 @@
 #include "vic.h"
 
-void vic_prepare_name(const char *raw_name, char *name, uint8_t len)
-{
-    memset(name, '\0', len + 1);
-    if (strlen(raw_name) > len) {
-        memcpy(name, raw_name, len);
-    } else {
-        strcpy(name, raw_name);
-    }
-}
+char *vic_err_msg[] = {
+    /* VIC_ERR_NO */
+    "",
+
+    /* VIC_ERR_INSUFFICIENT_SPACE */
+    "ERROR: No memory for new variable or function\n",
+
+    /* VIC_ERR_INVALID_NAME */
+    "ERROR: Invalid name\n",
+
+    /* VIC_ERR_INVALID_ARGS */
+    "ERROR: Arguments are of invalid type or there is wrong count of them\n"
+};
 
 void vic_init()
 {
