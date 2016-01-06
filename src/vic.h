@@ -45,7 +45,7 @@ int8_t vic_fn_rm(const char *raw_name);
 void vic_funcs_clear(void);
 
 /* vic-var.c */
-int8_t vic_var_set(const char *raw_name, char *value);
+int8_t vic_var_set(const char *raw_name, const char *value);
 int8_t vic_var_get(const char *raw_name, char **value_out);
 
 /* vic-exec.c */

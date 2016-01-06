@@ -7,9 +7,9 @@
 struct vic_var_t vic_vars[VIC_VARS_COUNT];
 uint8_t vic_vars_len = 0;
 
-int8_t vic_var_set(const char *raw_name, char *value)
+int8_t vic_var_set(const char *raw_name, const char *value)
 {
-    char name[VIC_VAR_NAME_LEN+1];
+    char name[VIC_VAR_NAME_LEN+1] = {'\0'};
 
     strncpy(name, raw_name, VIC_VAR_NAME_LEN);
 
@@ -32,6 +32,7 @@ int8_t vic_var_set(const char *raw_name, char *value)
     struct vic_var_t new_var;
     strcpy(new_var.name, name);
     strncpy(new_var.value, value, VIC_VAR_VAL_LEN);
+    new_var.value[VIC_VAR_VAL_LEN] = '\0';
     vic_vars[vic_vars_len] = new_var;
 
     vic_vars_len++;
@@ -40,7 +41,7 @@ int8_t vic_var_set(const char *raw_name, char *value)
 
 int8_t vic_var_get(const char *raw_name, char **value_out)
 {
-    char name[VIC_VAR_NAME_LEN+1];
+    char name[VIC_VAR_NAME_LEN+1] = {'\0'};
     strncpy(name, raw_name, VIC_VAR_NAME_LEN);
 
     uint8_t i;

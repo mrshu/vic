@@ -50,7 +50,7 @@ int8_t vic_fn_add(const char *raw_name, void (*p_func)(void))
 
 int8_t vic_fn_call(const char *raw_name)
 {
-    char name[VIC_FUNC_NAME_LEN + 1];
+    char name[VIC_FUNC_NAME_LEN + 1] = {'\0'};
     strncpy(name, raw_name, VIC_FUNC_NAME_LEN);
 
     uint8_t i;
@@ -66,7 +66,7 @@ int8_t vic_fn_call(const char *raw_name)
 
 int8_t vic_fn_intern_call(const char *raw_name)
 {
-    char name[VIC_FUNC_NAME_LEN + 1];
+    char name[VIC_FUNC_NAME_LEN + 1] = {'\0'};
     strncpy(name, raw_name, VIC_FUNC_NAME_LEN);
 
     uint8_t i;
@@ -82,7 +82,7 @@ int8_t vic_fn_intern_call(const char *raw_name)
 
 int8_t vic_fn_rm(const char *raw_name)
 {
-    char name[VIC_FUNC_NAME_LEN + 1];
+    char name[VIC_FUNC_NAME_LEN + 1] = {'\0'};
     strncpy(name, raw_name, VIC_FUNC_NAME_LEN);
 
     uint8_t i;

@@ -110,17 +110,19 @@ void print(char c)
 
 static char * test_exec_set(void)
 {
-    int test_count = 4;
+    int test_count = 5;
 
     char *in[] = {
         "  set  \n",
         "   set name  \n",
         " set name Peter \n",
+        "set very_long_variable_name   very_long_variable_value \n",
         "  set age 7 \n"
     };
     char *out[] = {
         vic_err_msg[VIC_ERR_INVALID_ARGS],
         vic_err_msg[VIC_ERR_INVALID_ARGS],
+        vic_err_msg[VIC_ERR_NO],
         vic_err_msg[VIC_ERR_NO],
         vic_err_msg[VIC_ERR_NO]
     };
@@ -148,7 +150,7 @@ static char * test_exec_set(void)
 
 static char *test_exec_set_get(void)
 {
-    int test_count = 6;
+    int test_count = 12;
 
     char *in[] = {
         " set name Peter \n",
@@ -156,7 +158,13 @@ static char *test_exec_set_get(void)
         " get    \n",
         "get age \n",
         " get name\n",
-        "get   Peter \n"
+        "get   Peter \n",
+        "set name Johny\n",
+        "set age 1000000\n",
+        "get name\n",
+        "get age\n",
+        "set too_long_var_name value\n",
+        "get too_long_var_name\n"
     };
     char *out[] = {
         vic_err_msg[VIC_ERR_NO],
@@ -164,7 +172,13 @@ static char *test_exec_set_get(void)
         vic_err_msg[VIC_ERR_INVALID_ARGS],
         "7\n",
         "Peter\n",
-        vic_err_msg[VIC_ERR_INVALID_NAME]
+        vic_err_msg[VIC_ERR_INVALID_NAME],
+        vic_err_msg[VIC_ERR_NO],
+        vic_err_msg[VIC_ERR_NO],
+        "Johny\n",
+        "1000000\n",
+        vic_err_msg[VIC_ERR_NO],
+        "value\n"
     };
 
     vic_output_set(print);
