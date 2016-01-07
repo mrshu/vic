@@ -35,12 +35,8 @@ int8_t vic_exec(char *input)
 
     vic_args_s = input + end + 1;
     char *command = input + start;
-    /* At first try to call intern function */
-    int8_t error = vic_fn_intern_call(command);
-    if (error == VIC_ERR_INVALID_NAME) {
-        /* No intern function with this name, try to call use defined one */
-        error = vic_fn_call(command);
-    }
+
+    int8_t error = vic_fn_call(command);
 
     vic_print_err(error);
 
