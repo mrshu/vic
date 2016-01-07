@@ -11,5 +11,6 @@
 #include "src/vic-serial.c"
 #include "src/vic-exec.c"
 #include "src/vic-var.c"
+#include "src/vic-stdlib.c"
 
 /* vim: set tabstop=4:softtabstop=4:shiftwidth=4:expandtabs */

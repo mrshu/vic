@@ -7,17 +7,18 @@
 struct vic_var_t vic_vars[VIC_VARS_COUNT];
 uint8_t vic_vars_len = 0;
 
-int8_t vic_var_set(const char *raw_name, char *value)
+int8_t vic_var_set(const char *raw_name, const char *value)
 {
-    char name[VIC_VAR_NAME_LEN+1];
-    vic_prepare_name(raw_name, name, VIC_VAR_NAME_LEN);
+    char name[VIC_VAR_NAME_LEN+1] = {'\0'};
+
+    strncpy(name, raw_name, VIC_VAR_NAME_LEN);
 
     uint8_t i;
     /* find variable in vic_vars array */
     for (i = 0; i < vic_vars_len; i++) {
         /* set value to variable when found */
         if (strcmp(name, vic_vars[i].name) == 0) {
-            vic_vars[i].p_value = value;
+            strncpy(vic_vars[i].value, value, VIC_VAR_VAL_LEN);
             return VIC_ERR_NO;
         }
     }
@@ -29,8 +30,9 @@ int8_t vic_var_set(const char *raw_name, char *value)
     }
 
     struct vic_var_t new_var;
-    new_var.p_value = value;
     strcpy(new_var.name, name);
+    strncpy(new_var.value, value, VIC_VAR_VAL_LEN);
+    new_var.value[VIC_VAR_VAL_LEN] = '\0';
     vic_vars[vic_vars_len] = new_var;
 
     vic_vars_len++;
@@ -39,14 +41,14 @@ int8_t vic_var_set(const char *raw_name, char *value)
 
 int8_t vic_var_get(const char *raw_name, char **value_out)
 {
-    char name[VIC_VAR_NAME_LEN+1];
-    vic_prepare_name(raw_name, name, VIC_VAR_NAME_LEN);
+    char name[VIC_VAR_NAME_LEN+1] = {'\0'};
+    strncpy(name, raw_name, VIC_VAR_NAME_LEN);
 
     uint8_t i;
     for (i = 0; i < vic_vars_len; i++) {
         if (strcmp(name, vic_vars[i].name) == 0) {
             /* found variable with that name */
-            *value_out = vic_vars[i].p_value;
+            *value_out = (char *)vic_vars[i].value;
             return VIC_ERR_NO;
         }
     }

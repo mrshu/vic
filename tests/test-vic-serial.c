@@ -6,7 +6,7 @@
 int tests_passed = 0;
 int tests_count = 0;
 
-static char * test_process()
+static char * test_process(void)
 {
     char in[] = "call";
 
@@ -19,7 +19,7 @@ static char * test_process()
     return 0;
 }
 
-static char * test_process_backspace()
+static char * test_process_backspace(void)
 {
     char in[] = "call";
 
@@ -38,7 +38,7 @@ static char * test_process_backspace()
     return 0;
 }
 
-static char * test_process_long_line()
+static char * test_process_long_line(void)
 {
     char in[VIC_BUFFER_SIZE] = {'a'};
 
@@ -52,7 +52,32 @@ static char * test_process_long_line()
     return 0;
 }
 
-static char * all_tests()
+char last_printed;
+
+void print(char c)
+{
+    putchar(c);
+    last_printed = c;
+}
+
+static char * test_output(void)
+{
+    char in1[] = "Hello world\n";
+    char in2 = 'X';
+
+    vic_output_set(print);
+    vic_print(in1);
+
+    mu_assert(in1[strlen(in1)-1] == last_printed);
+
+    vic_out(in2);
+
+    mu_assert(in2 == last_printed);
+
+    return 0;
+}
+
+static char * all_tests(void)
 {
     mu_run_test(test_process);
     vic_buffer_clear();
@@ -61,6 +86,9 @@ static char * all_tests()
     vic_buffer_clear();
 
     mu_run_test(test_process_long_line);
+    vic_buffer_clear();
+
+    mu_run_test(test_output);
 
     return 0;
 }
