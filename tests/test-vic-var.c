@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include "munit.h"
 #include "../src/vic.h"
 
@@ -28,9 +29,91 @@ static char * test_var_basic(void)
     return 0;
 }
 
+static char * test_var_bind_uint(void)
+{
+    char *var_name = "num";
+    char *str_value_8 = "255";
+    char *str_value_16 = "65535";
+    uint8_t value_8;
+    uint16_t value_16;
+
+    vic_var_set(var_name, str_value_8);
+    vic_var_bind(var_name, &value_8, VIC_VAR_UINT8);
+    mu_assert(value_8 == atol(str_value_8));
+
+    vic_var_set(var_name, str_value_16);
+    vic_var_bind(var_name, &value_16, VIC_VAR_UINT16);
+    mu_assert(value_16 == atol(str_value_16));
+
+    str_value_8 = "0";
+    str_value_16 = "0";
+
+    vic_var_set(var_name, str_value_8);
+    vic_var_bind(var_name, &value_8, VIC_VAR_UINT8);
+    mu_assert(value_8 == atol(str_value_8));
+
+    vic_var_set(var_name, str_value_16);
+    vic_var_bind(var_name, &value_16, VIC_VAR_UINT16);
+    mu_assert(value_16 == atol(str_value_16));
+
+    return 0;
+}
+
+static char * test_var_bind_int(void)
+{
+    char *var_name = "num";
+    char *str_value_8 = "127";
+    char *str_value_16 = "32767";
+    int8_t value_8;
+    int16_t value_16;
+
+    vic_var_set(var_name, str_value_8);
+    vic_var_bind(var_name, &value_8, VIC_VAR_INT8);
+    mu_assert(value_8 == atol(str_value_8));
+
+    vic_var_set(var_name, str_value_16);
+    vic_var_bind(var_name, &value_16, VIC_VAR_INT16);
+    mu_assert(value_16 == atol(str_value_16));
+
+    str_value_8 = "-128";
+    str_value_16 = "-32768";
+
+    vic_var_set(var_name, str_value_8);
+    vic_var_bind(var_name, &value_8, VIC_VAR_INT8);
+    mu_assert(value_8 == atol(str_value_8));
+
+    vic_var_set(var_name, str_value_16);
+    vic_var_bind(var_name, &value_16, VIC_VAR_INT16);
+    mu_assert(value_16 == atol(str_value_16));
+
+    return 0;
+}
+
+static char * test_var_bind_float(void)
+{
+    char *var_name = "num";
+    char *str_value = "12.345";
+    float value;
+
+    vic_var_set(var_name, str_value);
+    vic_var_bind(var_name, &value, VIC_VAR_FLOAT);
+    mu_assert(fabs(value - atof(str_value)) < 0.001f);
+
+    return 0;
+}
+
 static char * all_tests(void)
 {
     mu_run_test(test_var_basic);
+    vic_vars_clear();
+
+    mu_run_test(test_var_bind_uint);
+    vic_vars_clear();
+
+    mu_run_test(test_var_bind_int);
+    vic_vars_clear();
+
+    mu_run_test(test_var_bind_float);
 
     return 0;
 }

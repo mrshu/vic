@@ -19,6 +19,17 @@
 #define VIC_VAR_NAME_LEN 6
 #define VIC_VAR_VAL_LEN 10
 
+#define VIC_VAR_NONE 0x00
+#define VIC_VAR_INT8 0x01
+#define VIC_VAR_UINT8 0x02
+#define VIC_VAR_INT16 0x03
+#define VIC_VAR_UINT16 0x04
+/*
+#define VIC_VAR_INT32 0x05
+#define VIC_VAR_UINT32 0x06
+*/
+#define VIC_VAR_FLOAT 0x07
+
 #define VIC_ERR_NO 0
 #define VIC_ERR_INSUFFICIENT_SPACE 1
 #define VIC_ERR_INVALID_NAME 2
@@ -47,6 +58,8 @@ void vic_funcs_clear(void);
 /* vic-var.c */
 int8_t vic_var_set(const char *raw_name, const char *value);
 int8_t vic_var_get(const char *raw_name, char **value_out);
+int8_t vic_var_bind(const char *raw_name, void *bind_val, const uint8_t type);
+void vic_vars_clear(void);
 
 /* vic-exec.c */
 extern char *vic_args_s;
