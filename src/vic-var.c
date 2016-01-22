@@ -154,7 +154,7 @@ void vic_var_update_value(struct vic_var_t *vic_var)
             return;
         */
         case VIC_VAR_FLOAT :
-#ifdef ARDUINO
+#ifdef ARDUINO /* snprintf %f doesn't work with arduino */
             f = *((float *)vic_var->bind_val);
             snprintf(vic_var->value, VIC_VAR_VAL_LEN, "%d.%02d",
                     (int)f, abs((int)((f - (int)f) * 100)));

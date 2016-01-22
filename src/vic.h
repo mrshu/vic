@@ -30,7 +30,7 @@
 #define VIC_FUNCS_COUNT 8
 #define VIC_VARS_COUNT 8
 
-#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega32U4__) /* 2,2.5 kB */
+#elif defined(__AVR_ATmega328P__) || defined(__AVR_ATmega32U4__)/* 2, 2.5 kB */
 
 #define VIC_FUNCS_COUNT 16
 #define VIC_VARS_COUNT 16

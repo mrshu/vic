@@ -15,8 +15,12 @@ const char _err_msg_2[] PROGMEM = \
 const char _err_msg_3[] PROGMEM = \
     "ERROR: Arguments are of invalid type or there is wrong count of them\n";
 
-const char * const vic_err_msg[] PROGMEM = {_err_msg_0, _err_msg_1,
-    _err_msg_2, _err_msg_3};
+const char * const vic_err_msg[] PROGMEM = {
+    _err_msg_0,
+    _err_msg_1,
+    _err_msg_2,
+    _err_msg_3
+};
 
 void vic_init()
 {
