@@ -19,7 +19,7 @@ void vic_out(char c)
     }
 }
 
-void vic_print(char *s)
+void vic_print(const char *s)
 {
     if (vic_output_func != NULL) {
         while (*s != '\0') {
@@ -27,6 +27,14 @@ void vic_print(char *s)
             s++;
         }
     }
+}
+
+void vic_print_err(uint8_t id)
+{
+    static char buffer[VIC_BUFFER_SIZE + 1];
+    strncpy_P(buffer, (char*)pgm_read_word(&vic_err_msg[id]), VIC_BUFFER_SIZE);
+    buffer[VIC_BUFFER_SIZE] = '\0';
+    vic_print(buffer);
 }
 
 void vic_buffer_clear(void)

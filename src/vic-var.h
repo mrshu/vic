@@ -11,7 +11,10 @@ struct vic_var_t {
     uint8_t type;
 };
 
-void vic_var_set_bind_val(struct vic_var_t *vic_var);
+/* sets value to bind_val */
+void vic_var_update_bind_val(struct vic_var_t *vic_var);
+/* sets bind_val to value */
+void vic_var_update_value(struct vic_var_t *vic_var);
 
 #endif
 

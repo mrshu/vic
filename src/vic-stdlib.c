@@ -20,7 +20,7 @@ void vic_set(void)
         return;
     }
 
-    int8_t error = vic_var_set(var_name, var_val);
+    uint8_t error = vic_var_set(var_name, var_val);
 
     vic_print_err(error);
 }
@@ -36,7 +36,7 @@ void vic_get(void)
     }
 
     char *value = NULL;
-    int8_t error = vic_var_get(var_name, &value);
+    uint8_t error = vic_var_get(var_name, &value);
 
     vic_print_err(error);
     if (value != NULL) {
