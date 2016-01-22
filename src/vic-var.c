@@ -13,7 +13,7 @@ void vic_vars_clear(void)
     vic_vars_len = 0;
 }
 
-int8_t vic_var_set(const char *raw_name, const char *value)
+uint8_t vic_var_set(const char *raw_name, const char *value)
 {
     char name[VIC_VAR_NAME_LEN+1] = {'\0'};
 
@@ -25,7 +25,7 @@ int8_t vic_var_set(const char *raw_name, const char *value)
         /* set value to variable when found */
         if (strcmp(name, vic_vars[i].name) == 0) {
             strncpy(vic_vars[i].value, value, VIC_VAR_VAL_LEN);
-            vic_var_set_bind_val(&vic_vars[i]);
+            vic_var_update_bind_val(&vic_vars[i]);
             return VIC_ERR_NO;
         }
     }
@@ -49,7 +49,7 @@ int8_t vic_var_set(const char *raw_name, const char *value)
     return VIC_ERR_NO;
 }
 
-int8_t vic_var_get(const char *raw_name, char **value_out)
+uint8_t vic_var_get(const char *raw_name, char **value_out)
 {
     char name[VIC_VAR_NAME_LEN+1] = {'\0'};
     strncpy(name, raw_name, VIC_VAR_NAME_LEN);
@@ -58,6 +58,7 @@ int8_t vic_var_get(const char *raw_name, char **value_out)
     for (i = 0; i < vic_vars_len; i++) {
         if (strcmp(name, vic_vars[i].name) == 0) {
             /* found variable with that name */
+            vic_var_update_value(&vic_vars[i]);
             *value_out = (char *)vic_vars[i].value;
             return VIC_ERR_NO;
         }
@@ -66,7 +67,7 @@ int8_t vic_var_get(const char *raw_name, char **value_out)
     return VIC_ERR_INVALID_NAME;
 }
 
-int8_t vic_var_bind(const char *raw_name, void *bind_val, const uint8_t type)
+uint8_t vic_var_bind(const char *raw_name, void *bind_val, const uint8_t type)
 {
     char name[VIC_VAR_NAME_LEN+1] = {'\0'};
     strncpy(name, raw_name, VIC_VAR_NAME_LEN);
@@ -77,7 +78,7 @@ int8_t vic_var_bind(const char *raw_name, void *bind_val, const uint8_t type)
             /* found variable with that name */
             vic_vars[i].bind_val = bind_val;
             vic_vars[i].type = type;
-            vic_var_set_bind_val(&vic_vars[i]);
+            vic_var_update_bind_val(&vic_vars[i]);
             return VIC_ERR_NO;
         }
     }
@@ -85,7 +86,7 @@ int8_t vic_var_bind(const char *raw_name, void *bind_val, const uint8_t type)
     return VIC_ERR_INVALID_NAME;
 }
 
-void vic_var_set_bind_val(struct vic_var_t *vic_var)
+void vic_var_update_bind_val(struct vic_var_t *vic_var)
 {
     if (vic_var->bind_val == NULL) {
         return;
@@ -113,6 +114,54 @@ void vic_var_set_bind_val(struct vic_var_t *vic_var)
         */
         case VIC_VAR_FLOAT :
             *((float *)vic_var->bind_val) = (float)atof(vic_var->value);
+            return;
+    }
+}
+
+void vic_var_update_value(struct vic_var_t *vic_var)
+{
+    if (vic_var->bind_val == NULL) {
+        return;
+    }
+#ifdef ARDUINO
+    float f; /* see VIC_VAR_FLOAT case */
+#endif
+    switch (vic_var->type) {
+        case VIC_VAR_INT8 :
+            snprintf(vic_var->value, VIC_VAR_VAL_LEN, "%d",
+                        *((int8_t *)vic_var->bind_val));
+            return;
+        case VIC_VAR_UINT8 :
+            snprintf(vic_var->value, VIC_VAR_VAL_LEN, "%u",
+                        *((uint8_t *)vic_var->bind_val));
+            return;
+        case VIC_VAR_INT16 :
+            snprintf(vic_var->value, VIC_VAR_VAL_LEN, "%d",
+                        *((int16_t *)vic_var->bind_val));
+            return;
+        case VIC_VAR_UINT16 :
+            snprintf(vic_var->value, VIC_VAR_VAL_LEN, "%u",
+                        *((uint16_t *)vic_var->bind_val));
+            return;
+        /*
+        case VIC_VAR_INT32 :
+            snprintf(vic_var->value, VIC_VAR_VAL_LEN, "%d",
+                        *((int32_t *)vic_var->bind_val));
+            return;
+        case VIC_VAR_UINT32 :
+            snprintf(vic_var->value, VIC_VAR_VAL_LEN, "%u",
+                        *((uint32_t *)vic_var->bind_val));
+            return;
+        */
+        case VIC_VAR_FLOAT :
+#ifdef ARDUINO /* snprintf %f doesn't work with arduino */
+            f = *((float *)vic_var->bind_val);
+            snprintf(vic_var->value, VIC_VAR_VAL_LEN, "%d.%02d",
+                    (int)f, abs((int)((f - (int)f) * 100)));
+#else
+            snprintf(vic_var->value, VIC_VAR_VAL_LEN, "%f",
+                        *((float *)vic_var->bind_val));
+#endif
             return;
     }
 }

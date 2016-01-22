@@ -9,7 +9,7 @@
 
 char *vic_args_s = NULL;
 
-int8_t vic_exec(char *input)
+uint8_t vic_exec(char *input)
 {
     uint8_t start = 0, end;
     /* find start of func name */
@@ -36,7 +36,7 @@ int8_t vic_exec(char *input)
     vic_args_s = input + end + 1;
     char *command = input + start;
 
-    int8_t error = vic_fn_call(command);
+    uint8_t error = vic_fn_call(command);
 
     vic_print_err(error);
 

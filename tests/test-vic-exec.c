@@ -119,7 +119,7 @@ static char * test_exec_set(void)
         "set very_long_variable_name   very_long_variable_value \n",
         "  set age 7 \n"
     };
-    char *out[] = {
+    const char *out[] = {
         vic_err_msg[VIC_ERR_INVALID_ARGS],
         vic_err_msg[VIC_ERR_INVALID_ARGS],
         vic_err_msg[VIC_ERR_NO],
@@ -166,7 +166,7 @@ static char *test_exec_set_get(void)
         "set too_long_var_name value\n",
         "get too_long_var_name\n"
     };
-    char *out[] = {
+    const char *out[] = {
         vic_err_msg[VIC_ERR_NO],
         vic_err_msg[VIC_ERR_NO],
         vic_err_msg[VIC_ERR_INVALID_ARGS],
