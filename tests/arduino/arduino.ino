@@ -33,7 +33,6 @@ void serial_print(char c)
     Serial.print(c);
 }
 
-float test = 0;
 
 void setup()
 {

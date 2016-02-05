@@ -16,4 +16,11 @@
 *.out
 *.app
 example
-./shell
+/vic
+tests/test-vic-exec
+tests/test-vic-funcs
+tests/test-vic-serial
+tests/test-vic-var
+
+# Swap files
+*.swp
