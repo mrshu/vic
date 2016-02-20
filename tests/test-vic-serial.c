@@ -52,30 +52,33 @@ static char * test_process_long_line(void)
     return 0;
 }
 
-char last_printed;
+
+#define BUFFER_LEN 128
+
+char buffer[BUFFER_LEN] = {'\0'};
+int buffer_i = 0;
 
 void print(char c)
 {
-    putchar(c);
-    last_printed = c;
+    if (buffer_i < BUFFER_LEN - 1) {
+        buffer[buffer_i] = c;
+        buffer_i++;
+    }
 }
 
 static char * test_output(void)
 {
-    char in1[] = "Hello world\n";
-    char in2 = 'X';
-
     vic_output_set(print);
-    vic_print(in1);
 
-    mu_assert(in1[strlen(in1)-1] == last_printed);
+    buffer_i = 0;
+    vic_printf("%d %c%s test\n", 2016, 'y', "ear");
+    buffer[buffer_i] = '\0';
 
-    vic_out(in2);
-
-    mu_assert(in2 == last_printed);
+    mu_assert(strcmp(buffer, "2016 year test\n") == 0);
 
     return 0;
 }
+
 
 static char * all_tests(void)
 {
