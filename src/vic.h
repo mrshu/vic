@@ -77,6 +77,9 @@
 extern char vic_buffer[VIC_BUFFER_SIZE + 1];
 extern uint8_t vic_buffer_len;
 
+#define vic_printf(format, ...) do { char _vic_buff[VIC_BUFFER_SIZE];\
+    snprintf(_vic_buff, VIC_BUFFER_SIZE, (format), __VA_ARGS__);\
+    vic_print(_vic_buff); } while(0)
 #define vic_println(s) do { vic_print(s); vic_out('\n'); } while(0)
 
 void vic_out(char c);
