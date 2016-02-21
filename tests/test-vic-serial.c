@@ -14,7 +14,7 @@ static char * test_process(void)
     for(i = 0; i < strlen(in); i++){
         vic_process(in[i]);
     }
-    mu_assert(strcmp(vic_buffer, in) == 0);
+    mu_assert(strcmp(vic_buffer_in, in) == 0);
 
     return 0;
 }
@@ -33,21 +33,21 @@ static char * test_process_backspace(void)
     for(i = 0; i < strlen(in); i++){
         vic_process(in[i]);
     }
-    mu_assert(strcmp(vic_buffer, in) == 0);
+    mu_assert(strcmp(vic_buffer_in, in) == 0);
 
     return 0;
 }
 
 static char * test_process_long_line(void)
 {
-    char in[VIC_BUFFER_SIZE] = {'a'};
+    char in[VIC_BUFFER_IN_SIZE] = {'a'};
 
     int i;
-    for (i = 0; i < VIC_BUFFER_SIZE; i++){
+    for (i = 0; i < VIC_BUFFER_IN_SIZE; i++){
         vic_process(in[i]);
     }
     vic_process('\0');
-    mu_assert(strcmp(vic_buffer, in) == 0);
+    mu_assert(strcmp(vic_buffer_in, in) == 0);
 
     return 0;
 }
