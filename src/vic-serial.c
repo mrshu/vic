@@ -33,7 +33,7 @@ void vic_print(const char *s)
 
 void vic_print_err(uint8_t id)
 {
-    const char *err_msg = pgm_read_word(&vic_err_msg[id]);
+    const char *err_msg = (const char *)pgm_read_word(&vic_err_msg[id]);
     strncpy_P(vic_buffer_out, err_msg, VIC_BUFFER_OUT_SIZE);
     vic_print(vic_buffer_out);
 }
