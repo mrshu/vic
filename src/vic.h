@@ -52,7 +52,8 @@
 
 #endif
 
-#define VIC_BUFFER_SIZE 128
+#define VIC_BUFFER_IN_SIZE 64
+#define VIC_BUFFER_OUT_SIZE 128
 #define VIC_FUNC_NAME_LEN 8
 #define VIC_VAR_NAME_LEN 8
 #define VIC_VAR_VAL_LEN 16
@@ -74,12 +75,13 @@
 #define VIC_ERR_INVALID_ARGS 3
 
 /* vic-serial.c */
-extern char vic_buffer[VIC_BUFFER_SIZE + 1];
-extern uint8_t vic_buffer_len;
+extern uint8_t vic_buffer_in_len;
+extern char vic_buffer_in[VIC_BUFFER_IN_SIZE + 1];
+extern char vic_buffer_out[VIC_BUFFER_OUT_SIZE + 1];
 
-#define vic_printf(format, ...) do { char _vic_buff[VIC_BUFFER_SIZE];\
-    snprintf(_vic_buff, VIC_BUFFER_SIZE, (format), __VA_ARGS__);\
-    vic_print(_vic_buff); } while(0)
+#define vic_printf(format, ...) do {\
+    snprintf(vic_buffer_out, VIC_BUFFER_OUT_SIZE + 1, (format), __VA_ARGS__);\
+    vic_print(vic_buffer_out); } while(0)
 #define vic_println(s) do { vic_print(s); vic_out('\n'); } while(0)
 
 void vic_out(char c);
