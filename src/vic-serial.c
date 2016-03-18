@@ -73,6 +73,7 @@ void vic_process(char input)
     if (input == (char)0x08) { /* backspace */
         vic_buffer_pop();
     } else if (input == '\n') { /* new line */
+        vic_buffer_in[vic_buffer_in_len] = '\0';
         vic_exec(vic_buffer_in);
         vic_buffer_clear();
     } else {

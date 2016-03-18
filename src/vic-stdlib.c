@@ -9,7 +9,7 @@ void vic_set(void)
     char var_name[VIC_VAR_NAME_LEN+1] = {'\0'};
     char var_val[VIC_VAR_VAL_LEN+1] = {'\0'};
 
-    char *args_format = "%"VIC_XSTR(VIC_VAR_NAME_LEN)"s";
+    const char *args_format = "%"VIC_XSTR(VIC_VAR_NAME_LEN)"s";
     if (vic_args(args_format, var_name) != 1) {
         vic_print_err(VIC_ERR_INVALID_ARGS);
         return;
@@ -28,7 +28,7 @@ void vic_set(void)
 void vic_get(void)
 {
     char var_name[VIC_VAR_NAME_LEN+1] = {'\0'};
-    char *args_format = "%"VIC_XSTR(VIC_VAR_NAME_LEN)"s";
+    const char *args_format = "%"VIC_XSTR(VIC_VAR_NAME_LEN)"s";
 
     if (vic_args(args_format, var_name) != 1) {
         vic_print_err(VIC_ERR_INVALID_ARGS);

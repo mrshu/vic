@@ -35,6 +35,7 @@ uint8_t vic_exec(char *input)
 
     vic_args_s = input + end + 1;
     char *command = input + start;
+    vic_buffer_in_len = 0;
 
     uint8_t error = vic_fn_call(command);
 
