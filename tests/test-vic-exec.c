@@ -138,8 +138,11 @@ static char * test_exec_set(void)
         }
         buffer[buffer_i] = '\0';
 
+        mu_assert(buffer_i >= strlen(VIC_PS1));
+        buffer[buffer_i - strlen(VIC_PS1)] = '\0';
+
         /*
-        printf("in: %sout: %s\n", in[test_i], buffer);
+        printf("in: '%s'out: '%s'\n", in[test_i], buffer);
         */
 
         mu_assert(strcmp(buffer, out[test_i]) == 0);
@@ -192,6 +195,9 @@ static char *test_exec_set_get(void)
         }
         buffer[buffer_i] = '\0';
 
+        mu_assert(buffer_i >= strlen(VIC_PS1));
+        buffer[buffer_i - strlen(VIC_PS1)] = '\0';
+
         /*
         printf("in: %sout: %s\n", in[test_i], buffer);
         */
@@ -202,6 +208,46 @@ static char *test_exec_set_get(void)
     return 0;
 }
 
+static char *test_exec_ls(void)
+{
+    int test_count = 2;
+
+    char *in[] = {
+        "ls \n",
+        "lsv \n"
+    };
+    const char *out[] = {
+        "set\nget\nls\nlsv\ntest\n",
+        "name\n"
+    };
+
+    vic_output_set(print);
+    vic_fn_add("test", test_func);
+    vic_var_set("name", "Peter");
+
+    int test_i;
+    for (test_i = 0; test_i < test_count; test_i++) {
+        buffer_i = 0;
+        int i;
+        for (i = 0; i < strlen(in[test_i]); i++) {
+            vic_process(in[test_i][i]);
+        }
+        buffer[buffer_i] = '\0';
+
+        mu_assert(buffer_i >= strlen(VIC_PS1));
+        buffer[buffer_i - strlen(VIC_PS1)] = '\0';
+
+        /*
+        printf("in: %sout: %s\n", in[test_i], buffer);
+        */
+
+        mu_assert(strcmp(buffer, out[test_i]) == 0);
+    }
+
+    return 0;
+}
+
+
 static char * all_tests()
 {
     mu_run_test(test_exec_func);
@@ -210,6 +256,9 @@ static char * all_tests()
     mu_run_test(test_exec_bad_par_func_2);
     mu_run_test(test_exec_set);
     mu_run_test(test_exec_set_get);
+    vic_funcs_clear();
+    vic_vars_clear();
+    mu_run_test(test_exec_ls);
 
     return 0;
 }
@@ -217,7 +266,7 @@ static char * all_tests()
 
 int main(void)
 {
-    vic_init();
+    vic_init(NULL);
 
     char *result = all_tests();
 

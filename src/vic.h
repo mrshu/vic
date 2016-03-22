@@ -8,6 +8,9 @@
 #include <stdint.h>
 
 
+#define VIC_XSTR(s) VIC_STR(s)
+#define VIC_STR(s) #s
+
 #ifdef ARDUINO
 
 #include <avr/pgmspace.h>
@@ -19,11 +22,6 @@
 #define strncpy_P strncpy
 
 #endif /* arduino */
-
-#define vic_args(format, ...) (sscanf(vic_args_s, (format), __VA_ARGS__))
-#define VIC_XSTR(s) VIC_STR(s)
-#define VIC_STR(s) #s
-#define VIC_PS1 "+> "
 
 #if defined(__AVR_ATmega168__) /* 1 kB */
 
@@ -74,6 +72,9 @@
 #define VIC_ERR_INVALID_NAME 2
 #define VIC_ERR_INVALID_ARGS 3
 
+#define VIC_PS1 "+> "
+#define VIC_INIT_MESS "vic initialized"
+
 /* vic-serial.c */
 extern uint8_t vic_buffer_in_len;
 extern char vic_buffer_in[VIC_BUFFER_IN_SIZE + 1];
@@ -105,6 +106,8 @@ uint8_t vic_var_bind(const char *raw_name, void *bind_val, const uint8_t type);
 void vic_vars_clear(void);
 
 /* vic-exec.c */
+#define vic_args(format, ...) (sscanf(vic_args_s, (format), __VA_ARGS__))
+
 extern char *vic_args_s;
 
 uint8_t vic_exec(char *line);
@@ -112,7 +115,7 @@ uint8_t vic_exec(char *line);
 /* vic.c */
 extern const char * const vic_err_msg[] PROGMEM;
 
-void vic_init();
+void vic_init(void (*output_func)(char));
 
 #endif
 

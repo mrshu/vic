@@ -121,7 +121,7 @@ static char * all_tests(void)
 
 int main(void)
 {
-    vic_init();
+    vic_init(NULL);
 
     char *result = all_tests();
 

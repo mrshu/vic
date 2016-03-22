@@ -39,7 +39,7 @@ void setup()
     Serial.begin(115200);
     pinMode(13, OUTPUT);
 
-    vic_output_set(serial_print);
+    vic_init(serial_print);
 
     vic_fn_add("on", led_on);
     vic_fn_add("off", led_off);
@@ -53,6 +53,7 @@ void setup()
     Serial.println(F("\tled on\n\tled off"));
     Serial.println(F("\tset state 1\n\tset state 0"));
     Serial.println(F("and see LED attached to pin 13"));
+    Serial.println(F("If you want to try more:\n\tls\n\tlsv"));
 
     Serial.println(F(VIC_PS1));
 }

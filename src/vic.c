@@ -22,9 +22,11 @@ const char * const vic_err_msg[] PROGMEM = {
     _err_msg_3
 };
 
-void vic_init()
+void vic_init(void (*output_func)(char))
 {
-
+    vic_output_set(output_func);
+    vic_println(VIC_INIT_MESS);
+    vic_print(VIC_PS1);
 }
 
 /* vim: set tabstop=4:softtabstop=4:shiftwidth=4:expandtabs */
