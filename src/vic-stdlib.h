@@ -3,6 +3,8 @@
 
 void vic_set(void);
 void vic_get(void);
+void vic_list(void);
+void vic_list_vars(void);
 
 #endif
 

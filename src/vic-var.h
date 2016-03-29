@@ -11,6 +11,9 @@ struct vic_var_t {
     uint8_t type;
 };
 
+extern struct vic_var_t vic_vars[VIC_VARS_COUNT];
+extern uint8_t vic_vars_len;
+
 /* sets value to bind_val */
 void vic_var_update_bind_val(struct vic_var_t *vic_var);
 /* sets bind_val to value */

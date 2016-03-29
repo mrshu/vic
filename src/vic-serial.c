@@ -76,6 +76,7 @@ void vic_process(char input)
         vic_buffer_in[vic_buffer_in_len] = '\0';
         vic_exec(vic_buffer_in);
         vic_buffer_clear();
+        vic_print(VIC_PS1);
     } else {
         vic_buffer_append(input);
     }

@@ -2,6 +2,8 @@
 #define _VIC_STDLIB
 
 #include "vic.h"
+#include "vic-funcs.h"
+#include "vic-var.h"
 #include "stdlib.h"
 
 void vic_set(void)
@@ -41,6 +43,24 @@ void vic_get(void)
     vic_print_err(error);
     if (value != NULL) {
         vic_println(value);
+    }
+}
+
+void vic_list(void)
+{
+    uint8_t i;
+    for (i = 0; i < vic_funcs_len; i++) {
+        if (vic_funcs[i].p_func != NULL) {
+            vic_println(vic_funcs[i].name);
+        }
+    }
+}
+
+void vic_list_vars(void)
+{
+    uint8_t i;
+    for (i = 0; i < vic_vars_len; i++) {
+        vic_println(vic_vars[i].name);
     }
 }
 

@@ -7,7 +7,9 @@
 
 struct vic_func_t vic_funcs[VIC_ALL_FUNCS_COUNT] = {
     { "set", vic_set },
-    { "get", vic_get }
+    { "get", vic_get },
+    { "ls", vic_list },
+    { "lsv", vic_list_vars }
 };
 uint8_t vic_funcs_len = VIC_INTERN_FUNCS_COUNT;
 

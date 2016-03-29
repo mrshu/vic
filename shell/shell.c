@@ -9,11 +9,8 @@
 
 int main(void)
 {
-    vic_init();
-    vic_output_set((void (*)(char))putchar);
+    vic_init((void (*)(char))putchar);
     while (1) {
-        vic_print(VIC_PS1);
-
         char c;
         while ((c = getchar()) != '\n') {
             vic_process(c);
