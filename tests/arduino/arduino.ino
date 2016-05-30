@@ -1,8 +1,7 @@
 #include "vic.h"
 
-/***************************************
-MAKE SURE YOU HAVE SET '\n' LINE ENDINGS
-***************************************/
+/* You can use Arduino serial monitor (in that case set line endings with line
+   feed) or vic-picocom (find it in shell/) for talking to vic */
 
 uint8_t led_state;
 
@@ -39,6 +38,13 @@ void setup()
     Serial.begin(115200);
     pinMode(13, OUTPUT);
 
+    Serial.println(F("Try to use these commands: (type them and hit enter)"));
+    Serial.println(F("\ton\n\toff"));
+    Serial.println(F("\tled on\n\tled off"));
+    Serial.println(F("\tset state 1\n\tset state 0"));
+    Serial.println(F("and see LED attached to pin 13"));
+    Serial.println(F("If you want to try more:\n\tls\n\tlsv"));
+
     vic_init(serial_print);
 
     vic_fn_add("on", led_on);
@@ -47,25 +53,17 @@ void setup()
 
     vic_var_set("state", "0");
     vic_var_bind("state", &led_state, VIC_VAR_UINT8);
-
-    Serial.println(F("Try to use these commands: (type them and hit enter)"));
-    Serial.println(F("\ton\n\toff"));
-    Serial.println(F("\tled on\n\tled off"));
-    Serial.println(F("\tset state 1\n\tset state 0"));
-    Serial.println(F("and see LED attached to pin 13"));
-    Serial.println(F("If you want to try more:\n\tls\n\tlsv"));
-
-    Serial.println(F(VIC_PS1));
 }
 
 void loop()
 {
     if (Serial.available() > 0) {
         char c = Serial.read();
+
+        /* to delete character in picocom */
+        if (c == '\b') Serial.print(" \b");
+
         vic_process(c);
-        if (c == '\n') {
-            Serial.println(F(VIC_PS1));
-        }
     }
 
     digitalWrite(13, led_state);
