@@ -1,7 +1,7 @@
 #include "vic.h"
 
 /* You can use Arduino serial monitor (in that case set line endings with line
-   feed) or vic-picocom (find it in shell/) for talking to vic */
+   feed) or vic-picocom (which can be found in shell/) for talking to vic */
 
 uint8_t led_state;
 
@@ -60,7 +60,10 @@ void loop()
     if (Serial.available() > 0) {
         char c = Serial.read();
 
-        /* to delete character in picocom */
+        /* to delete character in picocom
+           '\b' (echoed by picocom itself) moves cursor on the last character
+           ' ' (printed) overwrites last character to space
+           '\b' (printed) moves the cursor backward again */
         if (c == '\b') Serial.print(" \b");
 
         vic_process(c);
